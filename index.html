@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efficient Container Unloading Consultants</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #064663;
+      --secondary-color: #0a7b9e;
+      --accent-color: #ff6b6b;
+      --text-color: #333;
+      --light-bg: #f7f7f7;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--white);
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+      opacity: 0.1;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.8em;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    header p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--accent-color);
+      color: var(--white);
+      padding: 15px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 30px;
+      transition: transform 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .services, .testimonials, .contact, .about {
+      background-color: var(--white);
+      border-radius: 15px;
+      padding: 40px;
+      margin-top: 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .services:hover, .testimonials:hover, .contact:hover, .about:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      font-size: 2em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .service-item {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .service-item i {
+      font-size: 2.5em;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial {
+      background: var(--light-bg);
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: '"';
+      font-size: 4em;
+      color: var(--secondary-color);
+      opacity: 0.2;
+      position: absolute;
+      top: -20px;
+      left: 10px;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .form-group textarea {
+      height: 150px;
+    }
+
+    .submit-button {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .social-links {
+      margin-top: 20px;
+    }
+
+    .social-links a {
+      color: var(--white);
+      font-size: 1.5em;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2em;
+      }
+      
+      section {
+        padding: 40px 20px;
+      }
+      
+      .services, .testimonials, .contact, .about {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Efficient Container Unloading Consultants</h1>
+    <p>Optimizing your logistics operations with expert container unloading solutions</p>
+    <a href="#contact" class="cta-button">Get Started</a>
+  </header>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We are industry leaders in container unloading optimization, helping businesses streamline their logistics operations and reduce costs. With over 15 years of experience, our team of experts provides tailored solutions for your specific needs.</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="service-grid">
+      <div class="service-item">
+        <i class="fas fa-truck-loading"></i>
+        <h3>Container Unloading</h3>
+        <p>Efficient and safe container unloading services with state-of-the-art equipment</p>
+      </div>
+      <div class="service-item">
+        <i class="fas fa-chart-line"></i>
+        <h3>Process Optimization</h3>
+        <p>Data-driven analysis to improve your unloading efficiency</p>
+      </div>
+      <div class="service-item">
+        <i class="fas fa-users"></i>
+        <h3>Staff Training</h3>
+        <p>Comprehensive training programs for your logistics team</p>
+      </div>
+      <div class="service-item">
+        <i class="fas fa-cogs"></i>
+        <h3>Equipment Consulting</h3>
+        <p>Expert advice on the best equipment for your operations</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Client Testimonials</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p>"Efficient Container Unloading Consultants transformed our logistics operations. We've seen a 40% improvement in unloading times."</p>
+        <p><strong>- John Smith, Logistics Manager</strong></p>
+      </div>
+      <div class="testimonial">
+        <p>"Their expertise in process optimization helped us reduce costs significantly. Highly recommended!"</p>
+        <p><strong>- Sarah Johnson, Operations Director</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <div class="contact-form">
+      <form>
+        <div class="form-group">
+          <input type="text" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="submit-button">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Efficient Container Unloading Consultants. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+    </div>
+  </footer>
+</body>
+</html>
+<!-- Trigger rebuild -->
