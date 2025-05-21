@@ -35,17 +35,33 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     header::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
-      opacity: 0.1;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      background: url('logo.png') center center no-repeat;
+      background-size: contain;
+      opacity: 0.18;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-logo-watermark {
+      display: none;
     }
 
     header h1 {
@@ -217,11 +233,54 @@
         padding: 20px;
       }
     }
+
+    @media (max-width: 600px) {
+      .header-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .site-logo {
+        height: 56px;
+      }
+      .contact-logo {
+        height: 40px;
+      }
+      .footer-logo {
+        height: 32px;
+      }
+    }
+
+    .footer-logo {
+      height: 56px;
+      width: auto;
+      display: block;
+      margin: 0 auto 16px auto;
+      border-radius: 8px;
+      background: transparent;
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border: 2px solid #eee;
+      max-width: 100%;
+    }
+    .contact-logo {
+      height: 70px;
+      width: auto;
+      display: block;
+      margin: 0 auto 20px auto;
+      border-radius: 10px;
+      background: transparent;
+      padding: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border: 2px solid #eee;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Efficient Container Unloading Consultants</h1>
+    <div class="header-content">
+      <h1>Efficient Container Unloading Consultants</h1>
+    </div>
     <p>Optimizing your logistics operations with expert container unloading solutions</p>
     <a href="#contact" class="cta-button">Get Started</a>
   </header>
@@ -272,6 +331,7 @@
   </section>
 
   <section id="contact">
+    <img src="logo.png" alt="Efficient Container Unloading Consultants Logo" class="contact-logo" />
     <h2>Contact Us</h2>
     <div class="contact-form">
       <form>
@@ -290,6 +350,7 @@
   </section>
 
   <footer>
+    <img src="logo.png" alt="Efficient Container Unloading Consultants Logo" class="footer-logo" />
     <p>&copy; 2024 Efficient Container Unloading Consultants. All rights reserved.</p>
     <div class="social-links">
       <a href="#"><i class="fab fa-linkedin"></i></a>
