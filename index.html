@@ -1,87 +1,128 @@
-import React, { useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MTCyber.com.au — Helping Small Businesses Be Cyber Ready</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" type="image/png" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      margin: 0;
+      line-height: 1.6;
+    }
+    header {
+      background: #1e293b;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header img {
+      height: 40px;
+      vertical-align: middle;
+    }
+    nav a {
+      color: #e2e8f0;
+      text-decoration: none;
+      margin-left: 1.2rem;
+      font-weight: 500;
+    }
+    nav a:hover {
+      color: #22d3ee;
+    }
+    section {
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 span {
+      color: #22d3ee;
+    }
+    .hero {
+      text-align: center;
+      padding-top: 3rem;
+    }
+    .hero img {
+      width: 120px;
+      margin-bottom: 1rem;
+    }
+    .button {
+      background: #22d3ee;
+      color: #0f172a;
+      padding: 0.75rem 1.5rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .button:hover {
+      background: #67e8f9;
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 0.75rem 0;
+    }
+    footer {
+      text-align: center;
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 0.5rem; }
+      nav a { margin: 0 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" alt="MTCyber Logo">
+      <strong style="margin-left: 10px; font-size: 1.2rem;">MTCyber</strong>
+    </div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
+  <section class="hero">
+    <img src="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" alt="MTCyber Logo">
+    <h1>Helping Small Businesses Be <span>Cyber Ready</span></h1>
+    <p>MTCyber.com.au provides free, ethical cybersecurity scans using only publicly available data to show businesses what attackers can already see — no intrusive tests, no risk, just awareness.</p>
+    <a href="#contact" class="button">Request Free Scan</a>
+  </section>
 
-// One‑page marketing site for MTCyber
-// TailwindCSS is available in this canvas preview. No external deps.
-// To deploy, drop this component into a React/Vite/Next app and set as the root page.
+  <section id="services">
+    <h2>What We Check</h2>
+    <div class="card">✅ SSL/TLS configuration & expiry</div>
+    <div class="card">✅ Open ports visible online</div>
+    <div class="card">✅ Security headers (HSTS, CSP, etc.)</div>
+    <div class="card">✅ Public breach data (Have I Been Pwned)</div>
+    <div class="card">✅ Domain reputation & blacklists</div>
+  </section>
 
+  <section id="contact">
+    <h2>Request Your Free Scan</h2>
+    <p>To request a free cyber readiness report, send an email to:</p>
+    <p><b>📧 <a href="mailto:mattzplace11@gmail.com" style="color:#22d3ee;">mattzplace11@gmail.com</a></b></p>
+    <p>Include your business name and website address (e.g., mybusiness.com.au).  
+    Reports are confidential and based on publicly available information only.</p>
+  </section>
 
-export default function MTCyberLanding() {
-const [submitted, setSubmitted] = useState(false);
-
-
-return (
-<div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-300 selection:text-slate-900">
-{/* Header / Nav */}
-<header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-slate-950/70">
-<div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-<a href="#top" className="flex items-center gap-3">
-<ShieldLogo className="h-9 w-9" />
-<span className="font-bold text-xl tracking-tight">MTCyber</span>
-</a>
-<nav className="hidden md:flex items-center gap-6 text-sm">
-<a href="#services" className="hover:text-cyan-300">Services</a>
-<a href="#how" className="hover:text-cyan-300">How it works</a>
-<a href="#ethics" className="hover:text-cyan-300">Ethics</a>
-<a href="#faq" className="hover:text-cyan-300">FAQ</a>
-<a href="#contact" className="px-3 py-1.5 rounded-xl bg-cyan-400/10 ring-1 ring-cyan-400/30 hover:bg-cyan-400/20">Get your free scan</a>
-</nav>
-</div>
-</header>
-
-
-{/* Hero */}
-<section id="top" className="relative overflow-hidden">
-<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-500/10 via-slate-900 to-slate-950" />
-<div className="relative mx-auto max-w-6xl px-4 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
-<div>
-<div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">
-Wallan & Surrounds • Public‑only scanning
-</div>
-<h1 className="mt-4 text-4xl md:text-5xl font-bold leading-tight">
-Helping small businesses be <span className="text-cyan-300">cyber ready</span> — for free.
-</h1>
-<p className="mt-4 text-slate-300/90 text-lg">
-MTCyber provides quick, non‑intrusive checks using only publicly available information to show what attackers can already see about your business.
-</p>
-<div className="mt-6 flex flex-wrap gap-3">
-<a href="#contact" className="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-300">
-Get my free scan
-</a>
-<a href="#services" className="rounded-2xl px-5 py-3 ring-1 ring-slate-600 hover:bg-slate-900">
-See what’s included
-</a>
-</div>
-<p className="mt-3 text-xs text-slate-400">No logins. No disruption. No obligations.</p>
-</div>
-<div className="relative">
-<div className="absolute -inset-6 rounded-3xl bg-cyan-500/10 blur-2xl" />
-<div className="relative rounded-3xl border border-slate-800 bg-slate-900 p-6 shadow-2xl shadow-cyan-500/5">
-<HeroChecklist />
-</div>
-</div>
-</div>
-</section>
-
-
-{/* Services */}
-<section id="services" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-<h2 className="text-3xl font-bold">What we check (public data only)</h2>
-<p className="mt-2 text-slate-400">A quick snapshot of your external exposure — fast and friendly.</p>
-<div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-{[
-{ title: "SSL/TLS health", desc: "Expiry, chain, modern configs" },
-{ title: "Open ports (public)", desc: "Internet‑visible services only" },
-{ title: "Security headers", desc: "HSTS, CSP, X‑Frame‑Options, etc." },
-{ title: "Breach mentions", desc: "Public breach data references" },
-{ title: "Domain reputation", desc: "Blacklist & spam signals" },
-{ title: "Basic misconfigs", desc: "Common low‑hanging issues" },
-].map((card, i) => (
-<div key={i} className="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-<h3 className="font-semibold text-lg text-cyan-200">{card.title}</h3>
-<p className="mt-1 text-slate-400">{card.desc}</p>
-</div>
-))}
-</div>
-</section>
-
+  <footer>
+    © 2025 MTCyber.com.au — Public-only scans • Wallan, Victoria  
+    <br>Created by Matthew Constantinou
+  </footer>
+</body>
+</html>
