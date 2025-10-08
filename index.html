@@ -3,79 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MTCyber.com.au — Helping Small Businesses Be Cyber Ready</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" type="image/png" />
+  <title>MTCyber — Helping Small Businesses Be Cyber Ready</title>
   <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --accent: #22d3ee;
+    }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
       margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
     header {
-      background: #1e293b;
-      padding: 1.2rem 2rem;
+      position: sticky;
+      top: 0;
+      background: var(--card);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 1rem 2rem;
+      z-index: 10;
     }
-    header img {
-      height: 40px;
-      vertical-align: middle;
+    header h1 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     nav a {
-      color: #e2e8f0;
+      color: var(--text);
       text-decoration: none;
-      margin-left: 1.2rem;
+      margin-left: 1rem;
       font-weight: 500;
     }
-    nav a:hover {
-      color: #22d3ee;
-    }
+    nav a:hover { color: var(--accent); }
     section {
-      padding: 3rem 2rem;
       max-width: 900px;
       margin: auto;
+      padding: 3rem 1.5rem;
     }
-    h1 span {
-      color: #22d3ee;
+    h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
     }
     .hero {
       text-align: center;
-      padding-top: 3rem;
+      padding-top: 2rem;
     }
-    .hero img {
-      width: 120px;
-      margin-bottom: 1rem;
-    }
+    .hero h1 span { color: var(--accent); }
+    .hero p { max-width: 600px; margin: 1rem auto; color: #cbd5e1; }
     .button {
-      background: #22d3ee;
-      color: #0f172a;
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg);
       padding: 0.75rem 1.5rem;
       border-radius: 1rem;
       text-decoration: none;
       font-weight: bold;
-      display: inline-block;
       margin-top: 1rem;
     }
-    .button:hover {
-      background: #67e8f9;
-    }
+    .button:hover { background: #67e8f9; }
     .card {
-      background: #1e293b;
+      background: var(--card);
       border-radius: 1rem;
-      padding: 1rem;
+      padding: 1rem 1.2rem;
       margin: 0.75rem 0;
     }
     footer {
       text-align: center;
-      background: #1e293b;
+      padding: 1.5rem;
+      background: var(--card);
       color: #94a3b8;
-      padding: 1rem;
       font-size: 0.9rem;
     }
     @media (max-width: 600px) {
@@ -86,42 +91,46 @@
 </head>
 <body>
   <header>
-    <div>
-      <img src="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" alt="MTCyber Logo">
-      <strong style="margin-left: 10px; font-size: 1.2rem;">MTCyber</strong>
-    </div>
+    <h1>🛡️ MTCyber</h1>
     <nav>
       <a href="#services">Services</a>
+      <a href="#ethics">Ethics</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/Slo33er/efficient-container-site/main/logo.png" alt="MTCyber Logo">
     <h1>Helping Small Businesses Be <span>Cyber Ready</span></h1>
-    <p>MTCyber.com.au provides free, ethical cybersecurity scans using only publicly available data to show businesses what attackers can already see — no intrusive tests, no risk, just awareness.</p>
-    <a href="#contact" class="button">Request Free Scan</a>
+    <p>MTCyber provides free, ethical cybersecurity scans using only publicly available information to show what attackers can already see about your business. No intrusive testing, no risk — just awareness.</p>
+    <a href="#contact" class="button">Get Your Free Scan</a>
   </section>
 
   <section id="services">
     <h2>What We Check</h2>
-    <div class="card">✅ SSL/TLS configuration & expiry</div>
-    <div class="card">✅ Open ports  visible online</div>
-    <div class="card">✅ Security headers (HSTS, CSP, etc.)</div>
-    <div class="card">✅ Public breach data (Have I Been Pwned)</div>
-    <div class="card">✅ Domain reputation & blacklists</div>
+    <div class="card">✅ SSL/TLS Configuration & Expiry</div>
+    <div class="card">✅ Open Ports (Publicly Visible)</div>
+    <div class="card">✅ Security Headers (HSTS, CSP, etc.)</div>
+    <div class="card">✅ Public Breach Mentions</div>
+    <div class="card">✅ Domain Reputation / Blacklists</div>
+  </section>
+
+  <section id="ethics">
+    <h2>Our Ethical Boundaries</h2>
+    <div class="card">⚖️ We only use public information — no login attempts, brute forcing, or scanning internal systems.</div>
+    <div class="card">🔍 Scans are light and non-disruptive. We simply observe what’s already visible online.</div>
+    <div class="card">🕊️ Every report is private and shared only with you.</div>
+    <div class="card">📜 MTCyber aligns with OWASP and ACSC guidelines for small business security.</div>
   </section>
 
   <section id="contact">
     <h2>Request Your Free Scan</h2>
-    <p>To request a free cyber readiness report, send an email to:</p>
-    <p><b>📧 <a href="mailto:mattzplace11@gmail.com" style="color:#22d3ee;">mattzplace11@gmail.com</a></b></p>
-    <p>Include your business name and website address (e.g., mybusiness.com.au).  
-    Reports are confidential and based on publicly available information only.</p>
+    <p>Send your business name and website to:</p>
+    <p><b>📧 <a href="mailto:mattzplace11@gmail.com" style="color:var(--accent);">mattzplace11@gmail.com</a></b></p>
+    <p>We’ll review only publicly available data and email you a confidential summary.</p>
   </section>
 
   <footer>
-    © 2025 MTCyber.com.au — Public-only scans • Wallan, Victoria  
+    © 2025 MTCyber — Public-only Scans • Wallan, Victoria  
     <br>Created by Matthew Constantinou
   </footer>
 </body>
