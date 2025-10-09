@@ -3,135 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MTCyber — Helping Small Businesses Be Cyber Ready</title>
+  <title>MTC Cyber | Helping Small Businesses Be Cyber Ready</title>
+  <link rel="icon" type="image/png" href="mtc-logo.png" />
   <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #e2e8f0;
-      --accent: #22d3ee;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: var(--card);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      z-index: 10;
-    }
-    header h1 {
-      font-size: 1.4rem;
-      color: var(--accent);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      margin-left: 1rem;
-      font-weight: 500;
-    }
-    nav a:hover { color: var(--accent); }
-    section {
-      max-width: 900px;
-      margin: auto;
-      padding: 3rem 1.5rem;
-    }
-    h2 {
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .hero {
-      text-align: center;
-      padding-top: 2rem;
-    }
-    .hero h1 span { color: var(--accent); }
-    .hero p { max-width: 600px; margin: 1rem auto; color: #cbd5e1; }
-    .button {
-      display: inline-block;
-      background: var(--accent);
-      color: var(--bg);
-      padding: 0.75rem 1.5rem;
-      border-radius: 1rem;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 1rem;
-    }
-    .button:hover { background: #67e8f9; }
-    .card {
-      background: var(--card);
-      border-radius: 1rem;
-      padding: 1rem 1.2rem;
-      margin: 0.75rem 0;
-    }
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: var(--card);
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-    @media (max-width: 600px) {
-      header { flex-direction: column; gap: 0.5rem; }
-      nav a { margin: 0 0.5rem; }
-    }
+    body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; background:#0a0f1a; color:#fff; }
+    header, section, footer { max-width:960px; margin:auto; padding:2rem; }
+    header { text-align:center; }
+    header img { width:140px; }
+    h1 { color:#4fd1c5; margin-top:0.5rem; }
+    h2 { color:#4fd1c5; margin-top:2rem; }
+    p { line-height:1.6; color:#cbd5e1; }
+    .btn { display:inline-block; margin-top:1rem; background:#4fd1c5; color:#000; padding:0.75rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:600; }
+    .card { background:#111827; padding:1rem; border-radius:10px; margin-top:1rem; border:1px solid #1e293b; }
+    footer { text-align:center; border-top:1px solid #1e293b; margin-top:3rem; padding-top:1.5rem; color:#94a3b8; font-size:0.9rem; }
+    form { display:grid; gap:1rem; margin-top:1rem; }
+    input, textarea { padding:0.75rem; border-radius:6px; border:none; font-size:1rem; background:#1e293b; color:#fff; }
+    input[type="submit"] { background:#4fd1c5; color:#000; cursor:pointer; font-weight:bold; }
   </style>
 </head>
 <body>
+
   <header>
-    <h1>🛡️ MTCyber</h1>
-    <nav>
-      <a href="#services">Services</a>
-      <a href="#ethics">Ethics</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <img src="mtc-logo.png" alt="MTC Cyber logo" />
+    <h1>MTC Cyber</h1>
+    <p>Helping small businesses be <strong>cyber ready</strong> through free public exposure scans and practical security guidance.</p>
+    <a href="#contact" class="btn">Get Your Free Scan</a>
   </header>
 
-  <section class="hero">
-    <h1>Helping Small Businesses Be <span>Cyber Ready</span></h1>
-    <p>MTCyber provides free, ethical cybersecurity scans using only publicly available information to show what attackers can already see about your business. No intrusive testing, no risk — just awareness.</p>
-    <a href="#contact" class="button">Get Your Free Scan</a>
+  <section id="about">
+    <h2>About Us</h2>
+    <p>MTC Cyber provides ethical, non-intrusive cybersecurity scans using only publicly available information. We help local Australian businesses understand their digital exposure before attackers do — in plain English and at no cost.</p>
   </section>
 
   <section id="services">
-    <h2>What We Check</h2>
-    <div class="card">✅ SSL/TLS Configuration & Expiry</div>
-    <div class="card">✅ Open Ports (Publicly Visible)</div>
-    <div class="card">✅ Security Headers (HSTS, CSP, etc.)</div>
-    <div class="card">✅ Public Breach Mentions</div>
-    <div class="card">✅ Domain Reputation / Blacklists</div>
+    <h2>Our Services</h2>
+    <div class="card"><strong>Free Cyber Snapshot</strong><br>Check SSL/TLS health, HTTP headers, open ports (public only), and data breach mentions.</div>
+    <div class="card"><strong>Awareness Report</strong><br>Receive a clear PDF summary mapping findings to OWASP Top 10 and ACSC Essential Eight controls.</div>
+    <div class="card"><strong>Consultation</strong><br>Optional free call or email to prioritise next steps for stronger cyber hygiene.</div>
   </section>
 
   <section id="ethics">
-    <h2>Our Ethical Boundaries</h2>
-    <div class="card">⚖️ We only use public information — no login attempts, brute forcing, or scanning internal systems.</div>
-    <div class="card">🔍 Scans are light and non-disruptive. We simply observe what’s already visible online.</div>
-    <div class="card">🕊️ Every report is private and shared only with you.</div>
-    <div class="card">📜 MTCyber aligns with OWASP and ACSC guidelines for small business security.</div>
+    <h2>Ethics & Alignment</h2>
+    <p>All assessments follow Australian law and industry standards:</p>
+    <ul>
+      <li>🟦 Public data only — no logins, brute-forcing, or intrusive testing.</li>
+      <li>🟦 Aligned with <strong>OWASP Top 10</strong> web security guidelines.</li>
+      <li>🟦 References the <strong>ACSC Small Business Cyber Security Guide</strong> and <strong>Essential Eight</strong>.</li>
+      <li>🟦 Confidential — reports shared only with the business owner.</li>
+    </ul>
   </section>
 
   <section id="contact">
     <h2>Request Your Free Scan</h2>
-    <p>Send your business name and website to:</p>
-    <p><b>📧 <a href="mailto:mattzplace11@gmail.com" style="color:var(--accent);">mattzplace11@gmail.com</a></b></p>
-    <p>We’ll review only publicly available data and email you a confidential summary.</p>
+    <p>Complete the form below to receive your report. We’ll contact you within one business day.</p>
+    <form action="https://formspree.io/f/your-form-id" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="text" name="website" placeholder="Business Website (e.g. example.com.au)" required>
+      <textarea name="message" placeholder="Any specific concerns?" rows="4"></textarea>
+      <input type="submit" value="Send Request">
+    </form>
   </section>
 
   <footer>
-    © 2025 MTCyber — Public-only Scans • Wallan, Victoria  
-    <br>Created by Matthew Constantinou
+    © 2025 MTC Cyber | Wallan VIC | Aligned with OWASP and ACSC Guidelines
   </footer>
+
 </body>
 </html>
