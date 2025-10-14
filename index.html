@@ -1,73 +1,160 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MTC Cyber | Helping Small Businesses Be Cyber Ready</title>
-  <link rel="icon" type="image/png" href="mtc-logo.png" />
-  <style>
-    body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; background:#0a0f1a; color:#fff; }
-    header, section, footer { max-width:960px; margin:auto; padding:2rem; }
-    header { text-align:center; }
-    header img { width:140px; }
-    h1 { color:#4fd1c5; margin-top:0.5rem; }
-    h2 { color:#4fd1c5; margin-top:2rem; }
-    p { line-height:1.6; color:#cbd5e1; }
-    .btn { display:inline-block; margin-top:1rem; background:#4fd1c5; color:#000; padding:0.75rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:600; }
-    .card { background:#111827; padding:1rem; border-radius:10px; margin-top:1rem; border:1px solid #1e293b; }
-    footer { text-align:center; border-top:1px solid #1e293b; margin-top:3rem; padding-top:1.5rem; color:#94a3b8; font-size:0.9rem; }
-    form { display:grid; gap:1rem; margin-top:1rem; }
-    input, textarea { padding:0.75rem; border-radius:6px; border:none; font-size:1rem; background:#1e293b; color:#fff; }
-    input[type="submit"] { background:#4fd1c5; color:#000; cursor:pointer; font-weight:bold; }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MTC Cyber — Free Cyber Readiness Snapshot for Small Business</title>
+  <meta name="description" content="MTC Cyber helps Australian small businesses strengthen their online security with free, ethical, non-intrusive scans and plain-language advice." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="MTC Cyber — Free Cyber Readiness Snapshot" />
+  <meta property="og:description" content="Ethical, non-intrusive scans + clear, actionable advice. No jargon." />
+  <meta property="og:url" content="https://mtccyber.com.au/" />
+  <meta property="og:type" content="website" />
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "MTC Cyber",
+    "url": "https://mtccyber.com.au/",
+    "image": "https://mtccyber.com.au/mtc-logo.png",
+    "description": "Free cyber readiness snapshots and practical guidance for Australian small businesses.",
+    "address": {"@type":"PostalAddress","addressLocality":"Wallan","addressRegion":"VIC","addressCountry":"AU"},
+    "areaServed": "Australia",
+    "founder": "Matthew Constantinou",
+    "sameAs": ["https://www.linkedin.com/"]
+  }
+  </script>
 </head>
 <body>
-
-  <header>
-    <img src="mtc-logo.png" alt="MTC Cyber logo" />
-    <h1>MTC Cyber</h1>
-    <p>Helping small businesses be <strong>cyber ready</strong> through free public exposure scans and practical security guidance.</p>
-    <a href="#contact" class="btn">Get Your Free Scan</a>
+  <header class="topbar">
+    <div class="container row space">
+      <a class="logo" href="/">MTC<span>Cyber</span></a>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#process">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a class="btn" href="#contact">Get your free snapshot</a>
+      </nav>
+    </div>
   </header>
 
-  <section id="about">
-    <h2>About Us</h2>
-    <p>MTC Cyber provides ethical, non-intrusive cybersecurity scans using only publicly available information. We help local Australian businesses understand their digital exposure before attackers do — in plain English and at no cost.</p>
+  <section class="hero">
+    <div class="container">
+      <h1>Free Cyber Readiness Snapshot for Small Business</h1>
+      <p class="lead">
+        Ethical, non-intrusive scan of your public footprint. Clear, plain-English fixes. No jargon.
+      </p>
+      <div class="cta">
+        <a class="btn xl" href="#contact">Get a free snapshot</a>
+        <a class="link" href="#sample">See a sample report →</a>
+      </div>
+      <ul class="badges">
+        <li>Aligned with ACSC Essential Eight</li>
+        <li>OWASP Top 10 mapping</li>
+        <li>Public-only, zero-risk assessment</li>
+      </ul>
+    </div>
   </section>
 
-  <section id="services">
-    <h2>Our Services</h2>
-    <div class="card"><strong>Free Cyber Snapshot</strong><br>Check SSL/TLS health, HTTP headers, open ports (public only), and data breach mentions.</div>
-    <div class="card"><strong>Awareness Report</strong><br>Receive a clear PDF summary mapping findings to OWASP Top 10 and ACSC Essential Eight controls.</div>
-    <div class="card"><strong>Consultation</strong><br>Optional free call or email to prioritise next steps for stronger cyber hygiene.</div>
+  <section id="cred" class="stripe">
+    <div class="container row wrap">
+      <div class="card">
+        <h3>What you get</h3>
+        <ul>
+          <li>Score out of 100 with traffic-light ratings</li>
+          <li>Findings: SSL/TLS, headers, exposed ports, breach mentions, outdated CMS</li>
+          <li>Action list prioritised for impact/effort</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Why it’s safe</h3>
+        <ul>
+          <li>Public data only — no intrusive testing</li>
+          <li>No credentials required</li>
+          <li>Results shared only with the owner</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>About MTC Cyber</h3>
+        <p>Founded by Matthew Constantinou (Google Cybersecurity, Cert IV Cyber Security, Cert III IT) to make cybersecurity simple and affordable for Aussie small businesses.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="ethics">
-    <h2>Ethics & Alignment</h2>
-    <p>All assessments follow Australian law and industry standards:</p>
-    <ul>
-      <li>🟦 Public data only — no logins, brute-forcing, or intrusive testing.</li>
-      <li>🟦 Aligned with <strong>OWASP Top 10</strong> web security guidelines.</li>
-      <li>🟦 References the <strong>ACSC Small Business Cyber Security Guide</strong> and <strong>Essential Eight</strong>.</li>
-      <li>🟦 Confidential — reports shared only with the business owner.</li>
-    </ul>
+  <section id="services" class="container">
+    <h2>Core Services</h2>
+    <div class="grid3">
+      <div class="tile">
+        <h3>Free Cyber Hygiene Snapshot</h3>
+        <p>Quick scan of public risks with a clear score and recommended fixes.</p>
+      </div>
+      <div class="tile">
+        <h3>Awareness Report</h3>
+        <p>Plain-language PDF linking findings to ACSC Essential Eight and OWASP Top 10.</p>
+      </div>
+      <div class="tile">
+        <h3>Consultation & Guidance</h3>
+        <p>30–60 min call to prioritise fixes, enable MFA, and improve patching.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="contact">
-    <h2>Request Your Free Scan</h2>
-    <p>Complete the form below to receive your report. We’ll contact you within one business day.</p>
-    <form action="https://formspree.io/f/your-form-id" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <input type="text" name="website" placeholder="Business Website (e.g. example.com.au)" required>
-      <textarea name="message" placeholder="Any specific concerns?" rows="4"></textarea>
-      <input type="submit" value="Send Request">
-    </form>
+  <section id="process" class="stripe">
+    <div class="container">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Request:</strong> You send your business name or domain.</li>
+        <li><strong>Public scan:</strong> We check SSL/TLS, headers, ports, breach mentions, CMS versions.</li>
+        <li><strong>Snapshot:</strong> You receive a score, findings, and quick wins.</li>
+        <li><strong>Optional call:</strong> We prioritise fixes and next steps.</li>
+      </ol>
+    </div>
   </section>
 
-  <footer>
-    © 2025 MTC Cyber | Wallan VIC | Aligned with OWASP and ACSC Guidelines
+  <section id="sample" class="container">
+    <h2>Snapshot sample</h2>
+    <p>Here’s the one-page summary we deliver. Want the template? I’ll send it after you request your free snapshot.</p>
+    <img class="sample" src="snapshot-sample.png" alt="Sample snapshot report preview" />
+  </section>
+
+  <section id="faq" class="container">
+    <h2>FAQ</h2>
+    <details><summary>Is this safe and legal?</summary><p>Yes. We only use publicly available data and never attempt to bypass controls.</p></details>
+    <details><summary>What does it cost?</summary><p>The snapshot is free. If you want help fixing items or a deeper assessment, we can quote simply and transparently.</p></details>
+    <details><summary>Do you need access to my systems?</summary><p>No. We do not require logins or internal access for the snapshot.</p></details>
+  </section>
+
+  <section id="contact" class="stripe">
+    <div class="container">
+      <h2>Get your free snapshot</h2>
+      <p>Fill this in and we’ll email your result within a business day.</p>
+      <!-- Replace the action URL with your Formspree endpoint once created -->
+      <form class="contact" action="https://formspree.io/f/your-form-id" method="POST">
+        <div class="row wrap">
+          <label>Business name<input required type="text" name="business_name"></label>
+          <label>Website or domain<input required type="url" name="domain" placeholder="https://example.com"></label>
+          <label>Your name<input required type="text" name="name"></label>
+          <label>Email<input required type="email" name="email"></label>
+        </div>
+        <label>Notes (optional)<textarea name="notes" rows="4" placeholder="Anything specific you want checked?"></textarea></label>
+        <button class="btn xl" type="submit">Request snapshot</button>
+        <p class="tiny">By submitting, you agree to our <a href="privacy.html">Privacy</a> and <a href="consent.html">Consent</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container row space wrap">
+      <p>© <span id="y"></span> MTC Cyber — ABN 37 347 798 045</p>
+      <p><a href="privacy.html">Privacy</a> · <a href="consent.html">Consent</a> · <a href="#contact">Contact</a></p>
+    </div>
   </footer>
-
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
