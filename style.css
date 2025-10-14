@@ -26,22 +26,26 @@ input,textarea{background:#07101a;border:1px solid var(--line);border-radius:10p
 .tiny{color:var(--muted);font-size:12px}
 .footer{padding:26px 0;color:var(--muted)}
 @media (max-width:640px){.hero h1{font-size:32px}}
+/* --- hard caps so the logo never takes over the page --- */
+.topbar .container { display:flex; align-items:center; justify-content:space-between; }
+.topbar nav { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
 .logo-img {
-  height: 48px;           /* size of the logo */
-  vertical-align: middle; /* aligns it nicely with the nav */
-  border-radius: 8px;     /* optional for rounded edges */
+  height: 40px !important;
+  width: auto !important;
+  max-width: 160px !important;
+  display: inline-block;
+  vertical-align: middle;
 }
-/* keep all images sane */
-img { max-width: 100%; height: auto; display: block; }
 
-/* header layout always in a row */
-.topbar .container { display: flex; align-items: center; justify-content: space-between; }
-.topbar nav { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+/* generic image sanity */
+img { max-width: 100%; height: auto; }
 
-/* logo in the top bar */
-.logo-img { height: 40px; width: auto; vertical-align: middle; }
+/* if any image sneaks into the hero, keep it small */
+.hero img { max-height: 180px; }
 
-/* (optional) smaller on very small screens */
+/* optional: shrink logo on very small screens */
 @media (max-width: 480px) {
-  .logo-img { height: 32px; }
+  .logo-img { height: 32px !important; }
 }
+
