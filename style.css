@@ -31,3 +31,17 @@ input,textarea{background:#07101a;border:1px solid var(--line);border-radius:10p
   vertical-align: middle; /* aligns it nicely with the nav */
   border-radius: 8px;     /* optional for rounded edges */
 }
+/* keep all images sane */
+img { max-width: 100%; height: auto; display: block; }
+
+/* header layout always in a row */
+.topbar .container { display: flex; align-items: center; justify-content: space-between; }
+.topbar nav { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+/* logo in the top bar */
+.logo-img { height: 40px; width: auto; vertical-align: middle; }
+
+/* (optional) smaller on very small screens */
+@media (max-width: 480px) {
+  .logo-img { height: 32px; }
+}
