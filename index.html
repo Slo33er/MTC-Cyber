@@ -137,22 +137,54 @@
       <h2>Get your free snapshot</h2>
       <p>Fill this in and we’ll email your result within a business day.</p>
       <!-- Replace the action URL with your Formspree endpoint once created -->
-      <form class="contact" action="https://formspree.io/f/xeorvneb" method="POST">
-        <div class="row wrap">
-          <label>Business name<input required type="text" name="business_name"></label>
-          <label>Website or domain<input required type="url" name="domain" placeholder="https://example.com"></label>
-          <label>Your name<input required type="text" name="name"></label>
-          <label>Email<input required type="email" name="email"></label>
-        </div>
-        <label>Notes (optional)<textarea name="notes" rows="4" placeholder="Anything specific you want checked?"></textarea></label>
-        <button class="btn xl" type="submit">Request snapshot</button>
-        <p class="tiny">By submitting, you agree to our <a href="privacy.html">Privacy</a> and <a href="consent.html">Consent</a>.</p>
-      </form>
+    <form class="contact" action="https://formspree.io/f/xeorvneb" method="POST">
+  <!-- subject line you’ll see in Gmail -->
+  <input type="hidden" name="_subject" value="MTC Cyber – Snapshot Request">
+  <!-- redirect after submit (create thanks.html or change this URL) -->
+  <input type="hidden" name="_redirect" value="https://mtccyber.com.au/thanks.html">
+  <!-- honeypot spam trap -->
+  <input type="text" name="_gotcha" style="display:none">
+
+  <div class="row wrap">
+    <label>Business name
+      <input required type="text" name="business_name" autocomplete="organization">
+    </label>
+
+    <!-- accept bare domains OR full URLs -->
+    <label>Website or domain
+      <input required type="text" name="domain" placeholder="example.com or https://example.com"
+             pattern="^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}$" inputmode="url" autocomplete="url">
+    </label>
+
+    <label>Your name
+      <input required type="text" name="name" autocomplete="name">
+    </label>
+
+    <!-- keep name='email' so reply works -->
+    <label>Email
+      <input required type="email" name="email" autocomplete="email">
+    </label>
+  </div>
+
+  <!-- explicit consent (good practice) -->
+  <label style="display:flex;gap:8px;align-items:flex-start;margin:8px 0 16px;">
+    <input type="checkbox" name="consent" required style="margin-top:5px;">
+    <span>I am the owner/authorised representative and consent to a public-only snapshot of this domain.</span>
+  </label>
+
+  <label>Notes (optional)
+    <textarea name="notes" rows="4" placeholder="Anything specific you want checked?"></textarea>
+  </label>
+
+  <button class="btn xl" type="submit">Request snapshot</button>
+  <p class="tiny">By submitting, you agree to our <a href="privacy.html">Privacy</a> and <a href="consent.html">Consent</a>.</p>
+</form>
     </div>
   </section>
 
   <footer class="footer">
     <div class="container row space wrap">
+      <p>Contact: <a href="mailto:hello@mtccyber.com.au">hello@mtccyber.com.au</a></p>
       <p>© <span id="y"></span> MTC Cyber — ABN 37 347 798 045</p>
       <p><a href="privacy.html">Privacy</a> · <a href="consent.html">Consent</a> · <a href="#contact">Contact</a></p>
     </div>
