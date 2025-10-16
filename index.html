@@ -192,6 +192,29 @@
   </footer>
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+    <script>
+  const form = document.querySelector(".contact");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.innerHTML = `
+        <div style="text-align:center; padding:60px 20px;">
+          <h2>✅ Thanks for your request!</h2>
+          <p>We’ll email your Cyber Readiness Snapshot within one business day.</p>
+          <a class="btn xl" href="/">Back to homepage</a>
+        </div>`;
+    } else {
+      alert("Oops! Something went wrong — please try again later or email hello@mtccyber.com.au");
+    }
+  });
+</script>
   </script>
 </body>
 </html>
