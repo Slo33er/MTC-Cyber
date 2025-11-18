@@ -620,7 +620,7 @@ textarea {
   border-radius: 10px;
   border: 1px solid rgba(148, 163, 184, 0.5);
   background: #020617;
-  color: var(--text);
+  color: #111827; /* dark slate grey */
   font-size: 0.9rem;
 }
 input:focus,
