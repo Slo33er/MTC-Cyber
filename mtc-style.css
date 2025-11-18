@@ -713,4 +713,42 @@ label.checkbox {
   border-radius: 8px;
   box-shadow: 0 12px 30px rgba(10, 20, 40, 0.06);
 }
+/* GLOBAL MOBILE FIXES */
+@media (max-width: 760px) {
 
+  /* Hero grid to 1 column */
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    text-align: left;
+  }
+
+  /* Step cards → 1 column */
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Pricing cards → 1 column */
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Blog grid → 1 column */
+  .blog-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Values grid → 1 column */
+  .values-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact page layout */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Two-column sections → 1 column */
+  .two-col {
+    grid-template-columns: 1fr !important;
+  }
+}
