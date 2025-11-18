@@ -752,3 +752,48 @@ label.checkbox {
     grid-template-columns: 1fr !important;
   }
 }
+/* ================================
+   MOBILE FIX – Collapse grids
+   ================================ */
+@media (max-width: 760px) {
+
+  /* Hero layout */
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Steps */
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Pricing */
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Values */
+  .values-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Testimonials */
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Blog */
+  .blog-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact page layout */
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Generic two-column sections */
+  .two-col {
+    grid-template-columns: 1fr !important;
+  }
+}
