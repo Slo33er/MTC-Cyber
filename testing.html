@@ -4,97 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fatigue Observer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F7F3EE; --bark: #2C2318; --rust: #C4623A;
-    --warm-mid: #8B7355; --soft-border: rgba(44,35,24,0.12);
-    --tag-bg: rgba(44,35,24,0.07);
-    --serif: 'DM Serif Display', Georgia, serif;
-    --sans: 'DM Sans', system-ui, sans-serif;
-  }
-  html, body { font-family: var(--sans); background: var(--cream); color: var(--bark); min-height: 100vh; }
-  .fo-app { display: flex; flex-direction: column; max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
-  .fo-nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 20px; border-bottom: 0.5px solid var(--soft-border); margin-bottom: 36px; }
-  .fo-brand { display: flex; flex-direction: column; }
-  .fo-brand-name { font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--bark); letter-spacing: -0.3px; line-height: 1; }
-  .fo-brand-tag { font-size: 11px; color: var(--warm-mid); font-weight: 300; letter-spacing: 0.5px; margin-top: 3px; }
-  .fo-stats { display: flex; gap: 20px; }
-  .fo-stat { text-align: right; }
-  .fo-stat-num { font-family: var(--serif); font-size: 20px; color: var(--bark); line-height: 1; }
-  .fo-stat-label { font-size: 10px; color: var(--warm-mid); font-weight: 300; letter-spacing: 0.4px; margin-top: 2px; }
-  .screen { display: none; }
-  .screen.active { display: block; }
-  .fo-hero { margin-bottom: 40px; }
-  .fo-hero-eyebrow { font-size: 11px; letter-spacing: 1.5px; color: var(--warm-mid); text-transform: uppercase; font-weight: 400; margin-bottom: 10px; }
-  .fo-hero-title { font-family: var(--serif); font-size: 38px; line-height: 1.15; color: var(--bark); margin-bottom: 14px; font-style: italic; }
-  .fo-hero-body { font-size: 15px; color: var(--warm-mid); font-weight: 300; line-height: 1.65; max-width: 460px; }
-  .fo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-  .fo-btn { padding: 16px 20px; border-radius: 10px; border: 0.5px solid var(--soft-border); background: rgba(44,35,24,0.04); cursor: pointer; text-align: left; font-family: var(--sans); transition: background 0.15s, border-color 0.15s; position: relative; overflow: hidden; }
-  .fo-btn:hover { background: rgba(44,35,24,0.08); border-color: rgba(44,35,24,0.2); }
-  .fo-btn-primary { background: var(--bark); border-color: var(--bark); color: var(--cream); }
-  .fo-btn-primary:hover { background: #3d3226; border-color: #3d3226; }
-  .fo-btn-title { font-size: 14px; font-weight: 500; color: var(--bark); display: block; margin-bottom: 3px; }
-  .fo-btn-primary .fo-btn-title { color: var(--cream); }
-  .fo-btn-sub { font-size: 12px; color: var(--warm-mid); font-weight: 300; }
-  .fo-btn-primary .fo-btn-sub { color: rgba(247,243,238,0.65); }
-  .fo-btn-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.35; }
-  .fo-btn-primary .fo-btn-arrow { opacity: 0.6; color: var(--cream); }
-  .fo-form-header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
-  .fo-back-btn { width: 34px; height: 34px; border-radius: 50%; border: 0.5px solid var(--soft-border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--bark); flex-shrink: 0; font-family: var(--sans); }
-  .fo-back-btn:hover { background: rgba(44,35,24,0.06); }
-  .fo-form-title { font-family: var(--serif); font-size: 24px; font-style: italic; color: var(--bark); }
-  .fo-timestamp { font-size: 12px; color: var(--warm-mid); font-weight: 300; margin-left: auto; }
-  .fo-section-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warm-mid); font-weight: 400; margin-bottom: 10px; margin-top: 28px; }
-  .fo-severity-track { display: flex; gap: 6px; margin-bottom: 4px; }
-  .fo-sev-dot { flex: 1; height: 6px; border-radius: 3px; background: rgba(44,35,24,0.12); cursor: pointer; transition: background 0.15s; }
-  .fo-sev-dot.active-1 { background: #8BBF8B; }
-  .fo-sev-dot.active-2 { background: #D4A84B; }
-  .fo-sev-dot.active-3 { background: #C4623A; }
-  .fo-sev-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--warm-mid); font-weight: 300; }
-  .fo-tag-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .fo-tag { padding: 6px 14px; border-radius: 100px; border: 0.5px solid var(--soft-border); background: var(--tag-bg); font-size: 13px; font-weight: 400; color: var(--warm-mid); cursor: pointer; transition: all 0.15s; font-family: var(--sans); user-select: none; }
-  .fo-tag:hover { border-color: rgba(44,35,24,0.25); color: var(--bark); }
-  .fo-tag.selected { background: var(--bark); color: var(--cream); border-color: var(--bark); }
-  .fo-note { width: 100%; border: 0.5px solid var(--soft-border); border-radius: 10px; background: rgba(44,35,24,0.03); padding: 12px 14px; font-family: var(--sans); font-size: 14px; color: var(--bark); resize: none; outline: none; line-height: 1.6; margin-top: 28px; }
-  .fo-note::placeholder { color: var(--warm-mid); opacity: 0.6; }
-  .fo-note:focus { border-color: rgba(44,35,24,0.3); }
-  .fo-save-btn { margin-top: 24px; width: 100%; padding: 15px; background: var(--bark); color: var(--cream); border: none; border-radius: 10px; font-family: var(--sans); font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.15s; letter-spacing: 0.2px; }
-  .fo-save-btn:hover { background: #3d3226; }
-  .fo-timeline-list { list-style: none; }
-  .fo-tl-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 0.5px solid var(--soft-border); align-items: flex-start; }
-  .fo-tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); flex-shrink: 0; margin-top: 6px; }
-  .fo-tl-dot.mild { background: #8BBF8B; }
-  .fo-tl-dot.moderate { background: #D4A84B; }
-  .fo-tl-content { flex: 1; }
-  .fo-tl-time { font-size: 11px; color: var(--warm-mid); font-weight: 300; margin-bottom: 4px; }
-  .fo-tl-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .fo-tl-tag { font-size: 11px; padding: 2px 9px; border-radius: 100px; background: var(--tag-bg); color: var(--warm-mid); border: 0.5px solid var(--soft-border); }
-  .fo-tl-note { font-size: 13px; color: var(--warm-mid); margin-top: 6px; font-style: italic; font-weight: 300; }
-  .fo-tl-sev { font-family: var(--serif); font-size: 26px; color: var(--bark); opacity: 0.2; flex-shrink: 0; font-style: italic; }
-  .fo-empty { text-align: center; padding: 60px 20px; color: var(--warm-mid); }
-  .fo-empty-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.35; }
-  .fo-empty-title { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--bark); margin-bottom: 6px; opacity: 0.5; }
-  .fo-empty-sub { font-size: 13px; font-weight: 300; }
-  .fo-trends-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-  .fo-metric-card { padding: 16px; border-radius: 10px; border: 0.5px solid var(--soft-border); background: rgba(44,35,24,0.04); }
-  .fo-metric-num { font-family: var(--serif); font-size: 32px; color: var(--bark); font-style: italic; }
-  .fo-metric-label { font-size: 11px; color: var(--warm-mid); font-weight: 300; margin-top: 2px; }
-  .fo-bar-section { margin-top: 8px; }
-  .fo-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .fo-bar-label { font-size: 12px; color: var(--warm-mid); width: 90px; flex-shrink: 0; font-weight: 300; }
-  .fo-bar-track { flex: 1; height: 4px; background: rgba(44,35,24,0.1); border-radius: 2px; overflow: hidden; }
-  .fo-bar-fill { height: 100%; background: var(--bark); border-radius: 2px; }
-  .fo-bar-val { font-size: 12px; color: var(--bark); width: 20px; text-align: right; font-weight: 500; }
-  .fo-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bark); color: var(--cream); padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 400; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; font-family: var(--sans); }
-  .fo-toast.show { opacity: 1; }
+  #fo-root * { box-sizing: border-box !important; margin: 0 !important; padding: 0 !important; font-family: 'DM Sans', system-ui, sans-serif !important; }
+  #fo-root { --cream: #F7F3EE; --bark: #2C2318; --rust: #C4623A; --warm-mid: #8B7355; --soft-border: rgba(44,35,24,0.12); --tag-bg: rgba(44,35,24,0.07); background: #F7F3EE !important; color: #2C2318 !important; min-height: 100vh !important; display: block !important; }
+  #fo-root .fo-app { display: flex !important; flex-direction: column !important; max-width: 720px !important; margin: 0 auto !important; padding: 0 20px 60px !important; }
+  #fo-root .fo-nav { display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 24px 0 20px !important; border-bottom: 0.5px solid rgba(44,35,24,0.12) !important; margin-bottom: 36px !important; }
+  #fo-root .fo-brand-name { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 22px !important; font-style: italic !important; color: #2C2318 !important; line-height: 1 !important; display: block !important; }
+  #fo-root .fo-brand-tag { font-size: 11px !important; color: #8B7355 !important; font-weight: 300 !important; letter-spacing: 0.5px !important; margin-top: 3px !important; display: block !important; }
+  #fo-root .fo-stats { display: flex !important; gap: 20px !important; }
+  #fo-root .fo-stat { text-align: right !important; }
+  #fo-root .fo-stat-num { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 20px !important; color: #2C2318 !important; line-height: 1 !important; display: block !important; }
+  #fo-root .fo-stat-label { font-size: 10px !important; color: #8B7355 !important; font-weight: 300 !important; margin-top: 2px !important; display: block !important; }
+  #fo-root .fo-screen { display: none !important; }
+  #fo-root .fo-screen.active { display: block !important; }
+  #fo-root .fo-hero { margin-bottom: 40px !important; }
+  #fo-root .fo-hero-eyebrow { font-size: 11px !important; letter-spacing: 1.5px !important; color: #8B7355 !important; text-transform: uppercase !important; margin-bottom: 10px !important; display: block !important; }
+  #fo-root .fo-hero-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 38px !important; line-height: 1.15 !important; color: #2C2318 !important; margin-bottom: 14px !important; font-style: italic !important; display: block !important; }
+  #fo-root .fo-hero-body { font-size: 15px !important; color: #8B7355 !important; font-weight: 300 !important; line-height: 1.65 !important; max-width: 460px !important; display: block !important; }
+  #fo-root .fo-actions { display: grid !important; gap: 12px !important; margin-bottom: 16px !important; }
+  #fo-root .fo-actions-two { grid-template-columns: 1fr 1fr !important; }
+  #fo-root .fo-actions-one { grid-template-columns: 1fr !important; }
+  #fo-root .fo-btn { padding: 16px 20px !important; border-radius: 10px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.04) !important; cursor: pointer !important; text-align: left !important; transition: background 0.15s !important; position: relative !important; display: block !important; width: 100% !important; }
+  #fo-root .fo-btn:hover { background: rgba(44,35,24,0.08) !important; }
+  #fo-root .fo-btn-primary { background: #2C2318 !important; border-color: #2C2318 !important; }
+  #fo-root .fo-btn-primary:hover { background: #3d3226 !important; }
+  #fo-root .fo-btn-title { font-size: 14px !important; font-weight: 500 !important; color: #2C2318 !important; display: block !important; margin-bottom: 3px !important; }
+  #fo-root .fo-btn-primary .fo-btn-title { color: #F7F3EE !important; }
+  #fo-root .fo-btn-sub { font-size: 12px !important; color: #8B7355 !important; font-weight: 300 !important; display: block !important; }
+  #fo-root .fo-btn-primary .fo-btn-sub { color: rgba(247,243,238,0.65) !important; }
+  #fo-root .fo-btn-arrow { position: absolute !important; right: 16px !important; top: 50% !important; transform: translateY(-50%) !important; font-size: 16px !important; opacity: 0.35 !important; }
+  #fo-root .fo-btn-primary .fo-btn-arrow { color: #F7F3EE !important; opacity: 0.6 !important; }
+  #fo-root .fo-form-header { display: flex !important; align-items: center !important; gap: 12px !important; margin-bottom: 32px !important; }
+  #fo-root .fo-back-btn { width: 34px !important; height: 34px !important; border-radius: 50% !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: transparent !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 14px !important; color: #2C2318 !important; flex-shrink: 0 !important; }
+  #fo-root .fo-back-btn:hover { background: rgba(44,35,24,0.06) !important; }
+  #fo-root .fo-form-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 24px !important; font-style: italic !important; color: #2C2318 !important; }
+  #fo-root .fo-timestamp { font-size: 12px !important; color: #8B7355 !important; font-weight: 300 !important; margin-left: auto !important; }
+  #fo-root .fo-section-label { font-size: 10px !important; letter-spacing: 1.2px !important; text-transform: uppercase !important; color: #8B7355 !important; margin-bottom: 10px !important; margin-top: 28px !important; display: block !important; }
+  #fo-root .fo-severity-track { display: flex !important; gap: 6px !important; margin-bottom: 4px !important; }
+  #fo-root .fo-sev-dot { flex: 1 !important; height: 6px !important; border-radius: 3px !important; background: rgba(44,35,24,0.12) !important; cursor: pointer !important; transition: background 0.15s !important; }
+  #fo-root .fo-sev-dot.active-1 { background: #8BBF8B !important; }
+  #fo-root .fo-sev-dot.active-2 { background: #D4A84B !important; }
+  #fo-root .fo-sev-dot.active-3 { background: #C4623A !important; }
+  #fo-root .fo-sev-labels { display: flex !important; justify-content: space-between !important; font-size: 11px !important; color: #8B7355 !important; }
+  #fo-root .fo-tag-grid { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
+  #fo-root .fo-tag { padding: 6px 14px !important; border-radius: 100px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.07) !important; font-size: 13px !important; color: #8B7355 !important; cursor: pointer !important; transition: all 0.15s !important; user-select: none !important; display: inline-block !important; }
+  #fo-root .fo-tag.selected { background: #2C2318 !important; color: #F7F3EE !important; border-color: #2C2318 !important; }
+  #fo-root .fo-note { width: 100% !important; border: 0.5px solid rgba(44,35,24,0.12) !important; border-radius: 10px !important; background: rgba(44,35,24,0.03) !important; padding: 12px 14px !important; font-size: 14px !important; color: #2C2318 !important; resize: none !important; outline: none !important; line-height: 1.6 !important; margin-top: 28px !important; display: block !important; }
+  #fo-root .fo-save-btn { margin-top: 24px !important; width: 100% !important; padding: 15px !important; background: #2C2318 !important; color: #F7F3EE !important; border: none !important; border-radius: 10px !important; font-size: 15px !important; font-weight: 500 !important; cursor: pointer !important; display: block !important; }
+  #fo-root .fo-save-btn:hover { background: #3d3226 !important; }
+  #fo-root .fo-timeline-list { list-style: none !important; display: block !important; }
+  #fo-root .fo-tl-item { display: flex !important; gap: 16px !important; padding: 16px 0 !important; border-bottom: 0.5px solid rgba(44,35,24,0.12) !important; align-items: flex-start !important; }
+  #fo-root .fo-tl-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #C4623A !important; flex-shrink: 0 !important; margin-top: 6px !important; }
+  #fo-root .fo-tl-dot.mild { background: #8BBF8B !important; }
+  #fo-root .fo-tl-dot.moderate { background: #D4A84B !important; }
+  #fo-root .fo-tl-content { flex: 1 !important; }
+  #fo-root .fo-tl-time { font-size: 11px !important; color: #8B7355 !important; font-weight: 300 !important; margin-bottom: 4px !important; display: block !important; }
+  #fo-root .fo-tl-tags { display: flex !important; flex-wrap: wrap !important; gap: 5px !important; }
+  #fo-root .fo-tl-tag { font-size: 11px !important; padding: 2px 9px !important; border-radius: 100px !important; background: rgba(44,35,24,0.07) !important; color: #8B7355 !important; border: 0.5px solid rgba(44,35,24,0.12) !important; display: inline-block !important; }
+  #fo-root .fo-tl-note { font-size: 13px !important; color: #8B7355 !important; margin-top: 6px !important; font-style: italic !important; display: block !important; }
+  #fo-root .fo-tl-sev { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 26px !important; color: #2C2318 !important; opacity: 0.2 !important; flex-shrink: 0 !important; font-style: italic !important; }
+  #fo-root .fo-empty { text-align: center !important; padding: 60px 20px !important; color: #8B7355 !important; display: block !important; }
+  #fo-root .fo-empty-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 20px !important; font-style: italic !important; color: #2C2318 !important; margin-bottom: 6px !important; opacity: 0.5 !important; display: block !important; }
+  #fo-root .fo-empty-sub { font-size: 13px !important; display: block !important; }
+  #fo-root .fo-trends-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-bottom: 24px !important; }
+  #fo-root .fo-metric-card { padding: 16px !important; border-radius: 10px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.04) !important; display: block !important; }
+  #fo-root .fo-metric-num { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 32px !important; color: #2C2318 !important; font-style: italic !important; display: block !important; }
+  #fo-root .fo-metric-label { font-size: 11px !important; color: #8B7355 !important; margin-top: 2px !important; display: block !important; }
+  #fo-root .fo-bar-row { display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 8px !important; }
+  #fo-root .fo-bar-label { font-size: 12px !important; color: #8B7355 !important; width: 90px !important; flex-shrink: 0 !important; }
+  #fo-root .fo-bar-track { flex: 1 !important; height: 4px !important; background: rgba(44,35,24,0.1) !important; border-radius: 2px !important; overflow: hidden !important; }
+  #fo-root .fo-bar-fill { height: 100% !important; background: #2C2318 !important; border-radius: 2px !important; }
+  #fo-root .fo-bar-val { font-size: 12px !important; color: #2C2318 !important; width: 20px !important; text-align: right !important; font-weight: 500 !important; }
+  .fo-toast-fixed { position: fixed !important; bottom: 24px !important; left: 50% !important; transform: translateX(-50%) !important; background: #2C2318 !important; color: #F7F3EE !important; padding: 10px 20px !important; border-radius: 100px !important; font-size: 13px !important; opacity: 0 !important; transition: opacity 0.3s !important; pointer-events: none !important; white-space: nowrap !important; z-index: 9999 !important; font-family: 'DM Sans', system-ui, sans-serif !important; }
+  .fo-toast-fixed.show { opacity: 1 !important; }
 </style>
 </head>
 <body>
+<div id="fo-root">
 <div class="fo-app">
+
   <nav class="fo-nav">
     <div class="fo-brand">
       <span class="fo-brand-name">Fatigue Observer</span>
@@ -106,26 +95,26 @@
     </div>
   </nav>
 
-  <div class="screen active" id="screen-home">
+  <div class="fo-screen active" id="screen-home">
     <div class="fo-hero">
       <div class="fo-hero-eyebrow">Your fatigue journal</div>
-      <h1 class="fo-hero-title">Notice patterns,<br>not just moments.</h1>
-      <p class="fo-hero-body">Log tired comments and surrounding context so you can spot patterns and take something concrete to a doctor.</p>
+      <div class="fo-hero-title">Notice patterns,<br>not just moments.</div>
+      <div class="fo-hero-body">Log tired comments and surrounding context so you can spot patterns and take something concrete to a doctor.</div>
     </div>
-    <div class="fo-actions" style="grid-template-columns:1fr;">
-      <button class="fo-btn fo-btn-primary" onclick="goto('screen-log')">
+    <div class="fo-actions fo-actions-one">
+      <button class="fo-btn fo-btn-primary" onclick="foGoto('screen-log')">
         <span class="fo-btn-title">Quick Log Tired Event</span>
         <span class="fo-btn-sub">Record a new fatigue event now</span>
         <span class="fo-btn-arrow">→</span>
       </button>
     </div>
-    <div class="fo-actions">
-      <button class="fo-btn" onclick="goto('screen-timeline')">
+    <div class="fo-actions fo-actions-two">
+      <button class="fo-btn" onclick="foGoto('screen-timeline')">
         <span class="fo-btn-title">Timeline</span>
         <span class="fo-btn-sub">All logged events</span>
         <span class="fo-btn-arrow">→</span>
       </button>
-      <button class="fo-btn" onclick="goto('screen-trends')">
+      <button class="fo-btn" onclick="foGoto('screen-trends')">
         <span class="fo-btn-title">Trends</span>
         <span class="fo-btn-sub">Patterns over time</span>
         <span class="fo-btn-arrow">→</span>
@@ -133,196 +122,167 @@
     </div>
   </div>
 
-  <div class="screen" id="screen-log">
+  <div class="fo-screen" id="screen-log">
     <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
+      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
       <span class="fo-form-title">Log event</span>
       <span class="fo-timestamp" id="log-time"></span>
     </div>
     <div class="fo-section-label">Severity</div>
     <div class="fo-severity-track">
-      <div class="fo-sev-dot" onclick="setSev(1)"></div>
-      <div class="fo-sev-dot" onclick="setSev(2)"></div>
-      <div class="fo-sev-dot" onclick="setSev(3)"></div>
-      <div class="fo-sev-dot" onclick="setSev(4)"></div>
-      <div class="fo-sev-dot" onclick="setSev(5)"></div>
+      <div class="fo-sev-dot" onclick="foSetSev(1)"></div>
+      <div class="fo-sev-dot" onclick="foSetSev(2)"></div>
+      <div class="fo-sev-dot" onclick="foSetSev(3)"></div>
+      <div class="fo-sev-dot" onclick="foSetSev(4)"></div>
+      <div class="fo-sev-dot" onclick="foSetSev(5)"></div>
     </div>
     <div class="fo-sev-labels"><span>Mild</span><span>Moderate</span><span>Severe</span></div>
     <div class="fo-section-label">Context — what were you doing?</div>
     <div class="fo-tag-grid" id="context-tags">
-      <div class="fo-tag" onclick="toggleTag(this)">After eating</div>
-      <div class="fo-tag" onclick="toggleTag(this)">After work</div>
-      <div class="fo-tag" onclick="toggleTag(this)">After exercise</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Just woke up</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Evening slump</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Random</div>
-      <div class="fo-tag" onclick="toggleTag(this)">During work</div>
-      <div class="fo-tag" onclick="toggleTag(this)">After social</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">After eating</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">After work</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">After exercise</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Just woke up</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Evening slump</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Random</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">During work</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">After social</div>
     </div>
     <div class="fo-section-label">Signs &amp; symptoms</div>
     <div class="fo-tag-grid" id="symptom-tags">
-      <div class="fo-tag" onclick="toggleTag(this)">Flat</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Low energy</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Mood dip</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Shut down</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Withdrawing</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Wired</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Restless</div>
-      <div class="fo-tag" onclick="toggleTag(this)">On edge</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Irritable</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Racy legs</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Can't focus</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Forgetful</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Headache</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Dizzy</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Weak</div>
-      <div class="fo-tag" onclick="toggleTag(this)">Heavy limbs</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Flat</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Low energy</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Mood dip</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Shut down</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Withdrawing</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Wired</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Restless</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">On edge</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Irritable</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Racy legs</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Can't focus</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Forgetful</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Headache</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Dizzy</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Weak</div>
+      <div class="fo-tag" onclick="foToggleTag(this)">Heavy limbs</div>
     </div>
-    <textarea class="fo-note" id="log-note" rows="3" placeholder="Optional note — anything else to add? coffee, meds, long shift, gym…"></textarea>
-    <button class="fo-save-btn" onclick="saveEvent()">Save event</button>
+    <textarea class="fo-note" id="log-note" rows="3" placeholder="Optional note — coffee, meds, long shift, gym…"></textarea>
+    <button class="fo-save-btn" onclick="foSaveEvent()">Save event</button>
   </div>
 
-  <div class="screen" id="screen-timeline">
+  <div class="fo-screen" id="screen-timeline">
     <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
+      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
       <span class="fo-form-title">Timeline</span>
     </div>
     <ul class="fo-timeline-list" id="timeline-list"></ul>
   </div>
 
-  <div class="screen" id="screen-trends">
+  <div class="fo-screen" id="screen-trends">
     <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
+      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
       <span class="fo-form-title">Trends</span>
     </div>
     <div id="trends-content"></div>
   </div>
-</div>
 
-<div class="fo-toast" id="toast">Event saved</div>
+</div>
+</div>
+<div class="fo-toast-fixed" id="fo-toast">Event saved</div>
 
 <script>
+(function() {
   var STORAGE_KEY = 'fatigue-observer-events';
+  var foEvents = [];
+  var foCurrentSev = 0;
 
-  function loadEvents() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return [];
-      return JSON.parse(raw).map(function(e) { return Object.assign({}, e, { ts: new Date(e.ts) }); });
-    } catch(e) { return []; }
-  }
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) foEvents = JSON.parse(raw).map(function(e) { return Object.assign({}, e, {ts: new Date(e.ts)}); });
+  } catch(e) {}
 
-  function saveEvents() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
-  }
-
-  var events = loadEvents();
-  var currentSev = 0;
-  updateStats();
-
-  function goto(id) {
-    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
-    document.getElementById(id).classList.add('active');
-    if (id === 'screen-log') {
-      var now = new Date();
-      document.getElementById('log-time').textContent =
-        now.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' }) +
-        ' · ' + now.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
-      resetForm();
-    }
-    if (id === 'screen-timeline') renderTimeline();
-    if (id === 'screen-trends') renderTrends();
-  }
-
-  function setSev(n) {
-    currentSev = n;
-    document.querySelectorAll('.fo-sev-dot').forEach(function(d, i) {
-      d.className = 'fo-sev-dot';
-      if (i < n) {
-        if (n <= 2) d.classList.add('active-1');
-        else if (n === 3) d.classList.add('active-2');
-        else d.classList.add('active-3');
-      }
-    });
-  }
-
-  function toggleTag(el) { el.classList.toggle('selected'); }
-
-  function resetForm() {
-    currentSev = 0;
-    document.querySelectorAll('.fo-sev-dot').forEach(function(d) { d.className = 'fo-sev-dot'; });
-    document.querySelectorAll('.fo-tag').forEach(function(t) { t.classList.remove('selected'); });
-    document.getElementById('log-note').value = '';
-  }
-
-  function saveEvent() {
-    var ctx = Array.from(document.querySelectorAll('#context-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
-    var sym = Array.from(document.querySelectorAll('#symptom-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
-    var note = document.getElementById('log-note').value.trim();
-    events.push({ ts: new Date(), sev: currentSev || 1, ctx: ctx, sym: sym, note: note });
-    saveEvents();
-    updateStats();
-    showToast('Event saved');
-    goto('screen-home');
-  }
-
-  function updateStats() {
-    document.getElementById('stat-events').textContent = events.length;
-    var days = new Set(events.map(function(e) { return new Date(e.ts).toDateString(); })).size;
+  function foSave() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(foEvents)); } catch(e) {} }
+  function foUpdateStats() {
+    document.getElementById('stat-events').textContent = foEvents.length;
+    var days = new Set(foEvents.map(function(e) { return new Date(e.ts).toDateString(); })).size;
     document.getElementById('stat-days').textContent = days;
   }
 
-  function sevLabel(n) {
-    if (n <= 2) return 'mild';
-    if (n === 3) return 'moderate';
-    return 'severe';
+  window.foGoto = function(id) {
+    document.querySelectorAll('#fo-root .fo-screen').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById(id).classList.add('active');
+    if (id === 'screen-log') {
+      var now = new Date();
+      document.getElementById('log-time').textContent = now.toLocaleDateString('en-AU', {weekday:'short',day:'numeric',month:'short'}) + ' · ' + now.toLocaleTimeString('en-AU', {hour:'2-digit',minute:'2-digit'});
+      foResetForm();
+    }
+    if (id === 'screen-timeline') foRenderTimeline();
+    if (id === 'screen-trends') foRenderTrends();
+    window.scrollTo(0, 0);
+  };
+
+  window.foSetSev = function(n) {
+    foCurrentSev = n;
+    document.querySelectorAll('#fo-root .fo-sev-dot').forEach(function(d, i) {
+      d.className = 'fo-sev-dot';
+      if (i < n) d.classList.add(n <= 2 ? 'active-1' : n === 3 ? 'active-2' : 'active-3');
+    });
+  };
+
+  window.foToggleTag = function(el) { el.classList.toggle('selected'); };
+
+  function foResetForm() {
+    foCurrentSev = 0;
+    document.querySelectorAll('#fo-root .fo-sev-dot').forEach(function(d) { d.className = 'fo-sev-dot'; });
+    document.querySelectorAll('#fo-root .fo-tag').forEach(function(t) { t.classList.remove('selected'); });
+    document.getElementById('log-note').value = '';
   }
 
-  function renderTimeline() {
+  window.foSaveEvent = function() {
+    var ctx = Array.from(document.querySelectorAll('#context-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
+    var sym = Array.from(document.querySelectorAll('#symptom-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
+    var note = document.getElementById('log-note').value.trim();
+    foEvents.push({ts: new Date(), sev: foCurrentSev || 1, ctx: ctx, sym: sym, note: note});
+    foSave(); foUpdateStats(); foShowToast('Event saved'); foGoto('screen-home');
+  };
+
+  function foSevLabel(n) { return n <= 2 ? 'mild' : n === 3 ? 'moderate' : 'severe'; }
+
+  function foRenderTimeline() {
     var list = document.getElementById('timeline-list');
-    if (!events.length) {
-      list.innerHTML = '<div class="fo-empty"><div class="fo-empty-icon">○</div><div class="fo-empty-title">Nothing logged yet</div><div class="fo-empty-sub">Your events will appear here</div></div>';
-      return;
-    }
-    var sorted = events.slice().sort(function(a, b) { return new Date(b.ts) - new Date(a.ts); });
+    if (!foEvents.length) { list.innerHTML = '<div class="fo-empty"><div class="fo-empty-title">Nothing logged yet</div><div class="fo-empty-sub">Your events will appear here</div></div>'; return; }
+    var sorted = foEvents.slice().sort(function(a,b) { return new Date(b.ts)-new Date(a.ts); });
     list.innerHTML = sorted.map(function(e) {
-      var tags = e.ctx.concat(e.sym).map(function(t) { return '<span class="fo-tl-tag">' + t + '</span>'; }).join('');
-      var dotClass = 'fo-tl-dot ' + sevLabel(e.sev);
+      var tags = e.ctx.concat(e.sym).map(function(t) { return '<span class="fo-tl-tag">'+t+'</span>'; }).join('');
       var d = new Date(e.ts);
-      var timeStr = d.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' }) + ' · ' + d.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
-      return '<li class="fo-tl-item"><div class="' + dotClass + '"></div><div class="fo-tl-content"><div class="fo-tl-time">' + timeStr + '</div><div class="fo-tl-tags">' + (tags || '<span class="fo-tl-tag">No tags</span>') + '</div>' + (e.note ? '<div class="fo-tl-note">"' + e.note + '"</div>' : '') + '</div><div class="fo-tl-sev">' + e.sev + '</div></li>';
+      var timeStr = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+      return '<li class="fo-tl-item"><div class="fo-tl-dot '+foSevLabel(e.sev)+'"></div><div class="fo-tl-content"><div class="fo-tl-time">'+timeStr+'</div><div class="fo-tl-tags">'+(tags||'<span class="fo-tl-tag">No tags</span>')+'</div>'+(e.note?'<div class="fo-tl-note">"'+e.note+'"</div>':'')+'</div><div class="fo-tl-sev">'+e.sev+'</div></li>';
     }).join('');
   }
 
-  function renderTrends() {
+  function foRenderTrends() {
     var el = document.getElementById('trends-content');
-    if (!events.length) {
-      el.innerHTML = '<div class="fo-empty"><div class="fo-empty-icon">○</div><div class="fo-empty-title">Log some events first</div><div class="fo-empty-sub">Patterns will appear here after a few entries</div></div>';
-      return;
-    }
-    var avgSev = (events.reduce(function(s, e) { return s + e.sev; }, 0) / events.length).toFixed(1);
-    var days = new Set(events.map(function(e) { return new Date(e.ts).toDateString(); })).size;
-    var symCount = {};
-    events.forEach(function(e) { e.sym.forEach(function(s) { symCount[s] = (symCount[s] || 0) + 1; }); });
-    var topSym = Object.entries(symCount).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 5);
-    var maxCount = topSym[0] ? topSym[0][1] : 1;
-    var ctxCount = {};
-    events.forEach(function(e) { e.ctx.forEach(function(c) { ctxCount[c] = (ctxCount[c] || 0) + 1; }); });
-    var topCtx = Object.entries(ctxCount).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 4);
-    function bars(items) {
-      return items.map(function(item) {
-        return '<div class="fo-bar-row"><span class="fo-bar-label">' + item[0] + '</span><div class="fo-bar-track"><div class="fo-bar-fill" style="width:' + Math.round(item[1] / maxCount * 100) + '%"></div></div><span class="fo-bar-val">' + item[1] + '</span></div>';
-      }).join('');
-    }
-    el.innerHTML = '<div class="fo-trends-grid"><div class="fo-metric-card"><div class="fo-metric-num">' + events.length + '</div><div class="fo-metric-label">Total events</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + avgSev + '</div><div class="fo-metric-label">Avg severity</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + days + '</div><div class="fo-metric-label">Days tracked</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + (days > 0 ? (events.length / days).toFixed(1) : '–') + '</div><div class="fo-metric-label">Events per day</div></div></div>' + (topSym.length ? '<div class="fo-section-label">Common symptoms</div><div class="fo-bar-section">' + bars(topSym) + '</div>' : '') + (topCtx.length ? '<div class="fo-section-label" style="margin-top:24px">Common contexts</div><div class="fo-bar-section">' + bars(topCtx) + '</div>' : '');
+    if (!foEvents.length) { el.innerHTML = '<div class="fo-empty"><div class="fo-empty-title">Log some events first</div><div class="fo-empty-sub">Patterns will appear after a few entries</div></div>'; return; }
+    var avgSev = (foEvents.reduce(function(s,e){return s+e.sev;},0)/foEvents.length).toFixed(1);
+    var days = new Set(foEvents.map(function(e){return new Date(e.ts).toDateString();})).size;
+    var symCount={}, ctxCount={};
+    foEvents.forEach(function(e){e.sym.forEach(function(s){symCount[s]=(symCount[s]||0)+1;});e.ctx.forEach(function(c){ctxCount[c]=(ctxCount[c]||0)+1;});});
+    var topSym=Object.entries(symCount).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+    var topCtx=Object.entries(ctxCount).sort(function(a,b){return b[1]-a[1];}).slice(0,4);
+    var max=topSym[0]?topSym[0][1]:1;
+    function bars(items){return items.map(function(it){return '<div class="fo-bar-row"><span class="fo-bar-label">'+it[0]+'</span><div class="fo-bar-track"><div class="fo-bar-fill" style="width:'+Math.round(it[1]/max*100)+'%"></div></div><span class="fo-bar-val">'+it[1]+'</span></div>';}).join('');}
+    el.innerHTML='<div class="fo-trends-grid"><div class="fo-metric-card"><div class="fo-metric-num">'+foEvents.length+'</div><div class="fo-metric-label">Total events</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+avgSev+'</div><div class="fo-metric-label">Avg severity</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+days+'</div><div class="fo-metric-label">Days tracked</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+(days>0?(foEvents.length/days).toFixed(1):'–')+'</div><div class="fo-metric-label">Events per day</div></div></div>'+(topSym.length?'<div class="fo-section-label">Common symptoms</div><div class="fo-bar-section">'+bars(topSym)+'</div>':'')+(topCtx.length?'<div class="fo-section-label" style="margin-top:24px">Common contexts</div><div class="fo-bar-section">'+bars(topCtx)+'</div>':'');
   }
 
-  function showToast(msg) {
-    var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 2200);
+  function foShowToast(msg) {
+    var t = document.getElementById('fo-toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(function(){t.classList.remove('show');}, 2200);
   }
+
+  foUpdateStats();
+})();
 </script>
 </body>
 </html>
