@@ -2,287 +2,804 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Fatigue Observer</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  #fo-root * { box-sizing: border-box !important; margin: 0 !important; padding: 0 !important; font-family: 'DM Sans', system-ui, sans-serif !important; }
-  #fo-root { --cream: #F7F3EE; --bark: #2C2318; --rust: #C4623A; --warm-mid: #8B7355; --soft-border: rgba(44,35,24,0.12); --tag-bg: rgba(44,35,24,0.07); background: #F7F3EE !important; color: #2C2318 !important; min-height: 100vh !important; display: block !important; }
-  #fo-root .fo-app { display: flex !important; flex-direction: column !important; max-width: 720px !important; margin: 0 auto !important; padding: 0 20px 60px !important; }
-  #fo-root .fo-nav { display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 24px 0 20px !important; border-bottom: 0.5px solid rgba(44,35,24,0.12) !important; margin-bottom: 36px !important; }
-  #fo-root .fo-brand-name { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 22px !important; font-style: italic !important; color: #2C2318 !important; line-height: 1 !important; display: block !important; }
-  #fo-root .fo-brand-tag { font-size: 11px !important; color: #8B7355 !important; font-weight: 300 !important; letter-spacing: 0.5px !important; margin-top: 3px !important; display: block !important; }
-  #fo-root .fo-stats { display: flex !important; gap: 20px !important; }
-  #fo-root .fo-stat { text-align: right !important; }
-  #fo-root .fo-stat-num { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 20px !important; color: #2C2318 !important; line-height: 1 !important; display: block !important; }
-  #fo-root .fo-stat-label { font-size: 10px !important; color: #8B7355 !important; font-weight: 300 !important; margin-top: 2px !important; display: block !important; }
-  #fo-root .fo-screen { display: none !important; }
-  #fo-root .fo-screen.active { display: block !important; }
-  #fo-root .fo-hero { margin-bottom: 40px !important; }
-  #fo-root .fo-hero-eyebrow { font-size: 11px !important; letter-spacing: 1.5px !important; color: #8B7355 !important; text-transform: uppercase !important; margin-bottom: 10px !important; display: block !important; }
-  #fo-root .fo-hero-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 38px !important; line-height: 1.15 !important; color: #2C2318 !important; margin-bottom: 14px !important; font-style: italic !important; display: block !important; }
-  #fo-root .fo-hero-body { font-size: 15px !important; color: #8B7355 !important; font-weight: 300 !important; line-height: 1.65 !important; max-width: 460px !important; display: block !important; }
-  #fo-root .fo-actions { display: grid !important; gap: 12px !important; margin-bottom: 16px !important; }
-  #fo-root .fo-actions-two { grid-template-columns: 1fr 1fr !important; }
-  #fo-root .fo-actions-one { grid-template-columns: 1fr !important; }
-  #fo-root .fo-btn { padding: 16px 20px !important; border-radius: 10px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.04) !important; cursor: pointer !important; text-align: left !important; transition: background 0.15s !important; position: relative !important; display: block !important; width: 100% !important; }
-  #fo-root .fo-btn:hover { background: rgba(44,35,24,0.08) !important; }
-  #fo-root .fo-btn-primary { background: #2C2318 !important; border-color: #2C2318 !important; }
-  #fo-root .fo-btn-primary:hover { background: #3d3226 !important; }
-  #fo-root .fo-btn-title { font-size: 14px !important; font-weight: 500 !important; color: #2C2318 !important; display: block !important; margin-bottom: 3px !important; }
-  #fo-root .fo-btn-primary .fo-btn-title { color: #F7F3EE !important; }
-  #fo-root .fo-btn-sub { font-size: 12px !important; color: #8B7355 !important; font-weight: 300 !important; display: block !important; }
-  #fo-root .fo-btn-primary .fo-btn-sub { color: rgba(247,243,238,0.65) !important; }
-  #fo-root .fo-btn-arrow { position: absolute !important; right: 16px !important; top: 50% !important; transform: translateY(-50%) !important; font-size: 16px !important; opacity: 0.35 !important; }
-  #fo-root .fo-btn-primary .fo-btn-arrow { color: #F7F3EE !important; opacity: 0.6 !important; }
-  #fo-root .fo-form-header { display: flex !important; align-items: center !important; gap: 12px !important; margin-bottom: 32px !important; }
-  #fo-root .fo-back-btn { width: 34px !important; height: 34px !important; border-radius: 50% !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: transparent !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 14px !important; color: #2C2318 !important; flex-shrink: 0 !important; }
-  #fo-root .fo-back-btn:hover { background: rgba(44,35,24,0.06) !important; }
-  #fo-root .fo-form-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 24px !important; font-style: italic !important; color: #2C2318 !important; }
-  #fo-root .fo-timestamp { font-size: 12px !important; color: #8B7355 !important; font-weight: 300 !important; margin-left: auto !important; }
-  #fo-root .fo-section-label { font-size: 10px !important; letter-spacing: 1.2px !important; text-transform: uppercase !important; color: #8B7355 !important; margin-bottom: 10px !important; margin-top: 28px !important; display: block !important; }
-  #fo-root .fo-severity-track { display: flex !important; gap: 6px !important; margin-bottom: 4px !important; }
-  #fo-root .fo-sev-dot { flex: 1 !important; height: 6px !important; border-radius: 3px !important; background: rgba(44,35,24,0.12) !important; cursor: pointer !important; transition: background 0.15s !important; }
-  #fo-root .fo-sev-dot.active-1 { background: #8BBF8B !important; }
-  #fo-root .fo-sev-dot.active-2 { background: #D4A84B !important; }
-  #fo-root .fo-sev-dot.active-3 { background: #C4623A !important; }
-  #fo-root .fo-sev-labels { display: flex !important; justify-content: space-between !important; font-size: 11px !important; color: #8B7355 !important; }
-  #fo-root .fo-tag-grid { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
-  #fo-root .fo-tag { padding: 6px 14px !important; border-radius: 100px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.07) !important; font-size: 13px !important; color: #8B7355 !important; cursor: pointer !important; transition: all 0.15s !important; user-select: none !important; display: inline-block !important; }
-  #fo-root .fo-tag.selected { background: #2C2318 !important; color: #F7F3EE !important; border-color: #2C2318 !important; }
-  #fo-root .fo-note { width: 100% !important; border: 0.5px solid rgba(44,35,24,0.12) !important; border-radius: 10px !important; background: rgba(44,35,24,0.03) !important; padding: 12px 14px !important; font-size: 14px !important; color: #2C2318 !important; resize: none !important; outline: none !important; line-height: 1.6 !important; margin-top: 28px !important; display: block !important; }
-  #fo-root .fo-save-btn { margin-top: 24px !important; width: 100% !important; padding: 15px !important; background: #2C2318 !important; color: #F7F3EE !important; border: none !important; border-radius: 10px !important; font-size: 15px !important; font-weight: 500 !important; cursor: pointer !important; display: block !important; }
-  #fo-root .fo-save-btn:hover { background: #3d3226 !important; }
-  #fo-root .fo-timeline-list { list-style: none !important; display: block !important; }
-  #fo-root .fo-tl-item { display: flex !important; gap: 16px !important; padding: 16px 0 !important; border-bottom: 0.5px solid rgba(44,35,24,0.12) !important; align-items: flex-start !important; }
-  #fo-root .fo-tl-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #C4623A !important; flex-shrink: 0 !important; margin-top: 6px !important; }
-  #fo-root .fo-tl-dot.mild { background: #8BBF8B !important; }
-  #fo-root .fo-tl-dot.moderate { background: #D4A84B !important; }
-  #fo-root .fo-tl-content { flex: 1 !important; }
-  #fo-root .fo-tl-time { font-size: 11px !important; color: #8B7355 !important; font-weight: 300 !important; margin-bottom: 4px !important; display: block !important; }
-  #fo-root .fo-tl-tags { display: flex !important; flex-wrap: wrap !important; gap: 5px !important; }
-  #fo-root .fo-tl-tag { font-size: 11px !important; padding: 2px 9px !important; border-radius: 100px !important; background: rgba(44,35,24,0.07) !important; color: #8B7355 !important; border: 0.5px solid rgba(44,35,24,0.12) !important; display: inline-block !important; }
-  #fo-root .fo-tl-note { font-size: 13px !important; color: #8B7355 !important; margin-top: 6px !important; font-style: italic !important; display: block !important; }
-  #fo-root .fo-tl-sev { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 26px !important; color: #2C2318 !important; opacity: 0.2 !important; flex-shrink: 0 !important; font-style: italic !important; }
-  #fo-root .fo-empty { text-align: center !important; padding: 60px 20px !important; color: #8B7355 !important; display: block !important; }
-  #fo-root .fo-empty-title { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 20px !important; font-style: italic !important; color: #2C2318 !important; margin-bottom: 6px !important; opacity: 0.5 !important; display: block !important; }
-  #fo-root .fo-empty-sub { font-size: 13px !important; display: block !important; }
-  #fo-root .fo-trends-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 12px !important; margin-bottom: 24px !important; }
-  #fo-root .fo-metric-card { padding: 16px !important; border-radius: 10px !important; border: 0.5px solid rgba(44,35,24,0.12) !important; background: rgba(44,35,24,0.04) !important; display: block !important; }
-  #fo-root .fo-metric-num { font-family: 'DM Serif Display', Georgia, serif !important; font-size: 32px !important; color: #2C2318 !important; font-style: italic !important; display: block !important; }
-  #fo-root .fo-metric-label { font-size: 11px !important; color: #8B7355 !important; margin-top: 2px !important; display: block !important; }
-  #fo-root .fo-bar-row { display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 8px !important; }
-  #fo-root .fo-bar-label { font-size: 12px !important; color: #8B7355 !important; width: 90px !important; flex-shrink: 0 !important; }
-  #fo-root .fo-bar-track { flex: 1 !important; height: 4px !important; background: rgba(44,35,24,0.1) !important; border-radius: 2px !important; overflow: hidden !important; }
-  #fo-root .fo-bar-fill { height: 100% !important; background: #2C2318 !important; border-radius: 2px !important; }
-  #fo-root .fo-bar-val { font-size: 12px !important; color: #2C2318 !important; width: 20px !important; text-align: right !important; font-weight: 500 !important; }
-  .fo-toast-fixed { position: fixed !important; bottom: 24px !important; left: 50% !important; transform: translateX(-50%) !important; background: #2C2318 !important; color: #F7F3EE !important; padding: 10px 20px !important; border-radius: 100px !important; font-size: 13px !important; opacity: 0 !important; transition: opacity 0.3s !important; pointer-events: none !important; white-space: nowrap !important; z-index: 9999 !important; font-family: 'DM Sans', system-ui, sans-serif !important; }
-  .fo-toast-fixed.show { opacity: 1 !important; }
+  :root {
+    --bg: #0d0f14;
+    --surface: #161921;
+    --surface2: #1e2230;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7EB8C9;
+    --accent2: #C9A77E;
+    --danger: #E07878;
+    --text: #e8eaf0;
+    --muted: #636880;
+    --pill-bg: #1e2230;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .screen { display: none; min-height: 100vh; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* HOME */
+  #home { background: var(--bg); position: relative; overflow: hidden; }
+
+  .home-glow {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px); pointer-events: none;
+  }
+  .glow-1 { background: rgba(126,184,201,0.12); width:300px; height:300px; top:-60px; right:-60px; }
+  .glow-2 { background: rgba(201,167,126,0.08); width:300px; height:300px; bottom:80px; left:-80px; }
+
+  .home-header { padding: 64px 28px 0; position: relative; z-index: 1; animation: fadeUp 0.5s ease both; }
+
+  .home-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+  }
+
+  .home-title { font-family: 'DM Serif Display', serif; font-size: 42px; line-height: 1.05; }
+  .home-title em { font-style: italic; color: var(--accent2); }
+
+  .home-sub {
+    margin-top: 16px; font-size: 14px; font-weight: 300;
+    color: var(--muted); line-height: 1.7; max-width: 280px;
+  }
+
+  .stats-row {
+    display: flex; gap: 12px; margin: 32px 28px 0;
+    position: relative; z-index: 1;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .stat-card {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px;
+  }
+
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; letter-spacing: 0.04em; }
+
+  .nav-list {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 28px 28px 48px; position: relative; z-index: 1; margin-top: 12px;
+    animation: fadeUp 0.5s 0.18s ease both;
+  }
+
+  .nav-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 500; cursor: pointer;
+    transition: background 0.18s, transform 0.1s; width: 100%; text-align: left;
+  }
+
+  .nav-btn:active { transform: scale(0.98); }
+
+  .nav-btn.primary {
+    background: var(--accent); color: #0d0f14;
+    border-color: transparent; font-weight: 600;
+  }
+
+  .nav-btn .btn-icon { font-size: 18px; opacity: 0.7; }
+  .nav-btn .btn-meta { font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  .nav-btn.primary .btn-meta { color: rgba(13,15,20,0.55); }
+  .nav-btn-left { display: flex; flex-direction: column; gap: 2px; }
+
+  /* PAGE HEADER */
+  .page-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 52px 20px 16px; position: sticky; top: 0; z-index: 10;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+
+  .back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  .back-btn:active { background: var(--surface2); }
+
+  .page-title { font-family: 'DM Serif Display', serif; font-size: 22px; flex: 1; }
+  .page-time { font-size: 12px; color: var(--muted); }
+
+  /* FORM */
+  .form-scroll {
+    flex: 1; overflow-y: auto;
+    padding: 20px 20px 140px; -webkit-overflow-scrolling: touch;
+  }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted); margin: 24px 0 10px;
+  }
+
+  /* Severity */
+  .severity-track { display: flex; gap: 6px; align-items: center; }
+
+  .sev-pip {
+    flex: 1; height: 8px; border-radius: 4px;
+    background: var(--surface2); cursor: pointer; transition: background 0.15s;
+  }
+
+  .sev-pip.active { background: var(--accent); }
+  .sev-pip[data-v="5"].active,
+  .sev-pip[data-v="6"].active { background: var(--accent2); }
+  .sev-pip[data-v="7"].active { background: var(--danger); }
+
+  .severity-labels {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted); margin-top: 6px;
+  }
+
+  /* Pills */
+  .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .pill {
+    padding: 8px 14px; border-radius: 100px;
+    background: var(--pill-bg); border: 1px solid var(--border);
+    color: var(--muted); font-size: 13px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s; user-select: none;
+  }
+
+  .pill:active { transform: scale(0.95); }
+
+  .pill.selected {
+    background: var(--accent); border-color: transparent; color: #0d0f14;
+  }
+
+  /* Note */
+  .note-area {
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    padding: 14px; resize: none; min-height: 80px; outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .note-area:focus { border-color: var(--accent); }
+  .note-area::placeholder { color: var(--muted); }
+
+  /* Action bar */
+  .action-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding: 12px 20px 28px;
+    background: linear-gradient(to top, var(--bg) 70%, transparent);
+    display: flex; gap: 10px;
+  }
+
+  .btn-cancel {
+    flex: 0 0 80px; padding: 14px; border-radius: var(--radius-sm);
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--muted); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+  }
+
+  .btn-save {
+    flex: 1; padding: 14px; border-radius: var(--radius-sm);
+    background: var(--accent); border: none; color: #0d0f14;
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    font-weight: 600; cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .btn-save:active { transform: scale(0.98); opacity: 0.9; }
+
+  /* Timeline */
+  .tl-list { padding: 16px 20px 100px; display: flex; flex-direction: column; gap: 12px; }
+
+  .tl-empty {
+    text-align: center; color: var(--muted);
+    padding: 60px 0; font-size: 14px; line-height: 1.7;
+  }
+
+  .tl-empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; display: block; }
+
+  .tl-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+  }
+
+  .tl-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .tl-time { font-size: 12px; color: var(--muted); }
+
+  .tl-sev {
+    font-size: 11px; font-weight: 600; padding: 3px 8px;
+    border-radius: 100px; background: var(--surface2);
+  }
+
+  .tl-sev.low { color: var(--accent); }
+  .tl-sev.mid { color: var(--accent2); }
+  .tl-sev.high { color: var(--danger); }
+
+  .tl-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+
+  .tl-tag {
+    font-size: 12px; padding: 3px 10px;
+    border-radius: 100px; background: var(--surface2); color: var(--muted);
+  }
+
+  .tl-note { font-size: 13px; color: var(--text); opacity: 0.7; line-height: 1.5; }
+
+  /* Summary */
+  .summary-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
+  }
+
+  .summary-block-title {
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
+  }
+
+  .sleep-row {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+  }
+
+  .sleep-label { font-size: 14px; }
+
+  .sleep-val { display: flex; align-items: center; gap: 10px; }
+
+  .num-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.1s;
+  }
+
+  .num-btn:active { background: var(--accent); color: #0d0f14; }
+
+  .num-display {
+    font-family: 'DM Serif Display', serif; font-size: 22px;
+    min-width: 32px; text-align: center;
+  }
+
+  .mood-row { display: flex; gap: 8px; justify-content: space-between; }
+
+  .mood-btn {
+    flex: 1; padding: 10px 4px; border-radius: var(--radius-sm);
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); font-size: 20px; cursor: pointer; text-align: center;
+    transition: all 0.15s;
+  }
+
+  .mood-btn.selected { background: rgba(126,184,201,0.15); border-color: var(--accent); }
+
+  /* Trends */
+  .trends-body { padding: 16px 20px 100px; }
+
+  .trend-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
+  }
+
+  .trend-title {
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
+  }
+
+  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+
+  .bar-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .bar-name { width: 90px; color: var(--muted); flex-shrink: 0; font-size: 12px; }
+
+  .bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+
+  .bar-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+
+  .bar-count { font-size: 12px; color: var(--muted); width: 20px; text-align: right; }
+
+  /* Export */
+  .export-body { padding: 16px 20px 100px; }
+
+  .export-preview {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    font-size: 12px; line-height: 1.8; color: var(--muted);
+    white-space: pre-wrap; font-family: monospace; min-height: 200px; margin-bottom: 16px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 90px; left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--accent); color: #0d0f14;
+    font-weight: 600; font-size: 13px;
+    padding: 10px 20px; border-radius: 100px;
+    opacity: 0; transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none; white-space: nowrap; z-index: 999;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
-<div id="fo-root">
-<div class="fo-app">
 
-  <nav class="fo-nav">
-    <div class="fo-brand">
-      <span class="fo-brand-name">Fatigue Observer</span>
-      <span class="fo-brand-tag">Pattern tracking for your health</span>
-    </div>
-    <div class="fo-stats">
-      <div class="fo-stat"><div class="fo-stat-num" id="stat-events">0</div><div class="fo-stat-label">events</div></div>
-      <div class="fo-stat"><div class="fo-stat-num" id="stat-days">0</div><div class="fo-stat-label">days tracked</div></div>
-    </div>
-  </nav>
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="home-glow glow-1"></div>
+  <div class="home-glow glow-2"></div>
 
-  <div class="fo-screen active" id="screen-home">
-    <div class="fo-hero">
-      <div class="fo-hero-eyebrow">Your fatigue journal</div>
-      <div class="fo-hero-title">Notice patterns,<br>not just moments.</div>
-      <div class="fo-hero-body">Log tired comments and surrounding context so you can spot patterns and take something concrete to a doctor.</div>
+  <div class="home-header">
+    <div class="home-eyebrow">Health Tracker</div>
+    <h1 class="home-title">Fatigue<br><em>Observer</em></h1>
+    <p class="home-sub">Track tired moments and surrounding context so you can spot patterns and take something concrete to a doctor.</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-events">0</div>
+      <div class="stat-label">Events</div>
     </div>
-    <div class="fo-actions fo-actions-one">
-      <button class="fo-btn fo-btn-primary" onclick="foGoto('screen-log')">
-        <span class="fo-btn-title">Quick Log Tired Event</span>
-        <span class="fo-btn-sub">Record a new fatigue event now</span>
-        <span class="fo-btn-arrow">→</span>
-      </button>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-summaries">0</div>
+      <div class="stat-label">Summaries</div>
     </div>
-    <div class="fo-actions fo-actions-two">
-      <button class="fo-btn" onclick="foGoto('screen-timeline')">
-        <span class="fo-btn-title">Timeline</span>
-        <span class="fo-btn-sub">All logged events</span>
-        <span class="fo-btn-arrow">→</span>
-      </button>
-      <button class="fo-btn" onclick="foGoto('screen-trends')">
-        <span class="fo-btn-title">Trends</span>
-        <span class="fo-btn-sub">Patterns over time</span>
-        <span class="fo-btn-arrow">→</span>
-      </button>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-streak">0</div>
+      <div class="stat-label">Day streak</div>
     </div>
   </div>
 
-  <div class="fo-screen" id="screen-log">
-    <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
-      <span class="fo-form-title">Log event</span>
-      <span class="fo-timestamp" id="log-time"></span>
-    </div>
-    <div class="fo-section-label">Severity</div>
-    <div class="fo-severity-track">
-      <div class="fo-sev-dot" onclick="foSetSev(1)"></div>
-      <div class="fo-sev-dot" onclick="foSetSev(2)"></div>
-      <div class="fo-sev-dot" onclick="foSetSev(3)"></div>
-      <div class="fo-sev-dot" onclick="foSetSev(4)"></div>
-      <div class="fo-sev-dot" onclick="foSetSev(5)"></div>
-    </div>
-    <div class="fo-sev-labels"><span>Mild</span><span>Moderate</span><span>Severe</span></div>
-    <div class="fo-section-label">Context — what were you doing?</div>
-    <div class="fo-tag-grid" id="context-tags">
-      <div class="fo-tag" onclick="foToggleTag(this)">After eating</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">After work</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">After exercise</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Just woke up</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Evening slump</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Random</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">During work</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">After social</div>
-    </div>
-    <div class="fo-section-label">Signs &amp; symptoms</div>
-    <div class="fo-tag-grid" id="symptom-tags">
-      <div class="fo-tag" onclick="foToggleTag(this)">Flat</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Low energy</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Mood dip</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Shut down</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Withdrawing</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Wired</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Restless</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">On edge</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Irritable</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Racy legs</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Can't focus</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Forgetful</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Headache</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Dizzy</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Weak</div>
-      <div class="fo-tag" onclick="foToggleTag(this)">Heavy limbs</div>
-    </div>
-    <textarea class="fo-note" id="log-note" rows="3" placeholder="Optional note — coffee, meds, long shift, gym…"></textarea>
-    <button class="fo-save-btn" onclick="foSaveEvent()">Save event</button>
+  <div class="nav-list">
+    <button class="nav-btn primary" onclick="show('log-event')">
+      <div class="nav-btn-left">
+        <span>Quick Log Tired Event</span>
+        <span class="btn-meta">Capture this moment now</span>
+      </div>
+      <span class="btn-icon">＋</span>
+    </button>
+    <button class="nav-btn" onclick="show('daily-summary')">
+      <div class="nav-btn-left">
+        <span>Daily Summary</span>
+        <span class="btn-meta">End-of-day context</span>
+      </div>
+      <span class="btn-icon">📋</span>
+    </button>
+    <button class="nav-btn" onclick="show('timeline')">
+      <div class="nav-btn-left">
+        <span>Timeline</span>
+        <span class="btn-meta">Browse past events</span>
+      </div>
+      <span class="btn-icon">📅</span>
+    </button>
+    <button class="nav-btn" onclick="show('trends')">
+      <div class="nav-btn-left">
+        <span>Trends</span>
+        <span class="btn-meta">Patterns over time</span>
+      </div>
+      <span class="btn-icon">📈</span>
+    </button>
+    <button class="nav-btn" onclick="show('export-view')">
+      <div class="nav-btn-left">
+        <span>Export View</span>
+        <span class="btn-meta">Share with your doctor</span>
+      </div>
+      <span class="btn-icon">⬆</span>
+    </button>
   </div>
-
-  <div class="fo-screen" id="screen-timeline">
-    <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
-      <span class="fo-form-title">Timeline</span>
-    </div>
-    <ul class="fo-timeline-list" id="timeline-list"></ul>
-  </div>
-
-  <div class="fo-screen" id="screen-trends">
-    <div class="fo-form-header">
-      <button class="fo-back-btn" onclick="foGoto('screen-home')">←</button>
-      <span class="fo-form-title">Trends</span>
-    </div>
-    <div id="trends-content"></div>
-  </div>
-
 </div>
+
+<!-- LOG EVENT -->
+<div id="log-event" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="show('home')">←</button>
+    <span class="page-title">Log Tired Event</span>
+    <span class="page-time" id="event-time"></span>
+  </div>
+
+  <div class="form-scroll">
+    <div class="section-label">Severity</div>
+    <div class="severity-track" id="sev-track">
+      <div class="sev-pip" data-v="1" onclick="setSev(1)"></div>
+      <div class="sev-pip" data-v="2" onclick="setSev(2)"></div>
+      <div class="sev-pip" data-v="3" onclick="setSev(3)"></div>
+      <div class="sev-pip" data-v="4" onclick="setSev(4)"></div>
+      <div class="sev-pip" data-v="5" onclick="setSev(5)"></div>
+      <div class="sev-pip" data-v="6" onclick="setSev(6)"></div>
+      <div class="sev-pip" data-v="7" onclick="setSev(7)"></div>
+    </div>
+    <div class="severity-labels">
+      <span>Mild</span><span>Moderate</span><span>Severe</span>
+    </div>
+
+    <div class="section-label">Context</div>
+    <div class="pill-grid" id="context-pills">
+      <div class="pill" onclick="togglePill(this)">After eating</div>
+      <div class="pill" onclick="togglePill(this)">After work</div>
+      <div class="pill" onclick="togglePill(this)">After exercise</div>
+      <div class="pill" onclick="togglePill(this)">Just woke up</div>
+      <div class="pill" onclick="togglePill(this)">Evening slump</div>
+      <div class="pill" onclick="togglePill(this)">Random</div>
+      <div class="pill" onclick="togglePill(this)">Mid-meeting</div>
+      <div class="pill" onclick="togglePill(this)">After driving</div>
+      <div class="pill" onclick="togglePill(this)">Morning</div>
+    </div>
+
+    <div class="section-label">Signs / Symptoms</div>
+    <div class="pill-grid" id="symptom-pills">
+      <div class="pill" onclick="togglePill(this)">Flat</div>
+      <div class="pill" onclick="togglePill(this)">Low energy</div>
+      <div class="pill" onclick="togglePill(this)">Mood</div>
+      <div class="pill" onclick="togglePill(this)">Shut down</div>
+      <div class="pill" onclick="togglePill(this)">Withdrawn</div>
+      <div class="pill" onclick="togglePill(this)">Wired</div>
+      <div class="pill" onclick="togglePill(this)">Restless</div>
+      <div class="pill" onclick="togglePill(this)">On edge</div>
+      <div class="pill" onclick="togglePill(this)">Irritable</div>
+      <div class="pill" onclick="togglePill(this)">Brain fog</div>
+      <div class="pill" onclick="togglePill(this)">Can't focus</div>
+      <div class="pill" onclick="togglePill(this)">Forgetful</div>
+      <div class="pill" onclick="togglePill(this)">Headache</div>
+      <div class="pill" onclick="togglePill(this)">Dizziness</div>
+      <div class="pill" onclick="togglePill(this)">Weak</div>
+      <div class="pill" onclick="togglePill(this)">Heavy limbs</div>
+      <div class="pill" onclick="togglePill(this)">Nausea</div>
+      <div class="pill" onclick="togglePill(this)">Eye strain</div>
+    </div>
+
+    <div class="section-label">Optional note</div>
+    <textarea class="note-area" id="event-note" placeholder="e.g. long shift, skipped lunch, poor sleep..."></textarea>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-cancel" onclick="show('home')">Back</button>
+    <button class="btn-save" onclick="saveEvent()">Save event</button>
+  </div>
 </div>
-<div class="fo-toast-fixed" id="fo-toast">Event saved</div>
+
+<!-- DAILY SUMMARY -->
+<div id="daily-summary" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="show('home')">←</button>
+    <span class="page-title">Daily Summary</span>
+    <span class="page-time" id="summary-date"></span>
+  </div>
+
+  <div class="form-scroll">
+    <div class="summary-block" style="margin-top:8px">
+      <div class="summary-block-title">Sleep</div>
+      <div class="sleep-row">
+        <span class="sleep-label">Hours slept</span>
+        <div class="sleep-val">
+          <button class="num-btn" onclick="adj('sleep',-1)">−</button>
+          <div class="num-display" id="sleep-val">7</div>
+          <button class="num-btn" onclick="adj('sleep',1)">＋</button>
+        </div>
+      </div>
+      <div class="sleep-row">
+        <span class="sleep-label">Quality (1–5)</span>
+        <div class="sleep-val">
+          <button class="num-btn" onclick="adj('sleepq',-1)">−</button>
+          <div class="num-display" id="sleepq-val">3</div>
+          <button class="num-btn" onclick="adj('sleepq',1)">＋</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-block">
+      <div class="summary-block-title">Overall energy today</div>
+      <div class="severity-track" id="energy-track">
+        <div class="sev-pip" data-v="1" onclick="setEnergy(1)"></div>
+        <div class="sev-pip" data-v="2" onclick="setEnergy(2)"></div>
+        <div class="sev-pip" data-v="3" onclick="setEnergy(3)"></div>
+        <div class="sev-pip" data-v="4" onclick="setEnergy(4)"></div>
+        <div class="sev-pip" data-v="5" onclick="setEnergy(5)"></div>
+        <div class="sev-pip" data-v="6" onclick="setEnergy(6)"></div>
+        <div class="sev-pip" data-v="7" onclick="setEnergy(7)"></div>
+      </div>
+      <div class="severity-labels"><span>Very low</span><span>Great</span></div>
+    </div>
+
+    <div class="summary-block">
+      <div class="summary-block-title">Mood</div>
+      <div class="mood-row">
+        <button class="mood-btn" onclick="setMood(this)">😔</button>
+        <button class="mood-btn" onclick="setMood(this)">😕</button>
+        <button class="mood-btn" onclick="setMood(this)">😐</button>
+        <button class="mood-btn" onclick="setMood(this)">🙂</button>
+        <button class="mood-btn" onclick="setMood(this)">😄</button>
+      </div>
+    </div>
+
+    <div class="summary-block">
+      <div class="summary-block-title">Contributing factors</div>
+      <div class="pill-grid">
+        <div class="pill" onclick="togglePill(this)">Stressful day</div>
+        <div class="pill" onclick="togglePill(this)">Physical work</div>
+        <div class="pill" onclick="togglePill(this)">Poor nutrition</div>
+        <div class="pill" onclick="togglePill(this)">Lots of screen</div>
+        <div class="pill" onclick="togglePill(this)">Social demands</div>
+        <div class="pill" onclick="togglePill(this)">Illness</div>
+        <div class="pill" onclick="togglePill(this)">Period</div>
+        <div class="pill" onclick="togglePill(this)">Heat</div>
+        <div class="pill" onclick="togglePill(this)">Good day</div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:0">Notes</div>
+    <textarea class="note-area" id="summary-note" placeholder="Anything else worth noting today..." style="margin-bottom:8px"></textarea>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-cancel" onclick="show('home')">Back</button>
+    <button class="btn-save" onclick="saveSummary()">Save summary</button>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div id="timeline" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="show('home')">←</button>
+    <span class="page-title">Timeline</span>
+  </div>
+  <div class="tl-list" id="tl-list">
+    <div class="tl-empty">
+      <span class="tl-empty-icon">🌙</span>
+      No events logged yet.<br>Use Quick Log to start tracking.
+    </div>
+  </div>
+</div>
+
+<!-- TRENDS -->
+<div id="trends" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="show('home')">←</button>
+    <span class="page-title">Trends</span>
+  </div>
+  <div class="trends-body">
+    <div class="trend-card">
+      <div class="trend-title">Top contexts</div>
+      <div class="bar-chart" id="ctx-bars">
+        <div class="tl-empty" style="padding:20px 0">Log events to see trends</div>
+      </div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-title">Top symptoms</div>
+      <div class="bar-chart" id="sym-bars">
+        <div class="tl-empty" style="padding:20px 0">Log events to see trends</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT -->
+<div id="export-view" class="screen">
+  <div class="page-header">
+    <button class="back-btn" onclick="show('home')">←</button>
+    <span class="page-title">Export</span>
+  </div>
+  <div class="export-body">
+    <div class="export-preview" id="export-text">No events to export yet.</div>
+  </div>
+  <div class="action-bar">
+    <button class="btn-save" onclick="copyExport()">Copy to clipboard</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-(function() {
-  var STORAGE_KEY = 'fatigue-observer-events';
-  var foEvents = [];
-  var foCurrentSev = 0;
+let state = {
+  events: JSON.parse(localStorage.getItem('fo_events') || '[]'),
+  summaries: JSON.parse(localStorage.getItem('fo_summaries') || '[]'),
+  sev: 0, energy: 0, mood: null, sleep: 7, sleepq: 3,
+};
 
-  try {
-    var raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) foEvents = JSON.parse(raw).map(function(e) { return Object.assign({}, e, {ts: new Date(e.ts)}); });
-  } catch(e) {}
+function save() {
+  localStorage.setItem('fo_events', JSON.stringify(state.events));
+  localStorage.setItem('fo_summaries', JSON.stringify(state.summaries));
+  updateStats();
+}
 
-  function foSave() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(foEvents)); } catch(e) {} }
-  function foUpdateStats() {
-    document.getElementById('stat-events').textContent = foEvents.length;
-    var days = new Set(foEvents.map(function(e) { return new Date(e.ts).toDateString(); })).size;
-    document.getElementById('stat-days').textContent = days;
+function updateStats() {
+  document.getElementById('stat-events').textContent = state.events.length;
+  document.getElementById('stat-summaries').textContent = state.summaries.length;
+  const dates = [...new Set(state.events.map(e => e.date))].sort();
+  let streak = 0;
+  for (let i = dates.length - 1; i >= 0; i--) {
+    const d = new Date(dates[i]);
+    const expected = new Date();
+    expected.setDate(expected.getDate() - (dates.length - 1 - i));
+    if (d.toDateString() === expected.toDateString()) streak++;
+    else break;
   }
+  document.getElementById('stat-streak').textContent = streak;
+}
 
-  window.foGoto = function(id) {
-    document.querySelectorAll('#fo-root .fo-screen').forEach(function(s) { s.classList.remove('active'); });
-    document.getElementById(id).classList.add('active');
-    if (id === 'screen-log') {
-      var now = new Date();
-      document.getElementById('log-time').textContent = now.toLocaleDateString('en-AU', {weekday:'short',day:'numeric',month:'short'}) + ' · ' + now.toLocaleTimeString('en-AU', {hour:'2-digit',minute:'2-digit'});
-      foResetForm();
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 'log-event') initLogEvent();
+  if (id === 'daily-summary') initSummary();
+  if (id === 'timeline') renderTimeline();
+  if (id === 'trends') renderTrends();
+  if (id === 'export-view') renderExport();
+}
+
+function initLogEvent() {
+  state.sev = 0;
+  document.querySelectorAll('#sev-track .sev-pip').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#context-pills .pill, #symptom-pills .pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('event-note').value = '';
+  document.getElementById('event-time').textContent =
+    new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function setSev(v) {
+  state.sev = v;
+  document.querySelectorAll('#sev-track .sev-pip').forEach(p =>
+    p.classList.toggle('active', +p.dataset.v <= v));
+}
+
+function setEnergy(v) {
+  state.energy = v;
+  document.querySelectorAll('#energy-track .sev-pip').forEach(p =>
+    p.classList.toggle('active', +p.dataset.v <= v));
+}
+
+function togglePill(el) { el.classList.toggle('selected'); }
+
+function getSelected(containerId) {
+  return [...document.querySelectorAll('#' + containerId + ' .pill.selected')].map(p => p.textContent);
+}
+
+function saveEvent() {
+  state.events.unshift({
+    id: Date.now(),
+    date: new Date().toDateString(),
+    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
+    sev: state.sev,
+    context: getSelected('context-pills'),
+    symptoms: getSelected('symptom-pills'),
+    note: document.getElementById('event-note').value.trim(),
+  });
+  save();
+  showToast('Event saved ✓');
+  show('home');
+}
+
+function initSummary() {
+  state.sleep = 7; state.sleepq = 3; state.energy = 0; state.mood = null;
+  document.getElementById('sleep-val').textContent = 7;
+  document.getElementById('sleepq-val').textContent = 3;
+  document.querySelectorAll('#energy-track .sev-pip').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('#daily-summary .pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('summary-note').value = '';
+  document.getElementById('summary-date').textContent =
+    new Date().toLocaleDateString([], {month:'short', day:'numeric'});
+}
+
+function adj(key, delta) {
+  if (key === 'sleep') {
+    state.sleep = Math.max(0, Math.min(24, state.sleep + delta));
+    document.getElementById('sleep-val').textContent = state.sleep;
+  } else {
+    state.sleepq = Math.max(1, Math.min(5, state.sleepq + delta));
+    document.getElementById('sleepq-val').textContent = state.sleepq;
+  }
+}
+
+function setMood(el) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  state.mood = el.textContent;
+}
+
+function saveSummary() {
+  state.summaries.unshift({
+    id: Date.now(),
+    date: new Date().toDateString(),
+    sleep: state.sleep, sleepq: state.sleepq,
+    energy: state.energy, mood: state.mood,
+    factors: [...document.querySelectorAll('#daily-summary .pill.selected')].map(p => p.textContent),
+    note: document.getElementById('summary-note').value.trim(),
+  });
+  save();
+  showToast('Summary saved ✓');
+  show('home');
+}
+
+function renderTimeline() {
+  const container = document.getElementById('tl-list');
+  if (!state.events.length) {
+    container.innerHTML = `<div class="tl-empty"><span class="tl-empty-icon">🌙</span>No events logged yet.<br>Use Quick Log to start tracking.</div>`;
+    return;
+  }
+  container.innerHTML = state.events.map(e => {
+    const sl = e.sev <= 2 ? 'low' : e.sev <= 5 ? 'mid' : 'high';
+    const st = e.sev <= 2 ? 'Mild' : e.sev <= 5 ? 'Moderate' : 'Severe';
+    const tags = [...(e.context||[]), ...(e.symptoms||[])].slice(0,5);
+    return `<div class="tl-card">
+      <div class="tl-top">
+        <span class="tl-time">${e.date} · ${e.time}</span>
+        <span class="tl-sev ${sl}">${st}${e.sev ? ' · '+e.sev+'/7' : ''}</span>
+      </div>
+      <div class="tl-tags">${tags.map(t=>`<span class="tl-tag">${t}</span>`).join('')}</div>
+      ${e.note ? `<div class="tl-note">${e.note}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderTrends() {
+  const ctxMap = {}, symMap = {};
+  state.events.forEach(e => {
+    (e.context||[]).forEach(c => ctxMap[c] = (ctxMap[c]||0)+1);
+    (e.symptoms||[]).forEach(s => symMap[s] = (symMap[s]||0)+1);
+  });
+  function makeBars(map, id) {
+    const items = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    if (!items.length) {
+      document.getElementById(id).innerHTML = '<div class="tl-empty" style="padding:20px 0">Log events to see trends</div>';
+      return;
     }
-    if (id === 'screen-timeline') foRenderTimeline();
-    if (id === 'screen-trends') foRenderTrends();
-    window.scrollTo(0, 0);
-  };
-
-  window.foSetSev = function(n) {
-    foCurrentSev = n;
-    document.querySelectorAll('#fo-root .fo-sev-dot').forEach(function(d, i) {
-      d.className = 'fo-sev-dot';
-      if (i < n) d.classList.add(n <= 2 ? 'active-1' : n === 3 ? 'active-2' : 'active-3');
-    });
-  };
-
-  window.foToggleTag = function(el) { el.classList.toggle('selected'); };
-
-  function foResetForm() {
-    foCurrentSev = 0;
-    document.querySelectorAll('#fo-root .fo-sev-dot').forEach(function(d) { d.className = 'fo-sev-dot'; });
-    document.querySelectorAll('#fo-root .fo-tag').forEach(function(t) { t.classList.remove('selected'); });
-    document.getElementById('log-note').value = '';
+    const max = items[0][1];
+    document.getElementById(id).innerHTML = items.map(([n,c])=>
+      `<div class="bar-row">
+        <span class="bar-name">${n}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${(c/max*100).toFixed(0)}%"></div></div>
+        <span class="bar-count">${c}</span>
+      </div>`).join('');
   }
+  makeBars(ctxMap, 'ctx-bars');
+  makeBars(symMap, 'sym-bars');
+}
 
-  window.foSaveEvent = function() {
-    var ctx = Array.from(document.querySelectorAll('#context-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
-    var sym = Array.from(document.querySelectorAll('#symptom-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
-    var note = document.getElementById('log-note').value.trim();
-    foEvents.push({ts: new Date(), sev: foCurrentSev || 1, ctx: ctx, sym: sym, note: note});
-    foSave(); foUpdateStats(); foShowToast('Event saved'); foGoto('screen-home');
-  };
-
-  function foSevLabel(n) { return n <= 2 ? 'mild' : n === 3 ? 'moderate' : 'severe'; }
-
-  function foRenderTimeline() {
-    var list = document.getElementById('timeline-list');
-    if (!foEvents.length) { list.innerHTML = '<div class="fo-empty"><div class="fo-empty-title">Nothing logged yet</div><div class="fo-empty-sub">Your events will appear here</div></div>'; return; }
-    var sorted = foEvents.slice().sort(function(a,b) { return new Date(b.ts)-new Date(a.ts); });
-    list.innerHTML = sorted.map(function(e) {
-      var tags = e.ctx.concat(e.sym).map(function(t) { return '<span class="fo-tl-tag">'+t+'</span>'; }).join('');
-      var d = new Date(e.ts);
-      var timeStr = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
-      return '<li class="fo-tl-item"><div class="fo-tl-dot '+foSevLabel(e.sev)+'"></div><div class="fo-tl-content"><div class="fo-tl-time">'+timeStr+'</div><div class="fo-tl-tags">'+(tags||'<span class="fo-tl-tag">No tags</span>')+'</div>'+(e.note?'<div class="fo-tl-note">"'+e.note+'"</div>':'')+'</div><div class="fo-tl-sev">'+e.sev+'</div></li>';
-    }).join('');
+function renderExport() {
+  if (!state.events.length) {
+    document.getElementById('export-text').textContent = 'No events to export yet.';
+    return;
   }
+  const lines = ['FATIGUE OBSERVER — EXPORT', `Generated: ${new Date().toLocaleString()}`, ''];
+  state.events.forEach(e => {
+    lines.push(`[${e.date} ${e.time}] Severity: ${e.sev}/7`);
+    if (e.context?.length) lines.push(`  Context: ${e.context.join(', ')}`);
+    if (e.symptoms?.length) lines.push(`  Symptoms: ${e.symptoms.join(', ')}`);
+    if (e.note) lines.push(`  Note: ${e.note}`);
+    lines.push('');
+  });
+  document.getElementById('export-text').textContent = lines.join('\n');
+}
 
-  function foRenderTrends() {
-    var el = document.getElementById('trends-content');
-    if (!foEvents.length) { el.innerHTML = '<div class="fo-empty"><div class="fo-empty-title">Log some events first</div><div class="fo-empty-sub">Patterns will appear after a few entries</div></div>'; return; }
-    var avgSev = (foEvents.reduce(function(s,e){return s+e.sev;},0)/foEvents.length).toFixed(1);
-    var days = new Set(foEvents.map(function(e){return new Date(e.ts).toDateString();})).size;
-    var symCount={}, ctxCount={};
-    foEvents.forEach(function(e){e.sym.forEach(function(s){symCount[s]=(symCount[s]||0)+1;});e.ctx.forEach(function(c){ctxCount[c]=(ctxCount[c]||0)+1;});});
-    var topSym=Object.entries(symCount).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
-    var topCtx=Object.entries(ctxCount).sort(function(a,b){return b[1]-a[1];}).slice(0,4);
-    var max=topSym[0]?topSym[0][1]:1;
-    function bars(items){return items.map(function(it){return '<div class="fo-bar-row"><span class="fo-bar-label">'+it[0]+'</span><div class="fo-bar-track"><div class="fo-bar-fill" style="width:'+Math.round(it[1]/max*100)+'%"></div></div><span class="fo-bar-val">'+it[1]+'</span></div>';}).join('');}
-    el.innerHTML='<div class="fo-trends-grid"><div class="fo-metric-card"><div class="fo-metric-num">'+foEvents.length+'</div><div class="fo-metric-label">Total events</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+avgSev+'</div><div class="fo-metric-label">Avg severity</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+days+'</div><div class="fo-metric-label">Days tracked</div></div><div class="fo-metric-card"><div class="fo-metric-num">'+(days>0?(foEvents.length/days).toFixed(1):'–')+'</div><div class="fo-metric-label">Events per day</div></div></div>'+(topSym.length?'<div class="fo-section-label">Common symptoms</div><div class="fo-bar-section">'+bars(topSym)+'</div>':'')+(topCtx.length?'<div class="fo-section-label" style="margin-top:24px">Common contexts</div><div class="fo-bar-section">'+bars(topCtx)+'</div>':'');
-  }
+function copyExport() {
+  const text = document.getElementById('export-text').textContent;
+  navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
+}
 
-  function foShowToast(msg) {
-    var t = document.getElementById('fo-toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(function(){t.classList.remove('show');}, 2200);
-  }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
 
-  foUpdateStats();
-})();
+updateStats();
 </script>
 </body>
 </html>
