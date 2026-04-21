@@ -9,121 +9,31 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --cream: #F7F3EE;
-    --bark: #2C2318;
-    --moss: #4A5E4A;
-    --rust: #C4623A;
-    --warm-mid: #8B7355;
-    --soft-border: rgba(44,35,24,0.12);
+    --cream: #F7F3EE; --bark: #2C2318; --rust: #C4623A;
+    --warm-mid: #8B7355; --soft-border: rgba(44,35,24,0.12);
     --tag-bg: rgba(44,35,24,0.07);
     --serif: 'DM Serif Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
   }
-
-  html, body {
-    font-family: var(--sans);
-    background: var(--cream);
-    color: var(--bark);
-    min-height: 100vh;
-  }
-
-  .fo-app {
-    display: flex;
-    flex-direction: column;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
-
-  .fo-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 0 20px;
-    border-bottom: 0.5px solid var(--soft-border);
-    margin-bottom: 36px;
-  }
+  html, body { font-family: var(--sans); background: var(--cream); color: var(--bark); min-height: 100vh; }
+  .fo-app { display: flex; flex-direction: column; max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
+  .fo-nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0 20px; border-bottom: 0.5px solid var(--soft-border); margin-bottom: 36px; }
   .fo-brand { display: flex; flex-direction: column; }
-  .fo-brand-name {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-style: italic;
-    color: var(--bark);
-    letter-spacing: -0.3px;
-    line-height: 1;
-  }
-  .fo-brand-tag {
-    font-size: 11px;
-    color: var(--warm-mid);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    margin-top: 3px;
-  }
+  .fo-brand-name { font-family: var(--serif); font-size: 22px; font-style: italic; color: var(--bark); letter-spacing: -0.3px; line-height: 1; }
+  .fo-brand-tag { font-size: 11px; color: var(--warm-mid); font-weight: 300; letter-spacing: 0.5px; margin-top: 3px; }
   .fo-stats { display: flex; gap: 20px; }
   .fo-stat { text-align: right; }
-  .fo-stat-num {
-    font-family: var(--serif);
-    font-size: 20px;
-    color: var(--bark);
-    line-height: 1;
-  }
-  .fo-stat-label {
-    font-size: 10px;
-    color: var(--warm-mid);
-    font-weight: 300;
-    letter-spacing: 0.4px;
-    margin-top: 2px;
-  }
-
+  .fo-stat-num { font-family: var(--serif); font-size: 20px; color: var(--bark); line-height: 1; }
+  .fo-stat-label { font-size: 10px; color: var(--warm-mid); font-weight: 300; letter-spacing: 0.4px; margin-top: 2px; }
   .screen { display: none; }
   .screen.active { display: block; }
-
   .fo-hero { margin-bottom: 40px; }
-  .fo-hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--warm-mid);
-    text-transform: uppercase;
-    font-weight: 400;
-    margin-bottom: 10px;
-  }
-  .fo-hero-title {
-    font-family: var(--serif);
-    font-size: 38px;
-    line-height: 1.15;
-    color: var(--bark);
-    margin-bottom: 14px;
-    font-style: italic;
-  }
-  .fo-hero-body {
-    font-size: 15px;
-    color: var(--warm-mid);
-    font-weight: 300;
-    line-height: 1.65;
-    max-width: 460px;
-  }
-
-  .fo-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .fo-btn {
-    padding: 16px 20px;
-    border-radius: 10px;
-    border: 0.5px solid var(--soft-border);
-    background: rgba(44,35,24,0.04);
-    cursor: pointer;
-    text-align: left;
-    font-family: var(--sans);
-    transition: background 0.15s, border-color 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
+  .fo-hero-eyebrow { font-size: 11px; letter-spacing: 1.5px; color: var(--warm-mid); text-transform: uppercase; font-weight: 400; margin-bottom: 10px; }
+  .fo-hero-title { font-family: var(--serif); font-size: 38px; line-height: 1.15; color: var(--bark); margin-bottom: 14px; font-style: italic; }
+  .fo-hero-body { font-size: 15px; color: var(--warm-mid); font-weight: 300; line-height: 1.65; max-width: 460px; }
+  .fo-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .fo-btn { padding: 16px 20px; border-radius: 10px; border: 0.5px solid var(--soft-border); background: rgba(44,35,24,0.04); cursor: pointer; text-align: left; font-family: var(--sans); transition: background 0.15s, border-color 0.15s; position: relative; overflow: hidden; }
   .fo-btn:hover { background: rgba(44,35,24,0.08); border-color: rgba(44,35,24,0.2); }
   .fo-btn-primary { background: var(--bark); border-color: var(--bark); color: var(--cream); }
   .fo-btn-primary:hover { background: #3d3226; border-color: #3d3226; }
@@ -133,101 +43,27 @@
   .fo-btn-primary .fo-btn-sub { color: rgba(247,243,238,0.65); }
   .fo-btn-arrow { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.35; }
   .fo-btn-primary .fo-btn-arrow { opacity: 0.6; color: var(--cream); }
-
-  .fo-form-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-  .fo-back-btn {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    border: 0.5px solid var(--soft-border);
-    background: transparent;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    color: var(--bark);
-    flex-shrink: 0;
-    font-family: var(--sans);
-  }
+  .fo-form-header { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
+  .fo-back-btn { width: 34px; height: 34px; border-radius: 50%; border: 0.5px solid var(--soft-border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--bark); flex-shrink: 0; font-family: var(--sans); }
   .fo-back-btn:hover { background: rgba(44,35,24,0.06); }
   .fo-form-title { font-family: var(--serif); font-size: 24px; font-style: italic; color: var(--bark); }
   .fo-timestamp { font-size: 12px; color: var(--warm-mid); font-weight: 300; margin-left: auto; }
-
-  .fo-section-label {
-    font-size: 10px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--warm-mid);
-    font-weight: 400;
-    margin-bottom: 10px;
-    margin-top: 28px;
-  }
-
+  .fo-section-label { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--warm-mid); font-weight: 400; margin-bottom: 10px; margin-top: 28px; }
   .fo-severity-track { display: flex; gap: 6px; margin-bottom: 4px; }
-  .fo-sev-dot {
-    flex: 1; height: 6px; border-radius: 3px;
-    background: rgba(44,35,24,0.12);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
+  .fo-sev-dot { flex: 1; height: 6px; border-radius: 3px; background: rgba(44,35,24,0.12); cursor: pointer; transition: background 0.15s; }
   .fo-sev-dot.active-1 { background: #8BBF8B; }
   .fo-sev-dot.active-2 { background: #D4A84B; }
   .fo-sev-dot.active-3 { background: #C4623A; }
   .fo-sev-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--warm-mid); font-weight: 300; }
-
   .fo-tag-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .fo-tag {
-    padding: 6px 14px;
-    border-radius: 100px;
-    border: 0.5px solid var(--soft-border);
-    background: var(--tag-bg);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--warm-mid);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: var(--sans);
-  }
+  .fo-tag { padding: 6px 14px; border-radius: 100px; border: 0.5px solid var(--soft-border); background: var(--tag-bg); font-size: 13px; font-weight: 400; color: var(--warm-mid); cursor: pointer; transition: all 0.15s; font-family: var(--sans); user-select: none; }
   .fo-tag:hover { border-color: rgba(44,35,24,0.25); color: var(--bark); }
   .fo-tag.selected { background: var(--bark); color: var(--cream); border-color: var(--bark); }
-
-  .fo-note {
-    width: 100%;
-    border: 0.5px solid var(--soft-border);
-    border-radius: 10px;
-    background: rgba(44,35,24,0.03);
-    padding: 12px 14px;
-    font-family: var(--sans);
-    font-size: 14px;
-    color: var(--bark);
-    resize: none;
-    outline: none;
-    line-height: 1.6;
-    margin-top: 28px;
-  }
+  .fo-note { width: 100%; border: 0.5px solid var(--soft-border); border-radius: 10px; background: rgba(44,35,24,0.03); padding: 12px 14px; font-family: var(--sans); font-size: 14px; color: var(--bark); resize: none; outline: none; line-height: 1.6; margin-top: 28px; }
   .fo-note::placeholder { color: var(--warm-mid); opacity: 0.6; }
   .fo-note:focus { border-color: rgba(44,35,24,0.3); }
-
-  .fo-save-btn {
-    margin-top: 24px;
-    width: 100%;
-    padding: 15px;
-    background: var(--bark);
-    color: var(--cream);
-    border: none;
-    border-radius: 10px;
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-    letter-spacing: 0.2px;
-  }
+  .fo-save-btn { margin-top: 24px; width: 100%; padding: 15px; background: var(--bark); color: var(--cream); border: none; border-radius: 10px; font-family: var(--sans); font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.15s; letter-spacing: 0.2px; }
   .fo-save-btn:hover { background: #3d3226; }
-
   .fo-timeline-list { list-style: none; }
   .fo-tl-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 0.5px solid var(--soft-border); align-items: flex-start; }
   .fo-tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rust); flex-shrink: 0; margin-top: 6px; }
@@ -239,72 +75,44 @@
   .fo-tl-tag { font-size: 11px; padding: 2px 9px; border-radius: 100px; background: var(--tag-bg); color: var(--warm-mid); border: 0.5px solid var(--soft-border); }
   .fo-tl-note { font-size: 13px; color: var(--warm-mid); margin-top: 6px; font-style: italic; font-weight: 300; }
   .fo-tl-sev { font-family: var(--serif); font-size: 26px; color: var(--bark); opacity: 0.2; flex-shrink: 0; font-style: italic; }
-
   .fo-empty { text-align: center; padding: 60px 20px; color: var(--warm-mid); }
   .fo-empty-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.35; }
   .fo-empty-title { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--bark); margin-bottom: 6px; opacity: 0.5; }
   .fo-empty-sub { font-size: 13px; font-weight: 300; }
-
   .fo-trends-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
   .fo-metric-card { padding: 16px; border-radius: 10px; border: 0.5px solid var(--soft-border); background: rgba(44,35,24,0.04); }
   .fo-metric-num { font-family: var(--serif); font-size: 32px; color: var(--bark); font-style: italic; }
   .fo-metric-label { font-size: 11px; color: var(--warm-mid); font-weight: 300; margin-top: 2px; }
-
   .fo-bar-section { margin-top: 8px; }
   .fo-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
   .fo-bar-label { font-size: 12px; color: var(--warm-mid); width: 90px; flex-shrink: 0; font-weight: 300; }
   .fo-bar-track { flex: 1; height: 4px; background: rgba(44,35,24,0.1); border-radius: 2px; overflow: hidden; }
   .fo-bar-fill { height: 100%; background: var(--bark); border-radius: 2px; }
   .fo-bar-val { font-size: 12px; color: var(--bark); width: 20px; text-align: right; font-weight: 500; }
-
-  .fo-toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%; transform: translateX(-50%);
-    background: var(--bark);
-    color: var(--cream);
-    padding: 10px 20px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 400;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    white-space: nowrap;
-    font-family: var(--sans);
-  }
+  .fo-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bark); color: var(--cream); padding: 10px 20px; border-radius: 100px; font-size: 13px; font-weight: 400; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; font-family: var(--sans); }
   .fo-toast.show { opacity: 1; }
 </style>
 </head>
 <body>
-
 <div class="fo-app">
-
   <nav class="fo-nav">
     <div class="fo-brand">
       <span class="fo-brand-name">Fatigue Observer</span>
       <span class="fo-brand-tag">Pattern tracking for your health</span>
     </div>
     <div class="fo-stats">
-      <div class="fo-stat">
-        <div class="fo-stat-num" id="stat-events">0</div>
-        <div class="fo-stat-label">events</div>
-      </div>
-      <div class="fo-stat">
-        <div class="fo-stat-num" id="stat-days">0</div>
-        <div class="fo-stat-label">days tracked</div>
-      </div>
+      <div class="fo-stat"><div class="fo-stat-num" id="stat-events">0</div><div class="fo-stat-label">events</div></div>
+      <div class="fo-stat"><div class="fo-stat-num" id="stat-days">0</div><div class="fo-stat-label">days tracked</div></div>
     </div>
   </nav>
 
-  <!-- HOME -->
   <div class="screen active" id="screen-home">
     <div class="fo-hero">
       <div class="fo-hero-eyebrow">Your fatigue journal</div>
       <h1 class="fo-hero-title">Notice patterns,<br>not just moments.</h1>
       <p class="fo-hero-body">Log tired comments and surrounding context so you can spot patterns and take something concrete to a doctor.</p>
     </div>
-    <div class="fo-actions" style="grid-template-columns: 1fr;">
+    <div class="fo-actions" style="grid-template-columns:1fr;">
       <button class="fo-btn fo-btn-primary" onclick="goto('screen-log')">
         <span class="fo-btn-title">Quick Log Tired Event</span>
         <span class="fo-btn-sub">Record a new fatigue event now</span>
@@ -325,16 +133,14 @@
     </div>
   </div>
 
-  <!-- LOG EVENT -->
   <div class="screen" id="screen-log">
     <div class="fo-form-header">
       <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
       <span class="fo-form-title">Log event</span>
       <span class="fo-timestamp" id="log-time"></span>
     </div>
-
     <div class="fo-section-label">Severity</div>
-    <div class="fo-severity-track" id="severity-track">
+    <div class="fo-severity-track">
       <div class="fo-sev-dot" onclick="setSev(1)"></div>
       <div class="fo-sev-dot" onclick="setSev(2)"></div>
       <div class="fo-sev-dot" onclick="setSev(3)"></div>
@@ -342,7 +148,6 @@
       <div class="fo-sev-dot" onclick="setSev(5)"></div>
     </div>
     <div class="fo-sev-labels"><span>Mild</span><span>Moderate</span><span>Severe</span></div>
-
     <div class="fo-section-label">Context — what were you doing?</div>
     <div class="fo-tag-grid" id="context-tags">
       <div class="fo-tag" onclick="toggleTag(this)">After eating</div>
@@ -354,7 +159,6 @@
       <div class="fo-tag" onclick="toggleTag(this)">During work</div>
       <div class="fo-tag" onclick="toggleTag(this)">After social</div>
     </div>
-
     <div class="fo-section-label">Signs &amp; symptoms</div>
     <div class="fo-tag-grid" id="symptom-tags">
       <div class="fo-tag" onclick="toggleTag(this)">Flat</div>
@@ -374,12 +178,10 @@
       <div class="fo-tag" onclick="toggleTag(this)">Weak</div>
       <div class="fo-tag" onclick="toggleTag(this)">Heavy limbs</div>
     </div>
-
     <textarea class="fo-note" id="log-note" rows="3" placeholder="Optional note — anything else to add? coffee, meds, long shift, gym…"></textarea>
     <button class="fo-save-btn" onclick="saveEvent()">Save event</button>
   </div>
 
-  <!-- TIMELINE -->
   <div class="screen" id="screen-timeline">
     <div class="fo-form-header">
       <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
@@ -388,7 +190,6 @@
     <ul class="fo-timeline-list" id="timeline-list"></ul>
   </div>
 
-  <!-- TRENDS -->
   <div class="screen" id="screen-trends">
     <div class="fo-form-header">
       <button class="fo-back-btn" onclick="goto('screen-home')">←</button>
@@ -396,39 +197,37 @@
     </div>
     <div id="trends-content"></div>
   </div>
-
 </div>
 
 <div class="fo-toast" id="toast">Event saved</div>
 
 <script>
-  const STORAGE_KEY = 'fatigue-observer-events';
+  var STORAGE_KEY = 'fatigue-observer-events';
 
   function loadEvents() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
-      return JSON.parse(raw).map(e => ({ ...e, ts: new Date(e.ts) }));
-    } catch { return []; }
+      return JSON.parse(raw).map(function(e) { return Object.assign({}, e, { ts: new Date(e.ts) }); });
+    } catch(e) { return []; }
   }
 
   function saveEvents() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
   }
 
-  let events = loadEvents();
-  let currentSev = 0;
-
+  var events = loadEvents();
+  var currentSev = 0;
   updateStats();
 
   function goto(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
     if (id === 'screen-log') {
-      const now = new Date();
+      var now = new Date();
       document.getElementById('log-time').textContent =
-        now.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' }) +
-        ' · ' + now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+        now.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' }) +
+        ' · ' + now.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
       resetForm();
     }
     if (id === 'screen-timeline') renderTimeline();
@@ -437,8 +236,7 @@
 
   function setSev(n) {
     currentSev = n;
-    const dots = document.querySelectorAll('.fo-sev-dot');
-    dots.forEach((d, i) => {
+    document.querySelectorAll('.fo-sev-dot').forEach(function(d, i) {
       d.className = 'fo-sev-dot';
       if (i < n) {
         if (n <= 2) d.classList.add('active-1');
@@ -448,22 +246,20 @@
     });
   }
 
-  function toggleTag(el) {
-    el.classList.toggle('selected');
-  }
+  function toggleTag(el) { el.classList.toggle('selected'); }
 
   function resetForm() {
     currentSev = 0;
-    document.querySelectorAll('.fo-sev-dot').forEach(d => d.className = 'fo-sev-dot');
-    document.querySelectorAll('.fo-tag').forEach(t => t.classList.remove('selected'));
+    document.querySelectorAll('.fo-sev-dot').forEach(function(d) { d.className = 'fo-sev-dot'; });
+    document.querySelectorAll('.fo-tag').forEach(function(t) { t.classList.remove('selected'); });
     document.getElementById('log-note').value = '';
   }
 
   function saveEvent() {
-    const ctx = [...document.querySelectorAll('#context-tags .fo-tag.selected')].map(t => t.textContent);
-    const sym = [...document.querySelectorAll('#symptom-tags .fo-tag.selected')].map(t => t.textContent);
-    const note = document.getElementById('log-note').value.trim();
-    events.push({ ts: new Date(), sev: currentSev || 1, ctx, sym, note });
+    var ctx = Array.from(document.querySelectorAll('#context-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
+    var sym = Array.from(document.querySelectorAll('#symptom-tags .fo-tag.selected')).map(function(t) { return t.textContent; });
+    var note = document.getElementById('log-note').value.trim();
+    events.push({ ts: new Date(), sev: currentSev || 1, ctx: ctx, sym: sym, note: note });
     saveEvents();
     updateStats();
     showToast('Event saved');
@@ -472,7 +268,7 @@
 
   function updateStats() {
     document.getElementById('stat-events').textContent = events.length;
-    const days = new Set(events.map(e => new Date(e.ts).toDateString())).size;
+    var days = new Set(events.map(function(e) { return new Date(e.ts).toDateString(); })).size;
     document.getElementById('stat-days').textContent = days;
   }
 
@@ -483,72 +279,49 @@
   }
 
   function renderTimeline() {
-    const list = document.getElementById('timeline-list');
+    var list = document.getElementById('timeline-list');
     if (!events.length) {
       list.innerHTML = '<div class="fo-empty"><div class="fo-empty-icon">○</div><div class="fo-empty-title">Nothing logged yet</div><div class="fo-empty-sub">Your events will appear here</div></div>';
       return;
     }
-    const sorted = [...events].sort((a, b) => new Date(b.ts) - new Date(a.ts));
-    list.innerHTML = sorted.map(e => {
-      const tags = [...e.ctx, ...e.sym].map(t => `<span class="fo-tl-tag">${t}</span>`).join('');
-      const dotClass = 'fo-tl-dot ' + sevLabel(e.sev);
-      const d = new Date(e.ts);
-      const timeStr = d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' }) + ' · ' + d.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
-      return `<li class="fo-tl-item">
-        <div class="${dotClass}"></div>
-        <div class="fo-tl-content">
-          <div class="fo-tl-time">${timeStr}</div>
-          <div class="fo-tl-tags">${tags || '<span class="fo-tl-tag">No tags</span>'}</div>
-          ${e.note ? `<div class="fo-tl-note">"${e.note}"</div>` : ''}
-        </div>
-        <div class="fo-tl-sev">${e.sev}</div>
-      </li>`;
+    var sorted = events.slice().sort(function(a, b) { return new Date(b.ts) - new Date(a.ts); });
+    list.innerHTML = sorted.map(function(e) {
+      var tags = e.ctx.concat(e.sym).map(function(t) { return '<span class="fo-tl-tag">' + t + '</span>'; }).join('');
+      var dotClass = 'fo-tl-dot ' + sevLabel(e.sev);
+      var d = new Date(e.ts);
+      var timeStr = d.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short' }) + ' · ' + d.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
+      return '<li class="fo-tl-item"><div class="' + dotClass + '"></div><div class="fo-tl-content"><div class="fo-tl-time">' + timeStr + '</div><div class="fo-tl-tags">' + (tags || '<span class="fo-tl-tag">No tags</span>') + '</div>' + (e.note ? '<div class="fo-tl-note">"' + e.note + '"</div>' : '') + '</div><div class="fo-tl-sev">' + e.sev + '</div></li>';
     }).join('');
   }
 
   function renderTrends() {
-    const el = document.getElementById('trends-content');
+    var el = document.getElementById('trends-content');
     if (!events.length) {
       el.innerHTML = '<div class="fo-empty"><div class="fo-empty-icon">○</div><div class="fo-empty-title">Log some events first</div><div class="fo-empty-sub">Patterns will appear here after a few entries</div></div>';
       return;
     }
-    const avgSev = (events.reduce((s, e) => s + e.sev, 0) / events.length).toFixed(1);
-    const days = new Set(events.map(e => new Date(e.ts).toDateString())).size;
-
-    const symCount = {};
-    events.forEach(e => e.sym.forEach(s => { symCount[s] = (symCount[s] || 0) + 1; }));
-    const topSym = Object.entries(symCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
-    const maxCount = topSym[0]?.[1] || 1;
-
-    const ctxCount = {};
-    events.forEach(e => e.ctx.forEach(c => { ctxCount[c] = (ctxCount[c] || 0) + 1; }));
-    const topCtx = Object.entries(ctxCount).sort((a, b) => b[1] - a[1]).slice(0, 4);
-
-    const bars = (items) => items.map(([label, count]) =>
-      `<div class="fo-bar-row">
-        <span class="fo-bar-label">${label}</span>
-        <div class="fo-bar-track"><div class="fo-bar-fill" style="width:${Math.round(count / maxCount * 100)}%"></div></div>
-        <span class="fo-bar-val">${count}</span>
-      </div>`
-    ).join('');
-
-    el.innerHTML = `
-      <div class="fo-trends-grid">
-        <div class="fo-metric-card"><div class="fo-metric-num">${events.length}</div><div class="fo-metric-label">Total events</div></div>
-        <div class="fo-metric-card"><div class="fo-metric-num">${avgSev}</div><div class="fo-metric-label">Avg severity</div></div>
-        <div class="fo-metric-card"><div class="fo-metric-num">${days}</div><div class="fo-metric-label">Days tracked</div></div>
-        <div class="fo-metric-card"><div class="fo-metric-num">${days > 0 ? (events.length / days).toFixed(1) : '–'}</div><div class="fo-metric-label">Events per day</div></div>
-      </div>
-      ${topSym.length ? `<div class="fo-section-label">Common symptoms</div><div class="fo-bar-section">${bars(topSym)}</div>` : ''}
-      ${topCtx.length ? `<div class="fo-section-label" style="margin-top:24px">Common contexts</div><div class="fo-bar-section">${bars(topCtx)}</div>` : ''}
-    `;
+    var avgSev = (events.reduce(function(s, e) { return s + e.sev; }, 0) / events.length).toFixed(1);
+    var days = new Set(events.map(function(e) { return new Date(e.ts).toDateString(); })).size;
+    var symCount = {};
+    events.forEach(function(e) { e.sym.forEach(function(s) { symCount[s] = (symCount[s] || 0) + 1; }); });
+    var topSym = Object.entries(symCount).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 5);
+    var maxCount = topSym[0] ? topSym[0][1] : 1;
+    var ctxCount = {};
+    events.forEach(function(e) { e.ctx.forEach(function(c) { ctxCount[c] = (ctxCount[c] || 0) + 1; }); });
+    var topCtx = Object.entries(ctxCount).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 4);
+    function bars(items) {
+      return items.map(function(item) {
+        return '<div class="fo-bar-row"><span class="fo-bar-label">' + item[0] + '</span><div class="fo-bar-track"><div class="fo-bar-fill" style="width:' + Math.round(item[1] / maxCount * 100) + '%"></div></div><span class="fo-bar-val">' + item[1] + '</span></div>';
+      }).join('');
+    }
+    el.innerHTML = '<div class="fo-trends-grid"><div class="fo-metric-card"><div class="fo-metric-num">' + events.length + '</div><div class="fo-metric-label">Total events</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + avgSev + '</div><div class="fo-metric-label">Avg severity</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + days + '</div><div class="fo-metric-label">Days tracked</div></div><div class="fo-metric-card"><div class="fo-metric-num">' + (days > 0 ? (events.length / days).toFixed(1) : '–') + '</div><div class="fo-metric-label">Events per day</div></div></div>' + (topSym.length ? '<div class="fo-section-label">Common symptoms</div><div class="fo-bar-section">' + bars(topSym) + '</div>' : '') + (topCtx.length ? '<div class="fo-section-label" style="margin-top:24px">Common contexts</div><div class="fo-bar-section">' + bars(topCtx) + '</div>' : '');
   }
 
   function showToast(msg) {
-    const t = document.getElementById('toast');
+    var t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2200);
+    setTimeout(function() { t.classList.remove('show'); }, 2200);
   }
 </script>
 </body>
