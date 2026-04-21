@@ -1,805 +1,820 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Fatigue Observer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0d0f14;
-    --surface: #161921;
-    --surface2: #1e2230;
-    --border: rgba(255,255,255,0.07);
-    --accent: #7EB8C9;
-    --accent2: #C9A77E;
-    --danger: #E07878;
-    --text: #e8eaf0;
-    --muted: #636880;
-    --pill-bg: #1e2230;
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  .screen { display: none; min-height: 100vh; flex-direction: column; }
-  .screen.active { display: flex; }
-
-  /* HOME */
-  #home { background: var(--bg); position: relative; overflow: hidden; }
-
-  .home-glow {
-    position: absolute; border-radius: 50%;
-    filter: blur(90px); pointer-events: none;
-  }
-  .glow-1 { background: rgba(126,184,201,0.12); width:300px; height:300px; top:-60px; right:-60px; }
-  .glow-2 { background: rgba(201,167,126,0.08); width:300px; height:300px; bottom:80px; left:-80px; }
-
-  .home-header { padding: 64px 28px 0; position: relative; z-index: 1; animation: fadeUp 0.5s ease both; }
-
-  .home-eyebrow {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-  }
-
-  .home-title { font-family: 'DM Serif Display', serif; font-size: 42px; line-height: 1.05; }
-  .home-title em { font-style: italic; color: var(--accent2); }
-
-  .home-sub {
-    margin-top: 16px; font-size: 14px; font-weight: 300;
-    color: var(--muted); line-height: 1.7; max-width: 280px;
-  }
-
-  .stats-row {
-    display: flex; gap: 12px; margin: 32px 28px 0;
-    position: relative; z-index: 1;
-    animation: fadeUp 0.5s 0.1s ease both;
-  }
-
-  .stat-card {
-    flex: 1; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); padding: 14px;
-  }
-
-  .stat-num { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--accent); }
-  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; letter-spacing: 0.04em; }
-
-  .nav-list {
-    display: flex; flex-direction: column; gap: 10px;
-    padding: 28px 28px 48px; position: relative; z-index: 1; margin-top: 12px;
-    animation: fadeUp 0.5s 0.18s ease both;
-  }
-
-  .nav-btn {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 18px 20px;
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: background 0.18s, transform 0.1s; width: 100%; text-align: left;
-  }
-
-  .nav-btn:active { transform: scale(0.98); }
-
-  .nav-btn.primary {
-    background: var(--accent); color: #0d0f14;
-    border-color: transparent; font-weight: 600;
-  }
-
-  .nav-btn .btn-icon { font-size: 18px; opacity: 0.7; }
-  .nav-btn .btn-meta { font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
-  .nav-btn.primary .btn-meta { color: rgba(13,15,20,0.55); }
-  .nav-btn-left { display: flex; flex-direction: column; gap: 2px; }
-
-  /* PAGE HEADER */
-  .page-header {
-    display: flex; align-items: center; gap: 12px;
-    padding: 52px 20px 16px; position: sticky; top: 0; z-index: 10;
-    background: var(--bg); border-bottom: 1px solid var(--border);
-  }
-
-  .back-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text); font-size: 16px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-
-  .back-btn:active { background: var(--surface2); }
-
-  .page-title { font-family: 'DM Serif Display', serif; font-size: 22px; flex: 1; }
-  .page-time { font-size: 12px; color: var(--muted); }
-
-  /* FORM */
-  .form-scroll {
-    flex: 1; overflow-y: auto;
-    padding: 20px 20px 140px; -webkit-overflow-scrolling: touch;
-  }
-
-  .section-label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--muted); margin: 24px 0 10px;
-  }
-
-  /* Severity */
-  .severity-track { display: flex; gap: 6px; align-items: center; }
-
-  .sev-pip {
-    flex: 1; height: 8px; border-radius: 4px;
-    background: var(--surface2); cursor: pointer; transition: background 0.15s;
-  }
-
-  .sev-pip.active { background: var(--accent); }
-  .sev-pip[data-v="5"].active,
-  .sev-pip[data-v="6"].active { background: var(--accent2); }
-  .sev-pip[data-v="7"].active { background: var(--danger); }
-
-  .severity-labels {
-    display: flex; justify-content: space-between;
-    font-size: 11px; color: var(--muted); margin-top: 6px;
-  }
-
-  /* Pills */
-  .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-
-  .pill {
-    padding: 8px 14px; border-radius: 100px;
-    background: var(--pill-bg); border: 1px solid var(--border);
-    color: var(--muted); font-size: 13px; font-weight: 500;
-    cursor: pointer; transition: all 0.15s; user-select: none;
-  }
-
-  .pill:active { transform: scale(0.95); }
-
-  .pill.selected {
-    background: var(--accent); border-color: transparent; color: #0d0f14;
-  }
-
-  /* Note */
-  .note-area {
-    width: 100%; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-family: 'DM Sans', sans-serif; font-size: 14px;
-    padding: 14px; resize: none; min-height: 80px; outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .note-area:focus { border-color: var(--accent); }
-  .note-area::placeholder { color: var(--muted); }
-
-  /* Action bar */
-  .action-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 12px 20px 28px;
-    background: linear-gradient(to top, var(--bg) 70%, transparent);
-    display: flex; gap: 10px;
-  }
-
-  .btn-cancel {
-    flex: 0 0 80px; padding: 14px; border-radius: var(--radius-sm);
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--muted); font-family: 'DM Sans', sans-serif;
-    font-size: 14px; font-weight: 500; cursor: pointer;
-  }
-
-  .btn-save {
-    flex: 1; padding: 14px; border-radius: var(--radius-sm);
-    background: var(--accent); border: none; color: #0d0f14;
-    font-family: 'DM Sans', sans-serif; font-size: 15px;
-    font-weight: 600; cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-  }
-
-  .btn-save:active { transform: scale(0.98); opacity: 0.9; }
-
-  /* Timeline */
-  .tl-list { padding: 16px 20px 100px; display: flex; flex-direction: column; gap: 12px; }
-
-  .tl-empty {
-    text-align: center; color: var(--muted);
-    padding: 60px 0; font-size: 14px; line-height: 1.7;
-  }
-
-  .tl-empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.4; display: block; }
-
-  .tl-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px;
-  }
-
-  .tl-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-  .tl-time { font-size: 12px; color: var(--muted); }
-
-  .tl-sev {
-    font-size: 11px; font-weight: 600; padding: 3px 8px;
-    border-radius: 100px; background: var(--surface2);
-  }
-
-  .tl-sev.low { color: var(--accent); }
-  .tl-sev.mid { color: var(--accent2); }
-  .tl-sev.high { color: var(--danger); }
-
-  .tl-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-
-  .tl-tag {
-    font-size: 12px; padding: 3px 10px;
-    border-radius: 100px; background: var(--surface2); color: var(--muted);
-  }
-
-  .tl-note { font-size: 13px; color: var(--text); opacity: 0.7; line-height: 1.5; }
-
-  /* Summary */
-  .summary-block {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
-  }
-
-  .summary-block-title {
-    font-size: 12px; font-weight: 600; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
-  }
-
-  .sleep-row {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-  }
-
-  .sleep-label { font-size: 14px; }
-
-  .sleep-val { display: flex; align-items: center; gap: 10px; }
-
-  .num-btn {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--text); font-size: 18px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.1s;
-  }
-
-  .num-btn:active { background: var(--accent); color: #0d0f14; }
-
-  .num-display {
-    font-family: 'DM Serif Display', serif; font-size: 22px;
-    min-width: 32px; text-align: center;
-  }
-
-  .mood-row { display: flex; gap: 8px; justify-content: space-between; }
-
-  .mood-btn {
-    flex: 1; padding: 10px 4px; border-radius: var(--radius-sm);
-    background: var(--surface2); border: 1px solid var(--border);
-    color: var(--muted); font-size: 20px; cursor: pointer; text-align: center;
-    transition: all 0.15s;
-  }
-
-  .mood-btn.selected { background: rgba(126,184,201,0.15); border-color: var(--accent); }
-
-  /* Trends */
-  .trends-body { padding: 16px 20px 100px; }
-
-  .trend-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
-  }
-
-  .trend-title {
-    font-size: 13px; font-weight: 600; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;
-  }
-
-  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
-
-  .bar-row { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-  .bar-name { width: 90px; color: var(--muted); flex-shrink: 0; font-size: 12px; }
-
-  .bar-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-
-  .bar-fill { height: 100%; border-radius: 4px; background: var(--accent); }
-
-  .bar-count { font-size: 12px; color: var(--muted); width: 20px; text-align: right; }
-
-  /* Export */
-  .export-body { padding: 16px 20px 100px; }
-
-  .export-preview {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 20px;
-    font-size: 12px; line-height: 1.8; color: var(--muted);
-    white-space: pre-wrap; font-family: monospace; min-height: 200px; margin-bottom: 16px;
-  }
-
-  /* Toast */
-  .toast {
-    position: fixed; bottom: 90px; left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    background: var(--accent); color: #0d0f14;
-    font-weight: 600; font-size: 13px;
-    padding: 10px 20px; border-radius: 100px;
-    opacity: 0; transition: opacity 0.25s, transform 0.25s;
-    pointer-events: none; white-space: nowrap; z-index: 999;
-  }
-
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fatigue Observer</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --green: #22c55e;
+      --green-soft: #dcfce7;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --blue: #60a5fa;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef2f7 0%, #f8fafc 100%);
+      color: var(--text);
+      padding: 24px;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .topbar p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .screen-picker {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .screen-picker button {
+      border: 1px solid var(--line);
+      background: white;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .screen-picker button.active {
+      background: #111827;
+      color: white;
+      border-color: #111827;
+    }
+
+    .phone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .phone {
+      background: #0f172a;
+      padding: 10px;
+      border-radius: 34px;
+      box-shadow: var(--shadow);
+      display: none;
+    }
+
+    .phone.active,
+    .phone.show-all {
+      display: block;
+    }
+
+    .screen {
+      background: var(--bg);
+      min-height: 720px;
+      border-radius: 26px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 10px 16px 90px;
+      flex: 1;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+    .tiny { font-size: 12px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .menu-icon, .bell, .icon-btn {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hello {
+      margin-top: 10px;
+    }
+
+    .hello h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .quick-moods {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .mood {
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .mood .circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 8px;
+      font-size: 24px;
+      border: 3px solid transparent;
+    }
+
+    .mood.selected .circle { border-color: #111827; }
+
+    .bg-green { background: #dcfce7; }
+    .bg-yellow { background: #fef9c3; }
+    .bg-orange { background: #ffedd5; }
+    .bg-red { background: #fee2e2; }
+    .bg-blue { background: #dbeafe; }
+    .bg-purple { background: #ede9fe; }
+
+    .summary-list, .mini-stats, .insight-list, .help-list, .report-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary-item, .help-item, .report-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .summary-left, .help-left, .report-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dot-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .action {
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .action .dot-icon {
+      margin: 0 auto 8px;
+    }
+
+    .nav {
+      position: sticky;
+      bottom: 0;
+      background: rgba(255,255,255,0.95);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 12px 8px;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav div {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav .active-tab {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .chip-row, .range-row, .context-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .chip, .range-chip, .context-chip {
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .chip.selected, .range-chip.selected, .context-chip.selected {
+      background: var(--green-soft);
+      border-color: #86efac;
+      color: #166534;
+      font-weight: 700;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      font: inherit;
+      margin-top: 10px;
+      background: white;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      background: var(--green);
+      color: white;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .stat-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px;
+    }
+
+    .meter {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(var(--orange) 0 216deg, #f3f4f6 216deg 360deg);
+      display: grid;
+      place-items: center;
+      margin-left: auto;
+    }
+
+    .meter-inner {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: white;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 1fr 120px auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      overflow: hidden;
+    }
+
+    .bar > div {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .tabs button.active {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .chart {
+      margin-top: 14px;
+      background: linear-gradient(180deg, #fff7ed 0%, #ffffff 100%);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 12px;
+    }
+
+    svg { width: 100%; height: auto; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 14px; }
+      .phone-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- HOME -->
-<div id="home" class="screen active">
-  <div class="home-glow glow-1"></div>
-  <div class="home-glow glow-2"></div>
-
-  <div class="home-header">
-    <div class="home-eyebrow">Health Tracker</div>
-    <h1 class="home-title">Fatigue<br><em>Observer</em></h1>
-    <p class="home-sub">Track tired moments and surrounding context so you can spot patterns and take something concrete to a doctor.</p>
-  </div>
-
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-num" id="stat-events">0</div>
-      <div class="stat-label">Events</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="stat-summaries">0</div>
-      <div class="stat-label">Summaries</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="stat-streak">0</div>
-      <div class="stat-label">Day streak</div>
-    </div>
-  </div>
-
-  <div class="nav-list">
-    <button class="nav-btn primary" onclick="show('log-event')">
-      <div class="nav-btn-left">
-        <span>Quick Log Tired Event</span>
-        <span class="btn-meta">Capture this moment now</span>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <h1>Fatigue Observer</h1>
+        <p>Simple HTML front-end only mockup.</p>
       </div>
-      <span class="btn-icon">＋</span>
-    </button>
-    <button class="nav-btn" onclick="show('daily-summary')">
-      <div class="nav-btn-left">
-        <span>Daily Summary</span>
-        <span class="btn-meta">End-of-day context</span>
+      <div class="screen-picker">
+        <button class="picker active" data-screen="all">Show All</button>
+        <button class="picker" data-screen="home">Home</button>
+        <button class="picker" data-screen="log">New Log</button>
+        <button class="picker" data-screen="summary">Summary</button>
+        <button class="picker" data-screen="trends">Trends</button>
+        <button class="picker" data-screen="insights">Insights</button>
+        <button class="picker" data-screen="report">Report</button>
       </div>
-      <span class="btn-icon">📋</span>
-    </button>
-    <button class="nav-btn" onclick="show('timeline')">
-      <div class="nav-btn-left">
-        <span>Timeline</span>
-        <span class="btn-meta">Browse past events</span>
-      </div>
-      <span class="btn-icon">📅</span>
-    </button>
-    <button class="nav-btn" onclick="show('trends')">
-      <div class="nav-btn-left">
-        <span>Trends</span>
-        <span class="btn-meta">Patterns over time</span>
-      </div>
-      <span class="btn-icon">📈</span>
-    </button>
-    <button class="nav-btn" onclick="show('export-view')">
-      <div class="nav-btn-left">
-        <span>Export View</span>
-        <span class="btn-meta">Share with your doctor</span>
-      </div>
-      <span class="btn-icon">⬆</span>
-    </button>
-  </div>
-</div>
-
-<!-- LOG EVENT -->
-<div id="log-event" class="screen">
-  <div class="page-header">
-    <button class="back-btn" onclick="show('home')">←</button>
-    <span class="page-title">Log Tired Event</span>
-    <span class="page-time" id="event-time"></span>
-  </div>
-
-  <div class="form-scroll">
-    <div class="section-label">Severity</div>
-    <div class="severity-track" id="sev-track">
-      <div class="sev-pip" data-v="1" onclick="setSev(1)"></div>
-      <div class="sev-pip" data-v="2" onclick="setSev(2)"></div>
-      <div class="sev-pip" data-v="3" onclick="setSev(3)"></div>
-      <div class="sev-pip" data-v="4" onclick="setSev(4)"></div>
-      <div class="sev-pip" data-v="5" onclick="setSev(5)"></div>
-      <div class="sev-pip" data-v="6" onclick="setSev(6)"></div>
-      <div class="sev-pip" data-v="7" onclick="setSev(7)"></div>
-    </div>
-    <div class="severity-labels">
-      <span>Mild</span><span>Moderate</span><span>Severe</span>
     </div>
 
-    <div class="section-label">Context</div>
-    <div class="pill-grid" id="context-pills">
-      <div class="pill" onclick="togglePill(this)">After eating</div>
-      <div class="pill" onclick="togglePill(this)">After work</div>
-      <div class="pill" onclick="togglePill(this)">After exercise</div>
-      <div class="pill" onclick="togglePill(this)">Just woke up</div>
-      <div class="pill" onclick="togglePill(this)">Evening slump</div>
-      <div class="pill" onclick="togglePill(this)">Random</div>
-      <div class="pill" onclick="togglePill(this)">Mid-meeting</div>
-      <div class="pill" onclick="togglePill(this)">After driving</div>
-      <div class="pill" onclick="togglePill(this)">Morning</div>
-    </div>
+    <div class="phone-grid">
+      <!-- Home -->
+      <div class="phone active show-all" data-name="home">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <button class="menu-icon">☰</button>
+              <button class="bell">🔔</button>
+            </div>
 
-    <div class="section-label">Signs / Symptoms</div>
-    <div class="pill-grid" id="symptom-pills">
-      <div class="pill" onclick="togglePill(this)">Flat</div>
-      <div class="pill" onclick="togglePill(this)">Low energy</div>
-      <div class="pill" onclick="togglePill(this)">Mood</div>
-      <div class="pill" onclick="togglePill(this)">Shut down</div>
-      <div class="pill" onclick="togglePill(this)">Withdrawn</div>
-      <div class="pill" onclick="togglePill(this)">Wired</div>
-      <div class="pill" onclick="togglePill(this)">Restless</div>
-      <div class="pill" onclick="togglePill(this)">On edge</div>
-      <div class="pill" onclick="togglePill(this)">Irritable</div>
-      <div class="pill" onclick="togglePill(this)">Brain fog</div>
-      <div class="pill" onclick="togglePill(this)">Can't focus</div>
-      <div class="pill" onclick="togglePill(this)">Forgetful</div>
-      <div class="pill" onclick="togglePill(this)">Headache</div>
-      <div class="pill" onclick="togglePill(this)">Dizziness</div>
-      <div class="pill" onclick="togglePill(this)">Weak</div>
-      <div class="pill" onclick="togglePill(this)">Heavy limbs</div>
-      <div class="pill" onclick="togglePill(this)">Nausea</div>
-      <div class="pill" onclick="togglePill(this)">Eye strain</div>
-    </div>
+            <div class="hello">
+              <h2>Good morning, Alex 👋</h2>
+              <p class="muted">How are you feeling today?</p>
+            </div>
 
-    <div class="section-label">Optional note</div>
-    <textarea class="note-area" id="event-note" placeholder="e.g. long shift, skipped lunch, poor sleep..."></textarea>
-  </div>
+            <div class="card">
+              <div class="row">
+                <strong>Quick Log</strong>
+              </div>
+              <p class="muted tiny">Tap how you feel right now</p>
+              <div class="quick-moods" id="homeMoods">
+                <div class="mood" data-label="Good"><div class="circle bg-green">😊</div><div class="tiny">Good</div></div>
+                <div class="mood" data-label="Okay"><div class="circle bg-yellow">😐</div><div class="tiny">Okay</div></div>
+                <div class="mood selected" data-label="Tired"><div class="circle bg-orange">😟</div><div class="tiny">Tired</div></div>
+                <div class="mood" data-label="Very Tired"><div class="circle bg-red">😫</div><div class="tiny">Very Tired</div></div>
+              </div>
+            </div>
 
-  <div class="action-bar">
-    <button class="btn-cancel" onclick="show('home')">Back</button>
-    <button class="btn-save" onclick="saveEvent()">Save event</button>
-  </div>
-</div>
+            <div class="card">
+              <div class="row">
+                <strong>Today's Summary</strong>
+                <span class="tiny muted">Logged at 8:45 AM</span>
+              </div>
+              <div class="summary-list" style="margin-top:12px;">
+                <div class="summary-item">
+                  <div class="summary-left"><div class="dot-icon bg-blue">💧</div><span>Fatigue Level</span></div>
+                  <span class="muted">Tired</span>
+                </div>
+                <div class="summary-item">
+                  <div class="summary-left"><div class="dot-icon bg-purple">⚡</div><span>Energy</span></div>
+                  <span class="muted">Low</span>
+                </div>
+                <div class="summary-item">
+                  <div class="summary-left"><div class="dot-icon bg-yellow">🌙</div><span>Sleep Quality</span></div>
+                  <span class="muted">Poor</span>
+                </div>
+              </div>
+            </div>
 
-<!-- DAILY SUMMARY -->
-<div id="daily-summary" class="screen">
-  <div class="page-header">
-    <button class="back-btn" onclick="show('home')">←</button>
-    <span class="page-title">Daily Summary</span>
-    <span class="page-time" id="summary-date"></span>
-  </div>
-
-  <div class="form-scroll">
-    <div class="summary-block" style="margin-top:8px">
-      <div class="summary-block-title">Sleep</div>
-      <div class="sleep-row">
-        <span class="sleep-label">Hours slept</span>
-        <div class="sleep-val">
-          <button class="num-btn" onclick="adj('sleep',-1)">−</button>
-          <div class="num-display" id="sleep-val">7</div>
-          <button class="num-btn" onclick="adj('sleep',1)">＋</button>
+            <div class="card">
+              <strong>Quick Actions</strong>
+              <div class="quick-actions">
+                <div class="action"><div class="dot-icon bg-green">➕</div>Log Event</div>
+                <div class="action"><div class="dot-icon bg-purple">👤</div>Symptoms</div>
+                <div class="action"><div class="dot-icon bg-blue">📈</div>Timeline</div>
+                <div class="action"><div class="dot-icon bg-yellow">💡</div>Insights</div>
+              </div>
+            </div>
+          </div>
+          <div class="nav">
+            <div class="active-tab">🏠<br>Home</div>
+            <div>📝<br>Log</div>
+            <div>🕒<br>Timeline</div>
+            <div>📊<br>Trends</div>
+            <div>⋯<br>More</div>
+          </div>
         </div>
       </div>
-      <div class="sleep-row">
-        <span class="sleep-label">Quality (1–5)</span>
-        <div class="sleep-val">
-          <button class="num-btn" onclick="adj('sleepq',-1)">−</button>
-          <div class="num-display" id="sleepq-val">3</div>
-          <button class="num-btn" onclick="adj('sleepq',1)">＋</button>
+
+      <!-- New Log -->
+      <div class="phone active show-all" data-name="log">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <button class="icon-btn">←</button>
+              <strong>New Log</strong>
+              <button class="icon-btn">📅</button>
+            </div>
+
+            <div class="card">
+              <div class="row">
+                <strong>Today, 24 May 2025</strong>
+                <span class="chip selected">🕒 8:45 AM</span>
+              </div>
+
+              <h3 style="margin:18px 0 8px; font-size:18px;">How do you feel?</h3>
+              <div class="quick-moods" id="logMoods">
+                <div class="mood" data-label="Good"><div class="circle bg-green">😊</div><div class="tiny">Good</div></div>
+                <div class="mood" data-label="Okay"><div class="circle bg-yellow">😐</div><div class="tiny">Okay</div></div>
+                <div class="mood selected" data-label="Tired"><div class="circle bg-orange">😟</div><div class="tiny">Tired</div></div>
+                <div class="mood" data-label="Very Tired"><div class="circle bg-red">😫</div><div class="tiny">Very Tired</div></div>
+              </div>
+
+              <h3 style="margin:18px 0 8px; font-size:18px;">Select symptoms</h3>
+              <p class="muted tiny">Choose all that apply</p>
+              <div class="chip-row">
+                <div class="chip selected">Fatigue</div>
+                <div class="chip selected">Low energy</div>
+                <div class="chip">Headache</div>
+                <div class="chip">Dizziness</div>
+                <div class="chip">Weakness</div>
+                <div class="chip">Brain fog</div>
+                <div class="chip">+ More</div>
+              </div>
+
+              <h3 style="margin:18px 0 8px; font-size:18px;">Add a note</h3>
+              <textarea placeholder="Type anything that might be useful..."></textarea>
+
+              <h3 style="margin:18px 0 8px; font-size:18px;">Add context</h3>
+              <div class="context-row">
+                <div class="context-chip">Sleep</div>
+                <div class="context-chip selected">Stress</div>
+                <div class="context-chip">Activity</div>
+                <div class="context-chip">Illness</div>
+                <div class="context-chip">Other</div>
+              </div>
+
+              <button class="primary-btn" onclick="alert('Front-end only demo: log saved visually only.')">Save Log</button>
+            </div>
+          </div>
+          <div class="nav">
+            <div>🏠<br>Home</div>
+            <div class="active-tab">📝<br>Log</div>
+            <div>🕒<br>Timeline</div>
+            <div>📊<br>Trends</div>
+            <div>⋯<br>More</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="phone active show-all" data-name="summary">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <button class="icon-btn">←</button>
+              <strong>Daily Summary</strong>
+              <button class="icon-btn">📅</button>
+            </div>
+
+            <div class="card">
+              <div class="row">
+                <div>
+                  <div class="small muted">Fatigue Level</div>
+                  <div style="font-size:20px; font-weight:700; color: var(--orange); margin-top:6px;">Tired</div>
+                </div>
+                <div class="meter">
+                  <div class="meter-inner">6<br><span class="tiny muted">/10</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-box"><div class="tiny muted">Energy</div><div style="margin-top:8px; font-weight:700; color:var(--red);">Low</div><div class="tiny muted">3/10</div></div>
+              <div class="stat-box"><div class="tiny muted">Sleep Quality</div><div style="margin-top:8px; font-weight:700; color:var(--purple);">Poor</div><div class="tiny muted">2/10</div></div>
+              <div class="stat-box"><div class="tiny muted">Stress Level</div><div style="margin-top:8px; font-weight:700; color:var(--orange);">Medium</div><div class="tiny muted">5/10</div></div>
+            </div>
+
+            <div class="card">
+              <strong>Top Symptoms</strong>
+              <p class="tiny muted">You reported 3 symptoms</p>
+              <div class="bar-row"><span>Fatigue</span><div class="bar"><div style="width:78%; background: var(--orange);"></div></div><span style="color:var(--orange)">Severe</span></div>
+              <div class="bar-row"><span>Low energy</span><div class="bar"><div style="width:55%; background: #f59e0b;"></div></div><span style="color:#d97706">Moderate</span></div>
+              <div class="bar-row"><span>Headache</span><div class="bar"><div style="width:24%; background: var(--green);"></div></div><span style="color:var(--green)">Mild</span></div>
+            </div>
+
+            <div class="card">
+              <div class="row"><strong>Notes</strong><span>✏️</span></div>
+              <p class="muted">Felt tired after a long meeting.</p>
+            </div>
+          </div>
+          <div class="nav">
+            <div>🏠<br>Home</div>
+            <div>📝<br>Log</div>
+            <div class="active-tab">🕒<br>Timeline</div>
+            <div>📊<br>Trends</div>
+            <div>⋯<br>More</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trends -->
+      <div class="phone active show-all" data-name="trends">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <strong>Trends</strong>
+              <button class="icon-btn">📅</button>
+            </div>
+
+            <div class="tabs">
+              <button class="active">Week</button>
+              <button>Month</button>
+              <button>3 Months</button>
+            </div>
+
+            <div class="card">
+              <div class="row"><strong>18 - 24 May 2025</strong><span class="muted">Weekly view</span></div>
+              <div class="chart">
+                <div class="tiny muted" style="margin-bottom:8px;">Fatigue Level (Daily Average)</div>
+                <svg viewBox="0 0 300 150" aria-label="fatigue chart">
+                  <line x1="20" y1="130" x2="280" y2="130" stroke="#d1d5db" stroke-width="1"/>
+                  <line x1="20" y1="20" x2="20" y2="130" stroke="#d1d5db" stroke-width="1"/>
+                  <polyline fill="none" stroke="#fb923c" stroke-width="4" points="20,110 60,70 100,78 140,52 180,74 220,66 260,45"/>
+                  <circle cx="20" cy="110" r="4" fill="#fb923c"/>
+                  <circle cx="60" cy="70" r="4" fill="#fb923c"/>
+                  <circle cx="100" cy="78" r="4" fill="#fb923c"/>
+                  <circle cx="140" cy="52" r="4" fill="#fb923c"/>
+                  <circle cx="180" cy="74" r="4" fill="#fb923c"/>
+                  <circle cx="220" cy="66" r="4" fill="#fb923c"/>
+                  <circle cx="260" cy="45" r="4" fill="#fb923c"/>
+                  <text x="20" y="145" font-size="10">Sun</text>
+                  <text x="60" y="145" font-size="10">Mon</text>
+                  <text x="100" y="145" font-size="10">Tue</text>
+                  <text x="140" y="145" font-size="10">Wed</text>
+                  <text x="180" y="145" font-size="10">Thu</text>
+                  <text x="220" y="145" font-size="10">Fri</text>
+                  <text x="260" y="145" font-size="10">Sat</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="two-col">
+              <div class="card" style="margin-top:0;">
+                <div class="tiny muted">Most tired on</div>
+                <div style="font-size:28px; color: var(--orange); font-weight:700; margin-top:8px;">Thursday</div>
+                <div class="muted">7.6 /10</div>
+              </div>
+              <div class="card" style="margin-top:0;">
+                <div class="tiny muted">Best day</div>
+                <div style="font-size:28px; color: var(--green); font-weight:700; margin-top:8px;">Sunday</div>
+                <div class="muted">4.2 /10</div>
+              </div>
+            </div>
+          </div>
+          <div class="nav">
+            <div>🏠<br>Home</div>
+            <div>📝<br>Log</div>
+            <div>🕒<br>Timeline</div>
+            <div class="active-tab">📊<br>Trends</div>
+            <div>⋯<br>More</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insights -->
+      <div class="phone active show-all" data-name="insights">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <button class="icon-btn">←</button>
+              <strong>Insights</strong>
+              <button class="icon-btn">ⓘ</button>
+            </div>
+
+            <div class="card">
+              <strong>Your patterns</strong>
+              <div class="insight-list" style="margin-top:14px;">
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-green">📅</div><span>You tend to feel more tired on Thursdays.</span></div></div>
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-purple">🌙</div><span>Poor sleep days are linked to higher fatigue.</span></div></div>
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-yellow">⚡</div><span>Lower stress days show better energy.</span></div></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <strong>What can help?</strong>
+              <div class="help-list" style="margin-top:14px;">
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-purple">🛏️</div><span>Try to get 7–8 hours of sleep.</span></div></div>
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-yellow">☕</div><span>Take short breaks during long meetings.</span></div></div>
+                <div class="help-item"><div class="help-left"><div class="dot-icon bg-green">🚶</div><span>Light exercise improves energy.</span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="nav">
+            <div>🏠<br>Home</div>
+            <div>📝<br>Log</div>
+            <div>🕒<br>Timeline</div>
+            <div class="active-tab">📊<br>Trends</div>
+            <div>⋯<br>More</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report -->
+      <div class="phone active show-all" data-name="report">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>📶 🔋</span></div>
+          <div class="content">
+            <div class="row">
+              <button class="icon-btn">←</button>
+              <strong>Export Report</strong>
+              <button class="icon-btn">⋯</button>
+            </div>
+
+            <div class="card report-item">
+              <div class="report-left">
+                <div class="dot-icon bg-green">📄</div>
+                <div>
+                  <strong>Generate a summary</strong>
+                  <div class="tiny muted">For your doctor or records</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <strong>Select data range</strong>
+              <div class="range-row">
+                <div class="range-chip">7 Days</div>
+                <div class="range-chip selected">30 Days</div>
+                <div class="range-chip">3 Months</div>
+                <div class="range-chip">Custom</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <strong>Include in report</strong>
+              <div class="check-row"><input type="checkbox" checked> <span>Fatigue levels</span></div>
+              <div class="check-row"><input type="checkbox" checked> <span>Symptoms</span></div>
+              <div class="check-row"><input type="checkbox" checked> <span>Notes</span></div>
+              <div class="check-row"><input type="checkbox" checked> <span>Trends & insights</span></div>
+              <button class="primary-btn" onclick="alert('Front-end only demo: report generation is not connected yet.')">Generate Report</button>
+            </div>
+          </div>
+          <div class="nav">
+            <div>🏠<br>Home</div>
+            <div>📝<br>Log</div>
+            <div>🕒<br>Timeline</div>
+            <div>📊<br>Trends</div>
+            <div class="active-tab">⋯<br>More</div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="summary-block">
-      <div class="summary-block-title">Overall energy today</div>
-      <div class="severity-track" id="energy-track">
-        <div class="sev-pip" data-v="1" onclick="setEnergy(1)"></div>
-        <div class="sev-pip" data-v="2" onclick="setEnergy(2)"></div>
-        <div class="sev-pip" data-v="3" onclick="setEnergy(3)"></div>
-        <div class="sev-pip" data-v="4" onclick="setEnergy(4)"></div>
-        <div class="sev-pip" data-v="5" onclick="setEnergy(5)"></div>
-        <div class="sev-pip" data-v="6" onclick="setEnergy(6)"></div>
-        <div class="sev-pip" data-v="7" onclick="setEnergy(7)"></div>
-      </div>
-      <div class="severity-labels"><span>Very low</span><span>Great</span></div>
-    </div>
-
-    <div class="summary-block">
-      <div class="summary-block-title">Mood</div>
-      <div class="mood-row">
-        <button class="mood-btn" onclick="setMood(this)">😔</button>
-        <button class="mood-btn" onclick="setMood(this)">😕</button>
-        <button class="mood-btn" onclick="setMood(this)">😐</button>
-        <button class="mood-btn" onclick="setMood(this)">🙂</button>
-        <button class="mood-btn" onclick="setMood(this)">😄</button>
-      </div>
-    </div>
-
-    <div class="summary-block">
-      <div class="summary-block-title">Contributing factors</div>
-      <div class="pill-grid">
-        <div class="pill" onclick="togglePill(this)">Stressful day</div>
-        <div class="pill" onclick="togglePill(this)">Physical work</div>
-        <div class="pill" onclick="togglePill(this)">Poor nutrition</div>
-        <div class="pill" onclick="togglePill(this)">Lots of screen</div>
-        <div class="pill" onclick="togglePill(this)">Social demands</div>
-        <div class="pill" onclick="togglePill(this)">Illness</div>
-        <div class="pill" onclick="togglePill(this)">Period</div>
-        <div class="pill" onclick="togglePill(this)">Heat</div>
-        <div class="pill" onclick="togglePill(this)">Good day</div>
-      </div>
-    </div>
-
-    <div class="section-label" style="margin-top:0">Notes</div>
-    <textarea class="note-area" id="summary-note" placeholder="Anything else worth noting today..." style="margin-bottom:8px"></textarea>
   </div>
 
-  <div class="action-bar">
-    <button class="btn-cancel" onclick="show('home')">Back</button>
-    <button class="btn-save" onclick="saveSummary()">Save summary</button>
-  </div>
-</div>
+  <script>
+    // Show selected screen or all screens.
+    const pickerButtons = document.querySelectorAll('.picker');
+    const phones = document.querySelectorAll('.phone');
 
-<!-- TIMELINE -->
-<div id="timeline" class="screen">
-  <div class="page-header">
-    <button class="back-btn" onclick="show('home')">←</button>
-    <span class="page-title">Timeline</span>
-  </div>
-  <div class="tl-list" id="tl-list">
-    <div class="tl-empty">
-      <span class="tl-empty-icon">🌙</span>
-      No events logged yet.<br>Use Quick Log to start tracking.
-    </div>
-  </div>
-</div>
+    pickerButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        pickerButtons.forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
 
-<!-- TRENDS -->
-<div id="trends" class="screen">
-  <div class="page-header">
-    <button class="back-btn" onclick="show('home')">←</button>
-    <span class="page-title">Trends</span>
-  </div>
-  <div class="trends-body">
-    <div class="trend-card">
-      <div class="trend-title">Top contexts</div>
-      <div class="bar-chart" id="ctx-bars">
-        <div class="tl-empty" style="padding:20px 0">Log events to see trends</div>
-      </div>
-    </div>
-    <div class="trend-card">
-      <div class="trend-title">Top symptoms</div>
-      <div class="bar-chart" id="sym-bars">
-        <div class="tl-empty" style="padding:20px 0">Log events to see trends</div>
-      </div>
-    </div>
-  </div>
-</div>
+        const target = button.dataset.screen;
+        phones.forEach(phone => {
+          phone.classList.remove('active', 'show-all');
 
-<!-- EXPORT -->
-<div id="export-view" class="screen">
-  <div class="page-header">
-    <button class="back-btn" onclick="show('home')">←</button>
-    <span class="page-title">Export</span>
-  </div>
-  <div class="export-body">
-    <div class="export-preview" id="export-text">No events to export yet.</div>
-  </div>
-  <div class="action-bar">
-    <button class="btn-save" onclick="copyExport()">Copy to clipboard</button>
-  </div>
-</div>
+          if (target === 'all') {
+            phone.classList.add('active', 'show-all');
+          } else if (phone.dataset.name === target) {
+            phone.classList.add('active');
+          }
+        });
+      });
+    });
 
-<div class="toast" id="toast"></div>
-
-<script>
-let state = {
-  events: JSON.parse(localStorage.getItem('fo_events') || '[]'),
-  summaries: JSON.parse(localStorage.getItem('fo_summaries') || '[]'),
-  sev: 0, energy: 0, mood: null, sleep: 7, sleepq: 3,
-};
-
-function save() {
-  localStorage.setItem('fo_events', JSON.stringify(state.events));
-  localStorage.setItem('fo_summaries', JSON.stringify(state.summaries));
-  updateStats();
-}
-
-function updateStats() {
-  document.getElementById('stat-events').textContent = state.events.length;
-  document.getElementById('stat-summaries').textContent = state.summaries.length;
-  const dates = [...new Set(state.events.map(e => e.date))].sort();
-  let streak = 0;
-  for (let i = dates.length - 1; i >= 0; i--) {
-    const d = new Date(dates[i]);
-    const expected = new Date();
-    expected.setDate(expected.getDate() - (dates.length - 1 - i));
-    if (d.toDateString() === expected.toDateString()) streak++;
-    else break;
-  }
-  document.getElementById('stat-streak').textContent = streak;
-}
-
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
-  if (id === 'log-event') initLogEvent();
-  if (id === 'daily-summary') initSummary();
-  if (id === 'timeline') renderTimeline();
-  if (id === 'trends') renderTrends();
-  if (id === 'export-view') renderExport();
-}
-
-function initLogEvent() {
-  state.sev = 0;
-  document.querySelectorAll('#sev-track .sev-pip').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('#context-pills .pill, #symptom-pills .pill').forEach(p => p.classList.remove('selected'));
-  document.getElementById('event-note').value = '';
-  document.getElementById('event-time').textContent =
-    new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-}
-
-function setSev(v) {
-  state.sev = v;
-  document.querySelectorAll('#sev-track .sev-pip').forEach(p =>
-    p.classList.toggle('active', +p.dataset.v <= v));
-}
-
-function setEnergy(v) {
-  state.energy = v;
-  document.querySelectorAll('#energy-track .sev-pip').forEach(p =>
-    p.classList.toggle('active', +p.dataset.v <= v));
-}
-
-function togglePill(el) { el.classList.toggle('selected'); }
-
-function getSelected(containerId) {
-  return [...document.querySelectorAll('#' + containerId + ' .pill.selected')].map(p => p.textContent);
-}
-
-function saveEvent() {
-  state.events.unshift({
-    id: Date.now(),
-    date: new Date().toDateString(),
-    time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
-    sev: state.sev,
-    context: getSelected('context-pills'),
-    symptoms: getSelected('symptom-pills'),
-    note: document.getElementById('event-note').value.trim(),
-  });
-  save();
-  showToast('Event saved ✓');
-  show('home');
-}
-
-function initSummary() {
-  state.sleep = 7; state.sleepq = 3; state.energy = 0; state.mood = null;
-  document.getElementById('sleep-val').textContent = 7;
-  document.getElementById('sleepq-val').textContent = 3;
-  document.querySelectorAll('#energy-track .sev-pip').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  document.querySelectorAll('#daily-summary .pill').forEach(p => p.classList.remove('selected'));
-  document.getElementById('summary-note').value = '';
-  document.getElementById('summary-date').textContent =
-    new Date().toLocaleDateString([], {month:'short', day:'numeric'});
-}
-
-function adj(key, delta) {
-  if (key === 'sleep') {
-    state.sleep = Math.max(0, Math.min(24, state.sleep + delta));
-    document.getElementById('sleep-val').textContent = state.sleep;
-  } else {
-    state.sleepq = Math.max(1, Math.min(5, state.sleepq + delta));
-    document.getElementById('sleepq-val').textContent = state.sleepq;
-  }
-}
-
-function setMood(el) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  state.mood = el.textContent;
-}
-
-function saveSummary() {
-  state.summaries.unshift({
-    id: Date.now(),
-    date: new Date().toDateString(),
-    sleep: state.sleep, sleepq: state.sleepq,
-    energy: state.energy, mood: state.mood,
-    factors: [...document.querySelectorAll('#daily-summary .pill.selected')].map(p => p.textContent),
-    note: document.getElementById('summary-note').value.trim(),
-  });
-  save();
-  showToast('Summary saved ✓');
-  show('home');
-}
-
-function renderTimeline() {
-  const container = document.getElementById('tl-list');
-  if (!state.events.length) {
-    container.innerHTML = `<div class="tl-empty"><span class="tl-empty-icon">🌙</span>No events logged yet.<br>Use Quick Log to start tracking.</div>`;
-    return;
-  }
-  container.innerHTML = state.events.map(e => {
-    const sl = e.sev <= 2 ? 'low' : e.sev <= 5 ? 'mid' : 'high';
-    const st = e.sev <= 2 ? 'Mild' : e.sev <= 5 ? 'Moderate' : 'Severe';
-    const tags = [...(e.context||[]), ...(e.symptoms||[])].slice(0,5);
-    return `<div class="tl-card">
-      <div class="tl-top">
-        <span class="tl-time">${e.date} · ${e.time}</span>
-        <span class="tl-sev ${sl}">${st}${e.sev ? ' · '+e.sev+'/7' : ''}</span>
-      </div>
-      <div class="tl-tags">${tags.map(t=>`<span class="tl-tag">${t}</span>`).join('')}</div>
-      ${e.note ? `<div class="tl-note">${e.note}</div>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function renderTrends() {
-  const ctxMap = {}, symMap = {};
-  state.events.forEach(e => {
-    (e.context||[]).forEach(c => ctxMap[c] = (ctxMap[c]||0)+1);
-    (e.symptoms||[]).forEach(s => symMap[s] = (symMap[s]||0)+1);
-  });
-  function makeBars(map, id) {
-    const items = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,5);
-    if (!items.length) {
-      document.getElementById(id).innerHTML = '<div class="tl-empty" style="padding:20px 0">Log events to see trends</div>';
-      return;
+    // Simple mood selection behaviour.
+    function setupMoodGroup(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const moods = container.querySelectorAll('.mood');
+      moods.forEach(mood => {
+        mood.addEventListener('click', () => {
+          moods.forEach(m => m.classList.remove('selected'));
+          mood.classList.add('selected');
+        });
+      });
     }
-    const max = items[0][1];
-    document.getElementById(id).innerHTML = items.map(([n,c])=>
-      `<div class="bar-row">
-        <span class="bar-name">${n}</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${(c/max*100).toFixed(0)}%"></div></div>
-        <span class="bar-count">${c}</span>
-      </div>`).join('');
-  }
-  makeBars(ctxMap, 'ctx-bars');
-  makeBars(symMap, 'sym-bars');
-}
 
-function renderExport() {
-  if (!state.events.length) {
-    document.getElementById('export-text').textContent = 'No events to export yet.';
-    return;
-  }
-  const lines = ['FATIGUE OBSERVER — EXPORT', `Generated: ${new Date().toLocaleString()}`, ''];
-  state.events.forEach(e => {
-    lines.push(`[${e.date} ${e.time}] Severity: ${e.sev}/7`);
-    if (e.context?.length) lines.push(`  Context: ${e.context.join(', ')}`);
-    if (e.symptoms?.length) lines.push(`  Symptoms: ${e.symptoms.join(', ')}`);
-    if (e.note) lines.push(`  Note: ${e.note}`);
-    lines.push('');
-  });
-  document.getElementById('export-text').textContent = lines.join('\n');
-}
+    setupMoodGroup('homeMoods');
+    setupMoodGroup('logMoods');
 
-function copyExport() {
-  const text = document.getElementById('export-text').textContent;
-  navigator.clipboard.writeText(text).then(() => showToast('Copied!'));
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-updateStats();
-</script>
+    // Toggle chips.
+    document.querySelectorAll('.chip, .context-chip, .range-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        if (chip.classList.contains('range-chip')) {
+          chip.parentElement.querySelectorAll('.range-chip').forEach(c => c.classList.remove('selected'));
+          chip.classList.add('selected');
+        } else {
+          chip.classList.toggle('selected');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
