@@ -4,11 +4,19 @@ const mainNav = document.getElementById('main-nav');
 
 if (navToggle && mainNav) {
   navToggle.addEventListener('click', () => {
-    mainNav.classList.toggle('open');
+    const isOpen = mainNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  mainNav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
   });
 }
 
-// Smooth scroll for in-page links (like "How it works")
+// Smooth scroll for same-page links (like "How it works")
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (evt) => {
     const targetId = link.getAttribute('href').slice(1);

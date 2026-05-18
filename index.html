@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>MTC Cyber — Cyber Readiness for Australian Small Business</title>
+    <title>MTC Cyber — Practical Cyber Security for Small Business</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="MTC Cyber helps Australian small businesses improve their cyber security with a simple, plain-English Cyber Readiness Snapshot and practical fixes."
+      content="Turn confusing cyber risk into a clear action plan. MTC Cyber provides plain-English Cyber Readiness Snapshots and practical fixes for Australian small businesses."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,16 +26,17 @@
           <span class="logo-text">MTC Cyber</span>
         </a>
         <nav class="main-nav" id="main-nav">
-          <a href="index.html">Home</a>
+          <a href="index.html" class="active">Home</a>
           <a href="services.html">Services</a>
           <a href="about.html">About</a>
           <a href="blog.html">Insights</a>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html" class="nav-cta">Free snapshot</a>
         </nav>
         <button
           class="nav-toggle"
           id="nav-toggle"
           aria-label="Toggle navigation"
+          aria-expanded="false"
         >
           <span></span><span></span><span></span>
         </button>
@@ -47,40 +48,55 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-text">
+            <p class="eyebrow">Small-business cyber security • Wallan VIC</p>
             <h1>
-              Simple, practical cyber security for Australian small business.
+              Turn cyber uncertainty into a clear action plan.
             </h1>
             <p>
-              Get a <strong>plain-English Cyber Readiness Snapshot</strong> of
-              your website and systems — no jargon, no scare tactics, just clear
-              risks and practical fixes you can act on.
+              MTC Cyber gives Australian small businesses a
+              <strong>plain-English Cyber Readiness Snapshot</strong> — showing
+              what is exposed, what matters most and exactly what to fix first.
             </p>
             <div class="hero-cta">
               <a href="contact.html#snapshot-form" class="btn btn-primary"
                 >Request your free snapshot</a
               >
-              <a href="#how-it-works" class="btn btn-secondary">How it works</a>
+              <a href="#snapshot-includes" class="btn btn-secondary">See what you get</a>
             </div>
             <div class="hero-meta">
-              <span>✔ Non-intrusive public scans only</span>
-              <span
-                >✔ Designed for cafes, mechanics, trades & local services</span
-              >
-              <span>✔ Based in Wallan, Victoria</span>
+              <span>✔ No disruptive testing</span>
+              <span>✔ Built for owner-operated businesses</span>
+              <span>✔ Clear next steps for you or your IT provider</span>
+            </div>
+            <div class="hero-stats" aria-label="Service highlights">
+              <div>
+                <strong>Fast</strong>
+                <span>clear first step</span>
+              </div>
+              <div>
+                <strong>Prioritised</strong>
+                <span>fix what matters</span>
+              </div>
+              <div>
+                <strong>Practical</strong>
+                <span>built for real budgets</span>
+              </div>
             </div>
           </div>
-          <div class="hero-card">
-            <!-- big logo added -->
-            <img
-              src="mtc-logo.png"
-              alt="MTC Cyber logo"
-              class="hero-logo-big"
-            />
-            <div class="score-badge">
-              <span class="score-label">Example score</span>
-              <span class="score-value">63 / 100</span>
-              <span class="score-sub">Moderate risk</span>
+          <div class="hero-card" aria-label="Example Cyber Readiness Snapshot">
+            <div class="hero-card-top">
+              <img
+                src="mtc-logo.png"
+                alt="MTC Cyber logo"
+                class="hero-logo-big"
+              />
+              <div class="score-badge">
+                <span class="score-label">Example snapshot</span>
+                <span class="score-value">63 / 100</span>
+                <span class="score-sub">3 priority fixes</span>
+              </div>
             </div>
+            <div class="scan-line"><span></span></div>
             <ul class="hero-list">
               <li>
                 <strong>Missing security headers</strong> &mdash; higher risk of
@@ -96,9 +112,99 @@
               </li>
             </ul>
             <p class="hero-note">
-              Your report is delivered as a simple PDF with ratings and next
-              steps.
+              Walk away with a ranked action list you can approve, delegate or
+              send directly to your IT provider.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trust strip -->
+      <section class="trust-strip" aria-label="Why businesses choose MTC Cyber">
+        <div class="container trust-strip-inner">
+          <span>Public-only checks</span>
+          <span>Consent-led assessment</span>
+          <span>Plain-English reporting</span>
+          <span>Australian small-business focus</span>
+        </div>
+      </section>
+
+      <!-- Business outcomes -->
+      <section class="section outcomes-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow centered">Built for busy operators</p>
+            <h2>Cyber security that protects trust, time and revenue</h2>
+            <p>
+              You do not need another technical report collecting dust. You need
+              a simple, commercial view of what could hurt the business and what
+              to do next.
+            </p>
+          </div>
+          <div class="outcome-grid">
+            <article class="outcome-card">
+              <span class="outcome-icon">🛡️</span>
+              <h3>Protect customer trust</h3>
+              <p>
+                Spot common website, DNS and email weaknesses before they become
+                embarrassing incidents or customer confidence issues.
+              </p>
+            </article>
+            <article class="outcome-card featured-outcome">
+              <span class="outcome-icon">⚡</span>
+              <h3>Fix the highest-risk gaps first</h3>
+              <p>
+                Get a ranked list of practical improvements so your time and IT
+                spend go toward the actions that matter most.
+              </p>
+            </article>
+            <article class="outcome-card">
+              <span class="outcome-icon">🤝</span>
+              <h3>Make IT conversations easier</h3>
+              <p>
+                Share plain-English findings with your web developer, MSP or IT
+                support so everyone knows the next move.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Snapshot inclusions -->
+      <section class="section section-alt" id="snapshot-includes">
+        <div class="container snapshot-layout">
+          <div>
+            <p class="eyebrow">What you get</p>
+            <h2>A clear snapshot, not a confusing audit</h2>
+            <p>
+              The Cyber Readiness Snapshot gives you enough visibility to make
+              smart decisions without committing to a heavy enterprise audit.
+            </p>
+            <a href="contact.html#snapshot-form" class="btn btn-primary">
+              Get my snapshot
+            </a>
+          </div>
+          <div class="deliverables-grid">
+            <article>
+              <strong>01</strong>
+              <h3>Readiness score</h3>
+              <p>A simple score out of 100 with high, medium and low priorities.</p>
+            </article>
+            <article>
+              <strong>02</strong>
+              <h3>Public exposure checks</h3>
+              <p>Review of common website, DNS, SSL/TLS and email security signals.</p>
+            </article>
+            <article>
+              <strong>03</strong>
+              <h3>Business-friendly explanation</h3>
+              <p>Each issue is explained in everyday language with the likely impact.</p>
+            </article>
+            <article>
+              <strong>04</strong>
+              <h3>Action plan</h3>
+              <p>Practical next steps you can approve, implement or hand to IT.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -107,9 +213,11 @@
       <section class="section" id="how-it-works">
         <div class="container">
           <div class="section-header">
-            <h2>How the Cyber Readiness Snapshot works</h2>
+            <p class="eyebrow centered">Simple process</p>
+            <h2>From uncertainty to action in three steps</h2>
             <p>
-              Three simple steps. No access to your internal systems required.
+              No access to your internal systems required, and no disruptive
+              testing against your business.
             </p>
           </div>
           <div class="steps-grid">
@@ -136,8 +244,8 @@
               <h3>You receive a clear report</h3>
               <p>
                 Within a short timeframe, you receive a PDF snapshot with a
-                score out of 100, with risks and practical next steps
-                you can share with your IT support.
+                score out of 100, risks and practical next steps you can share
+                with your IT support.
               </p>
             </article>
           </div>
@@ -148,7 +256,8 @@
       <section class="section section-alt">
         <div class="container">
           <div class="section-header">
-            <h2>Services designed for real-world small business</h2>
+            <p class="eyebrow centered">Practical services</p>
+            <h2>Start lean, then improve at the right pace</h2>
             <p>No noise, no enterprise bloat. Just what you actually need.</p>
           </div>
 
@@ -163,7 +272,7 @@
                 <li>List of recommended actions to share with IT.</li>
               </ul>
               <a href="contact.html#snapshot-form" class="btn btn-outline"
-                >Request snapshot</a
+                >Request my snapshot</a
               >
             </article>
 
@@ -272,7 +381,7 @@
                 our IT provider to fix. It felt like a safety check rather than
                 a sales pitch.”
               </p>
-              <p class="testimonial-meta">Theo, Caldern.org</p>
+              <p class="testimonial-meta">Theo, Calder region business</p>
             </article>
             <article class="testimonial-card">
               <p class="testimonial-text">
@@ -286,7 +395,7 @@
                 “Matthew explained cyber risks in a way the whole team
                 understood. It was practical, not overwhelming.”
               </p>
-              <p class="testimonial-meta">Manager, sart up "Clear-Head</p>
+              <p class="testimonial-meta">Manager, start-up "Clear-Head"</p>
             </article>
           </div>
         </div>
@@ -388,14 +497,15 @@
       <section class="section cta-section">
         <div class="container cta-inner">
           <div>
-            <h2>Ready to see where you stand?</h2>
+            <p class="eyebrow">Free first step</p>
+            <h2>Ready to make cyber risk feel manageable?</h2>
             <p>
-              Request a free Cyber Readiness Snapshot and get a clear view of
-              your risk in plain English.
+              Request a Cyber Readiness Snapshot and get a clear, prioritised
+              view of what to fix first.
             </p>
           </div>
           <a href="contact.html#snapshot-form" class="btn btn-primary btn-lg"
-            >Request snapshot</a
+            >Request my snapshot</a
           >
         </div>
       </section>
@@ -458,7 +568,7 @@
           }
         }
       </script>
-      <script src="scripts.js"></script>
+      <script src="script.js"></script>
     </footer>
   </body>
 </html>
