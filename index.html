@@ -26,7 +26,7 @@
           <span class="logo-text">MTC Cyber</span>
         </a>
         <nav class="main-nav" id="main-nav">
-          <a href="index.html">Home</a>
+          <a href="index.html" class="active">Home</a>
           <a href="services.html">Services</a>
           <a href="about.html">About</a>
           <a href="blog.html">Insights</a>
@@ -36,6 +36,7 @@
           class="nav-toggle"
           id="nav-toggle"
           aria-label="Toggle navigation"
+          aria-expanded="false"
         >
           <span></span><span></span><span></span>
         </button>
@@ -47,13 +48,14 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-text">
+            <p class="eyebrow">Small-business cyber security • Wallan VIC</p>
             <h1>
-              Simple, practical cyber security for Australian small business.
+              Know your cyber risks before attackers do.
             </h1>
             <p>
               Get a <strong>plain-English Cyber Readiness Snapshot</strong> of
               your website and systems — no jargon, no scare tactics, just clear
-              risks and practical fixes you can act on.
+              priorities and practical fixes you can act on.
             </p>
             <div class="hero-cta">
               <a href="contact.html#snapshot-form" class="btn btn-primary"
@@ -68,19 +70,35 @@
               >
               <span>✔ Based in Wallan, Victoria</span>
             </div>
-          </div>
-          <div class="hero-card">
-            <!-- big logo added -->
-            <img
-              src="mtc-logo.png"
-              alt="MTC Cyber logo"
-              class="hero-logo-big"
-            />
-            <div class="score-badge">
-              <span class="score-label">Example score</span>
-              <span class="score-value">63 / 100</span>
-              <span class="score-sub">Moderate risk</span>
+            <div class="hero-stats" aria-label="Service highlights">
+              <div>
+                <strong>100%</strong>
+                <span>public-only checks</span>
+              </div>
+              <div>
+                <strong>PDF</strong>
+                <span>plain-English report</span>
+              </div>
+              <div>
+                <strong>Local</strong>
+                <span>Australian support</span>
+              </div>
             </div>
+          </div>
+          <div class="hero-card" aria-label="Example Cyber Readiness Snapshot">
+            <div class="hero-card-top">
+              <img
+                src="mtc-logo.png"
+                alt="MTC Cyber logo"
+                class="hero-logo-big"
+              />
+              <div class="score-badge">
+                <span class="score-label">Example score</span>
+                <span class="score-value">63 / 100</span>
+                <span class="score-sub">Moderate risk</span>
+              </div>
+            </div>
+            <div class="scan-line"><span></span></div>
             <ul class="hero-list">
               <li>
                 <strong>Missing security headers</strong> &mdash; higher risk of
@@ -136,8 +154,8 @@
               <h3>You receive a clear report</h3>
               <p>
                 Within a short timeframe, you receive a PDF snapshot with a
-                score out of 100, with risks and practical next steps
-                you can share with your IT support.
+                score out of 100, risks and practical next steps you can share
+                with your IT support.
               </p>
             </article>
           </div>
@@ -272,7 +290,7 @@
                 our IT provider to fix. It felt like a safety check rather than
                 a sales pitch.”
               </p>
-              <p class="testimonial-meta">Theo, Caldern.org</p>
+              <p class="testimonial-meta">Theo, Calder region business</p>
             </article>
             <article class="testimonial-card">
               <p class="testimonial-text">
@@ -286,7 +304,7 @@
                 “Matthew explained cyber risks in a way the whole team
                 understood. It was practical, not overwhelming.”
               </p>
-              <p class="testimonial-meta">Manager, sart up "Clear-Head</p>
+              <p class="testimonial-meta">Manager, start-up "Clear-Head"</p>
             </article>
           </div>
         </div>
@@ -458,7 +476,7 @@
           }
         }
       </script>
-      <script src="scripts.js"></script>
+      <script src="script.js"></script>
     </footer>
   </body>
 </html>
