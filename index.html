@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>MTC Cyber — Cyber Readiness for Australian Small Business</title>
+    <title>MTC Cyber — Cyber Security That Makes Sense for Small Business</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="MTC Cyber helps Australian small businesses improve their cyber security with a simple, plain-English Cyber Readiness Snapshot and practical fixes."
+      content="MTC Cyber helps Australian small businesses find and fix practical cyber security gaps with plain-English snapshots, reviews and ongoing advisory."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="mtc-style.css" />
@@ -20,22 +20,22 @@
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a href="index.html" class="logo">
-          <!-- Replace with your logo image if you have one -->
+        <a href="index.html" class="logo" aria-label="MTC Cyber home">
           <img src="mtc-logo.png" alt="MTC Cyber logo" class="logo-img" />
           <span class="logo-text">MTC Cyber</span>
         </a>
         <nav class="main-nav" id="main-nav">
-          <a href="index.html">Home</a>
+          <a href="index.html" class="active">Home</a>
           <a href="services.html">Services</a>
           <a href="about.html">About</a>
           <a href="blog.html">Insights</a>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html#snapshot-form" class="nav-cta">Free snapshot</a>
         </nav>
         <button
           class="nav-toggle"
           id="nav-toggle"
           aria-label="Toggle navigation"
+          aria-expanded="false"
         >
           <span></span><span></span><span></span>
         </button>
@@ -43,303 +43,299 @@
     </header>
 
     <main>
-      <!-- Hero -->
-      <section class="hero">
+      <section class="hero hero-premium">
         <div class="container hero-inner">
           <div class="hero-text">
-            <h1>
-              Simple, practical cyber security for Australian small business.
-            </h1>
-            <p>
-              Get a <strong>plain-English Cyber Readiness Snapshot</strong> of
-              your website and systems — no jargon, no scare tactics, just clear
-              risks and practical fixes you can act on.
+            <p class="eyebrow">Practical cyber security for Australian small business</p>
+            <h1>Stop guessing. Know what to fix first.</h1>
+            <p class="hero-lead">
+              MTC Cyber turns confusing website, email and system risks into a
+              plain-English action plan your business can actually use — without
+              scare tactics, enterprise jargon or disruptive testing.
             </p>
             <div class="hero-cta">
-              <a href="contact.html#snapshot-form" class="btn btn-primary"
-                >Request your free snapshot</a
-              >
-              <a href="#how-it-works" class="btn btn-secondary">How it works</a>
+              <a href="contact.html#snapshot-form" class="btn btn-primary btn-lg">
+                Get my free snapshot
+              </a>
+              <a href="services.html" class="btn btn-secondary btn-lg">
+                View services
+              </a>
             </div>
-            <div class="hero-meta">
-              <span>✔ Non-intrusive public scans only</span>
-              <span
-                >✔ Designed for cafes, mechanics, trades & local services</span
-              >
-              <span>✔ Based in Wallan, Victoria</span>
+            <div class="proof-row" aria-label="Service promises">
+              <span>Public-only first step</span>
+              <span>Clear priorities</span>
+              <span>Built for real budgets</span>
             </div>
           </div>
-          <div class="hero-card">
-            <!-- big logo added -->
-            <img
-              src="mtc-logo.png"
-              alt="MTC Cyber logo"
-              class="hero-logo-big"
-            />
-            <div class="score-badge">
-              <span class="score-label">Example score</span>
-              <span class="score-value">63 / 100</span>
-              <span class="score-sub">Moderate risk</span>
+
+          <aside class="snapshot-card" aria-label="Example snapshot deliverable">
+            <div class="snapshot-card-header">
+              <div>
+                <span class="card-kicker">Example result</span>
+                <h2>Cyber Readiness Snapshot</h2>
+              </div>
+              <div class="score-dial">
+                <strong>63</strong>
+                <span>/100</span>
+              </div>
             </div>
-            <ul class="hero-list">
-              <li>
-                <strong>Missing security headers</strong> &mdash; higher risk of
-                clickjacking and data misuse.
-              </li>
-              <li>
-                <strong>Out-of-date software</strong> &mdash; increases chance
-                of known vulnerabilities.
-              </li>
-              <li>
-                <strong>DNS and email checks</strong> &mdash; helps reduce
-                spoofing & impersonation.
-              </li>
-            </ul>
-            <p class="hero-note">
-              Your report is delivered as a simple PDF with ratings and next
-              steps.
+            <div class="risk-meter" aria-hidden="true"><span></span></div>
+            <div class="priority-list">
+              <div>
+                <span class="priority-dot high"></span>
+                <p><strong>High:</strong> email spoofing protections need attention.</p>
+              </div>
+              <div>
+                <span class="priority-dot med"></span>
+                <p><strong>Medium:</strong> missing browser security headers.</p>
+              </div>
+              <div>
+                <span class="priority-dot low"></span>
+                <p><strong>Next:</strong> document ownership and patching routines.</p>
+              </div>
+            </div>
+            <a href="contact.html#snapshot-form" class="mini-cta">Request this report →</a>
+          </aside>
+        </div>
+      </section>
+
+      <section class="logo-strip" aria-label="What MTC Cyber focuses on">
+        <div class="container logo-strip-inner">
+          <span>Website security</span>
+          <span>Email protection</span>
+          <span>DNS checks</span>
+          <span>Cyber hygiene</span>
+          <span>Owner-friendly reporting</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split-section">
+          <div>
+            <p class="eyebrow">Why this matters</p>
+            <h2>Most small businesses do not need more fear. They need a clear first move.</h2>
+          </div>
+          <div class="copy-stack">
+            <p>
+              Cyber risk becomes expensive when it is unclear, ignored or left
+              entirely to chance. A short, practical review helps you understand
+              what is visible, what could be abused and which fixes are worth
+              doing first.
+            </p>
+            <p>
+              MTC Cyber is designed for business owners who want sensible
+              security progress — not an overwhelming audit or a pile of tools
+              they do not have time to manage.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- How it works -->
-      <section class="section" id="how-it-works">
+      <section class="section section-alt">
         <div class="container">
           <div class="section-header">
-            <h2>How the Cyber Readiness Snapshot works</h2>
+            <p class="eyebrow centered">Built to convert risk into action</p>
+            <h2>What you can walk away with</h2>
             <p>
-              Three simple steps. No access to your internal systems required.
+              Every engagement is built around decisions: what is wrong, why it
+              matters, what to fix first and who can help fix it.
             </p>
+          </div>
+          <div class="outcome-grid">
+            <article class="outcome-card">
+              <span class="outcome-icon">01</span>
+              <h3>A ranked fix list</h3>
+              <p>
+                Stop treating every issue equally. Focus on the risks most
+                likely to affect customer trust, uptime or business reputation.
+              </p>
+            </article>
+            <article class="outcome-card featured-outcome">
+              <span class="outcome-icon">02</span>
+              <h3>Plain-English evidence</h3>
+              <p>
+                Get screenshots, context and explanations you can understand —
+                and that your web developer or IT provider can act on.
+              </p>
+            </article>
+            <article class="outcome-card">
+              <span class="outcome-icon">03</span>
+              <h3>A practical improvement path</h3>
+              <p>
+                Start with a snapshot, move into a deeper review if needed, then
+                keep improving at a pace that suits your budget.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="snapshot-includes">
+        <div class="container snapshot-layout">
+          <div>
+            <p class="eyebrow">The flagship offer</p>
+            <h2>Cyber Readiness Snapshot</h2>
+            <p>
+              A lightweight first step for small businesses that want immediate
+              visibility without handing over passwords or disrupting operations.
+            </p>
+            <a href="contact.html#snapshot-form" class="btn btn-primary">
+              Request a snapshot
+            </a>
+          </div>
+          <div class="deliverables-grid">
+            <article>
+              <strong>Public checks</strong>
+              <p>Website, SSL/TLS, DNS, email security signals and basic exposure.</p>
+            </article>
+            <article>
+              <strong>Readiness score</strong>
+              <p>A simple score and traffic-light view of your most visible risks.</p>
+            </article>
+            <article>
+              <strong>Business impact</strong>
+              <p>What each finding could mean in customer, operational or trust terms.</p>
+            </article>
+            <article>
+              <strong>Next steps</strong>
+              <p>Prioritised fixes you can approve, delegate or discuss with IT.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="how-it-works">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow centered">Simple process</p>
+            <h2>From request to action plan</h2>
+            <p>No logins. No customer data access. No disruptive testing.</p>
           </div>
           <div class="steps-grid">
             <article class="step-card">
               <span class="step-number">1</span>
-              <h3>Tell us your website</h3>
+              <h3>Request your snapshot</h3>
               <p>
-                You share your public domain (for example,
-                <em>yourbusiness.com.au</em>) and a contact email. We confirm
-                you are authorised to request the scan.
+                Send your domain, contact details and consent so we can confirm
+                the public-facing scope.
               </p>
             </article>
             <article class="step-card">
               <span class="step-number">2</span>
-              <h3>We run non-intrusive checks</h3>
+              <h3>We review visible risk</h3>
               <p>
-                Using ethical, public-only techniques, we check things like
-                SSL/TLS, headers, DNS records, basic exposure and software
-                fingerprints — without touching customer data.
+                We assess common public signals such as website configuration,
+                DNS, email protections and obvious hygiene gaps.
               </p>
             </article>
             <article class="step-card">
               <span class="step-number">3</span>
-              <h3>You receive a clear report</h3>
+              <h3>You get a clear plan</h3>
               <p>
-                Within a short timeframe, you receive a PDF snapshot with a
-                score out of 100, with risks and practical next steps
-                you can share with your IT support.
+                You receive a readable report with what matters, why it matters
+                and the practical next move.
               </p>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- Services overview -->
-      <section class="section section-alt">
+      <section class="section">
         <div class="container">
           <div class="section-header">
-            <h2>Services designed for real-world small business</h2>
-            <p>No noise, no enterprise bloat. Just what you actually need.</p>
+            <p class="eyebrow centered">Choose your level</p>
+            <h2>Services that match where your business is today</h2>
           </div>
-
           <div class="pricing-grid">
             <article class="pricing-card">
               <h3>Cyber Readiness Snapshot</h3>
-              <p class="pricing-price">Free or low-cost starter</p>
+              <p class="pricing-price">Best first step</p>
               <ul class="pricing-list">
-                <li>Non-intrusive scan of your public website and DNS.</li>
-                <li>Score out of 100.</li>
-                <li>Plain-English findings & risks explained.</li>
-                <li>List of recommended actions to share with IT.</li>
+                <li>Public-only checks and score.</li>
+                <li>Plain-English PDF report.</li>
+                <li>Prioritised fix list for your IT provider.</li>
               </ul>
-              <a href="contact.html#snapshot-form" class="btn btn-outline"
-                >Request snapshot</a
-              >
+              <a href="contact.html#snapshot-form" class="btn btn-outline">Get started</a>
             </article>
-
             <article class="pricing-card featured">
-              <div class="badge">Most popular</div>
+              <div class="badge">Most practical</div>
               <h3>Small Business Security Review</h3>
-              <p class="pricing-price">From $<span>149</span> (custom quote)</p>
+              <p class="pricing-price">Deeper review and walkthrough</p>
               <ul class="pricing-list">
-                <li>Includes Cyber Readiness Snapshot.</li>
-                <li>Deeper review of key systems and processes.</li>
-                <li>Cyber hygiene checklist tailored to your business.</li>
-                <li>60–90 minute walkthrough session with Q&amp;A.</li>
+                <li>Snapshot plus process and account review.</li>
+                <li>Risk register and improvement roadmap.</li>
+                <li>60–90 minute walkthrough with Q&amp;A.</li>
               </ul>
-              <a href="services.html" class="btn btn-primary"
-                >View full service breakdown</a
-              >
+              <a href="services.html" class="btn btn-primary">Compare packages</a>
             </article>
-
             <article class="pricing-card">
-              <h3>Ongoing Support &amp; Advisory</h3>
-              <p class="pricing-price">Retainer or as-needed</p>
+              <h3>Ongoing Advisory</h3>
+              <p class="pricing-price">Support when you need it</p>
               <ul class="pricing-list">
-                <li>Regular check-ins and follow-up snapshots.</li>
-                <li>Support to implement practical improvements.</li>
-                <li>Awareness sessions for staff and management.</li>
-                <li>Flexible for your budget and priorities.</li>
+                <li>Follow-up checks and implementation guidance.</li>
+                <li>Staff awareness and policy support.</li>
+                <li>Flexible support for real small-business budgets.</li>
               </ul>
-              <a href="contact.html" class="btn btn-outline"
-                >Talk about your needs</a
-              >
+              <a href="contact.html" class="btn btn-outline">Talk to us</a>
             </article>
           </div>
         </div>
       </section>
 
-      <!-- Why choose MTC Cyber -->
-      <section class="section">
-        <div class="container">
-          <div class="two-col">
-            <div>
-              <h2>Why MTC Cyber?</h2>
-              <p>
-                MTC Cyber exists to close the gap between technical cyber
-                security and everyday small business. No fear-mongering, no
-                enterprise-only language.
-              </p>
-              <ul class="check-list">
-                <li>
-                  <strong>Small-business first:</strong> Experience working with
-                  local operators like container crews, trades and services.
-                </li>
-                <li>
-                  <strong>Plain-English reporting:</strong> Every risk is
-                  explained in simple language, with examples.
-                </li>
-                <li>
-                  <strong>Independent &amp; ethical:</strong> We only run
-                  non-intrusive checks with your consent.
-                </li>
-                <li>
-                  <strong>Local &amp; available:</strong> Based in Wallan,
-                  Victoria and focused on Australian businesses.
-                </li>
-              </ul>
-              <a href="about.html" class="link-arrow"
-                >Learn more about MTC Cyber</a
-              >
-            </div>
-            <div class="highlight-card">
-              <h3>About Matthew</h3>
-              <p>
-                MTC Cyber is led by <strong>Matthew Constantinou</strong>, a
-                cyber security practitioner with hands-on experience in both
-                technical environments and real-world small business operations.
-              </p>
-              <ul class="bullet-list">
-                <li>Certificate IV in Cyber Security (Victoria University).</li>
-                <li>Google Cybersecurity Professional Certificate.</li>
-                <li>
-                  Over a decade working in logistics and operations leadership.
-                </li>
-              </ul>
-              <p>
-                That mix means the advice you receive is grounded, realistic and
-                tailored to how your business actually runs day-to-day.
-              </p>
-            </div>
+      <section class="section founder-section">
+        <div class="container founder-card">
+          <div>
+            <p class="eyebrow">Why MTC Cyber</p>
+            <h2>Cyber advice from someone who understands operations, not just tools.</h2>
+            <p>
+              MTC Cyber is led by Matthew Constantinou, combining cyber security
+              training with more than a decade of logistics and operations
+              leadership. That means the advice is grounded in how small
+              businesses actually work day to day.
+            </p>
+            <a href="about.html" class="link-arrow">Learn about Matthew</a>
           </div>
+          <ul class="credential-list">
+            <li>Certificate IV in Cyber Security</li>
+            <li>Google Cybersecurity Professional Certificate</li>
+            <li>Plain-English reports and practical implementation focus</li>
+          </ul>
         </div>
       </section>
 
-      <!-- Testimonials -->
       <section class="section section-alt">
         <div class="container">
           <div class="section-header">
-            <h2>What small businesses say</h2>
-            <p>
-              Real feedback from real operators (names anonymised where
-              requested).
-            </p>
-          </div>
-          <div class="testimonials-grid">
-            <article class="testimonial-card">
-              <p class="testimonial-text">
-                “The report was easy to follow and showed us exactly what to ask
-                our IT provider to fix. It felt like a safety check rather than
-                a sales pitch.”
-              </p>
-              <p class="testimonial-meta">Theo, Caldern.org</p>
-            </article>
-            <article class="testimonial-card">
-              <p class="testimonial-text">
-                “We had no idea our website was missing basic protections. The
-                snapshot made it clear and gave us a plan.”
-              </p>
-              <p class="testimonial-meta">Director</p>
-            </article>
-            <article class="testimonial-card">
-              <p class="testimonial-text">
-                “Matthew explained cyber risks in a way the whole team
-                understood. It was practical, not overwhelming.”
-              </p>
-              <p class="testimonial-meta">Manager, sart up "Clear-Head</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section class="section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Common questions</h2>
-            <p>Short, honest answers to what most small business owners ask.</p>
+            <p class="eyebrow centered">Common questions</p>
+            <h2>Good questions before you start</h2>
           </div>
           <div class="faq-list">
             <details class="faq-item" open>
-              <summary>
-                Will this scan take my website offline or touch customer data?
-              </summary>
+              <summary>Will this affect my website or customer data?</summary>
               <div class="faq-body">
                 <p>
-                  No. The Cyber Readiness Snapshot uses non-intrusive checks
-                  against your public-facing website and DNS only. We do not
-                  attempt to log in, bypass controls or access customer data.
+                  No. The Snapshot starts with non-intrusive public-facing checks
+                  only. We do not log in, bypass controls or access customer data.
                 </p>
               </div>
             </details>
             <details class="faq-item">
-              <summary>Do I need an IT team already?</summary>
+              <summary>What if I already have an IT provider?</summary>
               <div class="faq-body">
                 <p>
-                  No. The report is written so that you can understand it
-                  yourself. If you have an IT provider, you can simply send them
-                  the findings and recommended fixes.
+                  Great. The report is designed to make that relationship more
+                  productive by giving your provider a clear, prioritised list of
+                  items to confirm or fix.
                 </p>
               </div>
             </details>
             <details class="faq-item">
-              <summary>How long does the snapshot take?</summary>
+              <summary>Is this only for technical businesses?</summary>
               <div class="faq-body">
                 <p>
-                  Once confirmed, most snapshots are turned around within a
-                  short timeframe (depending on workload and complexity). You
-                  will receive your report by email as a PDF.
-                </p>
-              </div>
-            </details>
-            <details class="faq-item">
-              <summary>What does it cost?</summary>
-              <div class="faq-body">
-                <p>
-                  The basic Cyber Readiness Snapshot is offered free or at a
-                  very low cost for genuine small businesses, as an awareness
-                  and relationship-building service. Deeper reviews and ongoing
-                  advisory are quoted case-by-case, with clear pricing up front.
+                  No. The service is specifically built for cafes, trades,
+                  mechanics, local services and other owner-operated businesses
+                  that need practical guidance.
                 </p>
               </div>
             </details>
@@ -347,56 +343,19 @@
         </div>
       </section>
 
-      <!-- Blog preview -->
-      <section class="section section-alt">
-        <div class="container">
-          <div class="section-header">
-            <h2>Latest insights</h2>
-            <p>Short, practical articles you can share with your team.</p>
-          </div>
-          <div class="blog-grid">
-            <article class="blog-card">
-              <h3>
-                <a href="blog.html"
-                  >Why small businesses are prime targets for cyber attacks</a
-                >
-              </h3>
-              <p>
-                Cyber crime is not just an “enterprise problem”. Here is why
-                local cafes, mechanics and trades are being targeted — and what
-                you can do about it.
-              </p>
-              <a href="blog.html" class="link-arrow">Read more</a>
-            </article>
-            <article class="blog-card">
-              <h3>
-                <a href="blog.html"
-                  >5 quick checks you can do on your website today</a
-                >
-              </h3>
-              <p>
-                From HTTPS to basic headers, here are simple things you can ask
-                your IT support to confirm for your website.
-              </p>
-              <a href="blog.html" class="link-arrow">Read more</a>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Call to action -->
       <section class="section cta-section">
         <div class="container cta-inner">
           <div>
-            <h2>Ready to see where you stand?</h2>
+            <p class="eyebrow">Make the first move</p>
+            <h2>Get a clear view of your cyber risk before it becomes urgent.</h2>
             <p>
-              Request a free Cyber Readiness Snapshot and get a clear view of
-              your risk in plain English.
+              Request your Cyber Readiness Snapshot and turn uncertainty into a
+              practical fix list.
             </p>
           </div>
-          <a href="contact.html#snapshot-form" class="btn btn-primary btn-lg"
-            >Request snapshot</a
-          >
+          <a href="contact.html#snapshot-form" class="btn btn-primary btn-lg">
+            Request my snapshot
+          </a>
         </div>
       </section>
     </main>
@@ -408,8 +367,7 @@
             <span class="logo-text">MTC Cyber</span>
           </div>
           <p class="footer-text">
-            Helping Australian small businesses understand and improve their
-            cyber security using simple, practical steps.
+            Practical cyber security support for Australian small businesses.
           </p>
         </div>
         <div class="footer-col">
@@ -433,15 +391,10 @@
       </div>
       <div class="footer-bottom">
         <div class="container footer-bottom-inner">
-          <span
-            >&copy; <span id="year"></span> MTC Cyber. All rights
-            reserved.</span
-          >
+          <span>&copy; <span id="year"></span> MTC Cyber. All rights reserved.</span>
           <span>ABN: 37 347 798 045</span>
         </div>
       </div>
-
-      <!-- LocalBusiness schema -->
       <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -458,8 +411,7 @@
           }
         }
       </script>
-      <script src="scripts.js"></script>
+      <script src="script.js"></script>
     </footer>
   </body>
 </html>
-
